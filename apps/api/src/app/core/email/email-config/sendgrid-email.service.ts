@@ -1,7 +1,7 @@
 import SendGrid from '@sendgrid/mail';
 
 import { Injectable } from '@nestjs/common';
-import { environment } from '../../../../../../hr-client/src/environments/environment';
+import { environment } from 'apps/api/src/environments/environment';
 
 @Injectable()
 export class SendgridEmailService {

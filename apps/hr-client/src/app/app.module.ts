@@ -1,3 +1,4 @@
+import { HashService } from './../../../api/src/app/core/security/hash.service';
 import { NgModule } from '@angular/core';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
