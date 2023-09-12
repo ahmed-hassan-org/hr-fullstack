@@ -1,0 +1,8 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year {
+  border-radius: 5px;
+  border-color: $secondary;
+}

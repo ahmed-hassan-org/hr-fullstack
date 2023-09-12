@@ -1,0 +1,266 @@
+<section class="signup-page-wrapper p-fluid h-full bg-white">
+  <div class="content-wrapper px-7">
+    <div [ngSwitch]="signupStepModel()">
+      <div *ngSwitchCase="0">
+        <ng-template [ngTemplateOutlet]="stepperSection"></ng-template>
+      </div>
+      <div *ngSwitchCase="1">
+        <ng-template [ngTemplateOutlet]="phoneOtpForm"></ng-template>
+      </div>
+      <div *ngSwitchCase="2">
+        <ng-template [ngTemplateOutlet]="verifyEmailForm"></ng-template>
+      </div>
+      <div *ngSwitchCase="3">
+        <ng-template [ngTemplateOutlet]="emailOtpForm"></ng-template>
+      </div>
+      <div *ngSwitchCase="4">
+        <ng-template [ngTemplateOutlet]="emailOtpSuccess"></ng-template>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- templates goes here -->
+<ng-template #stepperSection>
+  <div class="grid p-fluid">
+    <div class="col-12 mt-8 px-7">
+      <hr-title1>Company Registration</hr-title1>
+      <hr-subtitle>Please enter your company information </hr-subtitle>
+    </div>
+    <div class="col-12">
+      <div class="px-6">
+        <p-steps
+          [model]="stepItems()"
+          [activeIndex]="signupStepperModel()"
+          [readonly]="true"
+          (activeIndexChange)="changeAddInfoIdx($event)"
+          styleClass="signup-step-custom"
+        ></p-steps>
+      </div>
+      <p-tabView
+        [activeIndex]="signupStepperModel()"
+        class="p-tab-stepper-custom"
+      >
+        <p-tabPanel header="nameStep">
+          <div class="grid px-6 mt-3">
+            <div class="col-12 field">
+              <label for="name">Name</label>
+              <input type="text" pInputText placeholder="Name" />
+            </div>
+            <div class="col-12 field">
+              <label for="nameId">Company/s Name</label>
+              <input type="text" pInputText placeholder="company name" />
+            </div>
+            <div class="col-12">
+              <button
+                type="button"
+                pButton
+                class="p-button border-noround"
+                label="Next"
+                (click)="toPasswordStep()"
+              ></button>
+            </div>
+            <div class="col-12">
+              <hr-signup-back-button [backFn]="backToMainPage" />
+            </div>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="passwordStep">
+          <div class="grid px-6 mt-3">
+            <div class="col-12 field">
+              <label for="passId">Password</label>
+              <p-password
+                [toggleMask]="true"
+                class="p-password-custom"
+                wapelRtl
+              >
+                <ng-template pTemplate="header">
+                  <h6>Pick a password</h6>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                  <p-divider></p-divider>
+                  <p class="mt-2">Suggestions</p>
+                  <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                    <li>At least one lowercase</li>
+                    <li>At least one uppercase</li>
+                    <li>At least one numeric</li>
+                    <li>Minimum 8 characters</li>
+                  </ul>
+                </ng-template>
+              </p-password>
+            </div>
+            <div class="col-12 field">
+              <label for="confPass">Confirm Password</label>
+              <p-password
+                [toggleMask]="true"
+                class="p-password-custom"
+                wapelRtl
+              >
+                <ng-template pTemplate="header">
+                  <h6>Pick a password</h6>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                  <p-divider></p-divider>
+                  <p class="mt-2">Suggestions</p>
+                  <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                    <li>At least one lowercase</li>
+                    <li>At least one uppercase</li>
+                    <li>At least one numeric</li>
+                    <li>Minimum 8 characters</li>
+                  </ul>
+                </ng-template>
+              </p-password>
+            </div>
+            <div class="col-12">
+              <button
+                type="button"
+                pButton
+                class="p-button border-noround"
+                label="Next"
+                (click)="toPhoneStep()"
+              ></button>
+            </div>
+            <div class="col-12">
+              <hr-signup-back-button [backFn]="toNameStep" />
+            </div>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="passwordStep">
+          <div class="grid px-6 mt-3">
+            <div class="col-12 field">
+              <label for="phoneId" class="block">Mobile Number</label>
+            </div>
+
+            <div class="col-12">
+              <button
+                type="button"
+                pButton
+                class="p-button border-noround"
+                label="Continue"
+                (click)="toPhoneVerification()"
+              ></button>
+            </div>
+            <div class="col-12">
+              <hr-signup-back-button [backFn]="toPasswordStep" />
+            </div>
+          </div>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #phoneOtpForm>
+  <section class="grid p-fluid px-7">
+    <div class="col-12 mt-8">
+      <hr-title1>Please check your phone</hr-title1>
+      <hr-subtitle
+        >We have sent a code to
+        <span class="font-bold text-gray-800">{{
+          '+9660542658456'
+        }}</span></hr-subtitle
+      >
+    </div>
+    <div class="col-12">
+      <ng-otp-input
+        [config]="{ length: 4, allowNumbersOnly: true }"
+        (onInputChange)="onPhoneOtpChange($event)"
+      />
+      <p class="m-0 mt-3 text-base text-gray-500 font-bold">
+        Did't get a code?
+        <span class="mx-2 text-primary">Send the verification code again</span>
+      </p>
+    </div>
+    <div class="col-12">
+      <button
+        type="button"
+        pButton
+        class="p-button border-noround"
+        label="Verify"
+        (click)="toPhoneVerificationSuccess()"
+      ></button>
+    </div>
+    <div class="col-12">
+      <hr-signup-back-button [backFn]="toPhoneStep" />
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #verifyEmailForm>
+  <section class="grid p-fluid px-7">
+    <div class="col-12 mt-8">
+      <hr-title1>Verify your email address</hr-title1>
+      <hr-subtitle>Pleae verify your email address </hr-subtitle>
+    </div>
+    <div class="col-12">
+      <input type="text" pInputText placeholder="email address" />
+      <p class="m-0 mt-3 text-base text-gray-500 font-bold">
+        Did't get a code?
+        <span class="mx-2 wp-text-secondary"
+          >Send the verification code again</span
+        >
+      </p>
+    </div>
+
+    <div class="col-12">
+      <button
+        type="button"
+        pButton
+        class="p-button border-noround"
+        label="Continue"
+        (click)="toEmailVerificationOTP()"
+      ></button>
+    </div>
+    <div class="col-12">
+      <hr-signup-back-button [backFn]="toNameStep" />
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #emailOtpForm>
+  <section class="grid p-fluid px-7">
+    <div class="col-12 mt-8">
+      <hr-title1>Please check your email</hr-title1>
+      <hr-subtitle
+        >We have sent a code to
+        <span class="font-bold text-gray-800">{{
+          'email@domain.com'
+        }}</span></hr-subtitle
+      >
+    </div>
+    <div class="col-12">
+      <ng-otp-input
+        [config]="{ length: 4, allowNumbersOnly: true }"
+        (onInputChange)="onPhoneOtpChange($event)"
+      />
+      <p class="m-0 mt-3 text-base text-gray-500 font-bold">
+        Did't get a code?
+        <span class="mx-2 wp-text-primary"
+          >Send the verification code again</span
+        >
+      </p>
+    </div>
+
+    <div class="col-12">
+      <button
+        type="button"
+        pButton
+        class="p-button border-noround"
+        label="Verify"
+        (click)="toEmailVerificationSuccess()"
+      ></button>
+    </div>
+    <div class="col-12">
+      <hr-signup-back-button [backFn]="toNameStep" />
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #emailOtpSuccess>
+  <p>email otp success</p>
+  <button
+    type="button"
+    pButton
+    class="p-button border-noround"
+    label="Verify"
+  ></button>
+</ng-template>

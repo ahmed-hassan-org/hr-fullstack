@@ -1,0 +1,406 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+.ngx-otp-input {
+  width: 60px !important;
+  height: 60px !important;
+  font-size: 17px !important;
+  border-radius: 6px !important;
+}
+
+.ngx-otp-input-box {
+  margin: 0 5px;
+}
+
+.rtl,
+html[dir*='rtl'] {
+  .ngx-otp-input-box {
+    margin-left: 8px !important;
+    margin-right: 0 !important;
+  }
+}
+
+.mt-44 {
+  margin-top: 44px;
+}
+
+@media screen and (max-width: 39.938em) {
+  .otp-wrapper {
+    .wp-text-h1 {
+      font-size: 25px;
+    }
+
+    .min-width-400 {
+      min-width: 0 !important;
+    }
+
+    .ngx-otp-input-box {
+      margin: 0 !important;
+      .ngx-otp-input {
+        width: 50px !important;
+        height: 50px !important;
+        margin: 0 3px !important;
+      }
+    }
+  }
+
+  .rtl,
+  html[dir*='rtl'] {
+    .ngx-otp-input-box {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+}
+
+/// << custom prime input >> ///
+
+// << full calendar >> //
+
+.p-input-calendar-custom {
+  box-shadow: none !important;
+
+  .p-inputtext {
+    border-color: $gray5;
+    border-right: none;
+
+    &:not(.p-disabled).p-focus {
+      border: none;
+    }
+
+    &:enabled:focus {
+      border-color: $gray5 !important;
+      box-shadow: none !important;
+    }
+
+    &:enabled:hover {
+      border-color: $primary;
+    }
+  }
+
+  .p-button {
+    // background-color: transparent;
+    border-color: $gray5;
+
+    // color: $primary;
+    &:hover {
+      background-color: transparent;
+    }
+
+    &:not(.p-disabled).p-focus {
+      background-color: transparent;
+    }
+
+    &.p-button:enabled:active {
+      color: $white;
+      background-color: $primary;
+      border-color: $gray5;
+    }
+
+    &.p-button:enabled:hover {
+      color: $white;
+      background-color: $primary;
+      border-color: $gray5;
+    }
+
+    &.p-button-icon-only {
+      width: 3.5rem;
+      border-left: none;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem $primary-accent;
+    }
+  }
+
+  .p-datepicker table td > span.p-highlight {
+    background-color: $primary;
+    color: $white;
+  }
+
+  .p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
+    background-color: $secondary;
+    color: $white;
+  }
+
+  .p-datepicker .p-datepicker-header .p-datepicker-prev,
+  .p-datepicker .p-datepicker-header .p-datepicker-next {
+    color: $white;
+  }
+
+  .p-inputtext:enabled:focus {
+    border-color: $primary;
+  }
+
+  .p-inputtext:disabled {
+    background-color: $white;
+  }
+
+  .p-datepicker .p-datepicker-buttonbar .p-button {
+    color: $primary;
+  }
+
+  .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+    box-shadow: none !important;
+    background-color: $primary;
+    height: 25px;
+    border-radius: 10px;
+    padding: 0px 5px;
+    color: $white;
+  }
+
+  .p-datepicker .p-datepicker-header .p-datepicker-title select {
+    box-shadow: none !important;
+    background-color: $primary;
+    height: 25px;
+    border-radius: 10px;
+    padding: 0px 5px;
+    color: $white;
+
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: $gray5;
+    }
+
+    &::-webkit-scrollbar {
+      width: 15px;
+      background-color: $gray5;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $primary;
+      border: 2px solid lighten($color: $primary, $amount: 20%);
+    }
+
+    &:focus {
+      border-color: $primary;
+    }
+  }
+
+  .p-datepicker .p-datepicker-header .p-datepicker-prev,
+  .p-datepicker .p-datepicker-header .p-datepicker-next {
+    color: $primary !important;
+  }
+
+  .p-button {
+    &.p-button-icon-only {
+      border-right: none;
+      // border-left: 1px solid $primary;
+      height: 41px;
+      border: 0;
+    }
+  }
+
+  &.rtl {
+    .p-inputtext {
+      border-color: $gray5;
+      border-right: 1px solid $gray5;
+    }
+
+    .p-calendar-w-btn {
+      .p-inputtext {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: none !important;
+        // border-right: 1px solid $primary;
+        height: 41px;
+      }
+
+      .p-button {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+
+        &.p-button-icon-only {
+          border-right: none;
+          border-left: 1px solid $primary;
+          height: 41px;
+        }
+      }
+    }
+
+    .p-datepicker-header {
+      flex-direction: row-reverse;
+    }
+
+    .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+      margin-left: 10px;
+    }
+
+    .p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
+      flex-direction: row-reverse;
+    }
+
+    // .p-input-calendar-custom .p-button.p-button:enabled:hover {
+    //   color: $secondary;
+    // }
+  }
+}
+
+// << input group custom >> //
+.p-inputgroup-custom {
+  &.rtl {
+    input:first-child {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .p-inputgroup-addon:last-child {
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      border-left: 1px solid #ced4da;
+    }
+  }
+}
+
+// << text input custom >> //
+.p-input-text-custom {
+  box-shadow: none !important;
+
+  // background-color: $primary;
+  // width: 100%;
+  //   border: 1px solid $gray4 !important;
+  &:enabled:focus {
+    border-color: $gray5 !important;
+    box-shadow: none !important;
+  }
+
+  &.p-inputtext {
+    border: 1px solid $gray5;
+
+    &:not(.p-disabled).p-focus {
+      //   box-shadow: none !important;
+      border: 1px solid $gray9;
+
+      &.ng-dirty.ng-invalid {
+        border-color: $danger;
+      }
+    }
+  }
+
+  &:read-only {
+    background-color: $gray2;
+  }
+
+  &:disabled {
+    background-color: $gray4;
+  }
+
+  .p-inputtext:enabled:focus {
+    box-shadow: none;
+    border-color: $gray5 !important;
+  }
+
+  &:enabled:hover {
+    // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+    box-shadow: none !important;
+    border-color: $primary !important;
+  }
+}
+
+// << mask input custom >> //
+.p-input-mask-custom {
+  box-shadow: none !important;
+  background-color: $primary;
+
+  // width: 100%;
+  //   border: 1px solid $gray4 !important;
+  &:enabled:focus {
+    border-color: $gray5 !important;
+    box-shadow: none !important;
+  }
+
+  &.p-inputtext {
+    border: 1px solid $gray5;
+
+    &:not(.p-disabled).p-focus {
+      //   box-shadow: none !important;
+      border: none;
+
+      &.ng-dirty.ng-invalid {
+        border-color: $danger;
+      }
+    }
+  }
+
+  .p-inputtext:enabled:hover {
+    box-shadow: none !important;
+    border-color: $primary !important;
+  }
+
+  .p-inputtext:enabled:focus {
+    box-shadow: none;
+    border-color: $gray10 !important;
+  }
+
+  &:enabled:hover {
+    // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+    box-shadow: none !important;
+    border-color: $primary !important;
+  }
+}
+
+// << item number  >> //
+.p-input-number-custom {
+  box-shadow: none !important;
+  width: 100%;
+
+  //   border: 1px solid $gray4 !important;
+  &:enabled:focus {
+    border-color: $gray5 !important;
+    box-shadow: none !important;
+  }
+
+  // &:enabled:hover {
+  //   border-color: $primary !important;
+  //   box-shadow: none !important;
+  // }
+
+  &.p-inputtext {
+    border: 1px solid $gray5;
+
+    &:not(.p-disabled).p-focus {
+      //   box-shadow: none !important;
+      border: none;
+
+      &.ng-dirty.ng-invalid {
+        border-color: $danger;
+      }
+    }
+  }
+
+  .p-inputtext:enabled:hover {
+    border-color: $primary !important;
+    box-shadow: none !important;
+  }
+
+  .p-inputtext:enabled:focus {
+    box-shadow: none;
+    border-color: $gray10 !important;
+  }
+}
+
+// input password custom
+.p-password-custom {
+  .p-input-icon-right > i:last-of-type {
+    right: unset !important;
+    left: 0.75rem !important;
+  }
+
+  &.rtl {
+    &.p-input-icon-left > i,
+    .p-input-icon-left > .p-icon-wrapper,
+    .p-input-icon-right > i,
+    .p-input-icon-right > .p-icon-wrapper {
+      right: unset !important;
+      left: 0.75rem !important;
+    }
+  }
+}

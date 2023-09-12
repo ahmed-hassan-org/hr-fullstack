@@ -1,0 +1,31 @@
+<div class="grid p-fluid m-0">
+  <div class="col-12 p-0">
+    <div class="flex flex-row justify-content-end align-items-center mt-2">
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-times"
+        class="p-button-rounded p-button-danger p-button-text close-dialog"
+        (click)="closeDialog()"
+      ></button>
+    </div>
+  </div>
+  <div class="col-12 p-0" *ngIf="headerActionTemp">
+    <ng-template [ngTemplateOutlet]="headerActionTemp"></ng-template>
+  </div>
+  <div class="col-12 p-0" style="min-height: 400px">
+    <ng-container *ngIf="pdfFileUrl">
+      <iframe
+        id="ifrm"
+        style="width: 100%; min-height: 400px"
+        [src]="'data:application/pdf;base64,' + pdfFileUrl | sanitize : 'src'"
+      ></iframe>
+    </ng-container>
+  </div>
+  <ng-container *ngIf="footerActionTemp">
+    <div class="col-12 mt-3">
+      <ng-template [ngTemplateOutlet]="footerActionTemp"></ng-template>
+    </div>
+  </ng-container>
+</div>

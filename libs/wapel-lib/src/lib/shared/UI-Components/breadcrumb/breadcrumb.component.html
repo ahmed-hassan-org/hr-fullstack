@@ -1,0 +1,26 @@
+<!-- <nav class="breadcrumb rtl">
+  <a class="breadcrumb-item">{{ currentUrl }}</a>
+</nav> -->
+
+<!-- <div class="breadcrumb-pagination"> -->
+<ul id="breadcrumbs" wapelRtl>
+  <ng-container *ngFor="let item of translateUrlArr; let idx = index">
+    <li>
+      <a
+      
+        [ngClass]="{ 'add-underline': idx < trandlsateArrLenght }"
+        >{{ item.urlTranslated }}</a
+      >
+      <!-- <a
+        (click)="goLink(item.realUrl,idx)"
+        [ngClass]="{ 'add-underline': idx < trandlsateArrLenght }"
+        >{{ item.urlTranslated }}</a
+      > -->
+    </li>
+  </ng-container>
+  <ng-container *ngIf="addTextInLast.length > 0">
+    <li *ngFor="let it of addTextInLast">
+      <span>{{ it }}</span>
+    </li>
+  </ng-container>
+</ul>

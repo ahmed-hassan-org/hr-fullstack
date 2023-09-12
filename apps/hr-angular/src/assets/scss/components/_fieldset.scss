@@ -1,0 +1,14 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+// << custom field set >> //
+.p-fieldset-custom {
+  .p-fieldset {
+    border-color: $primary !important;
+  }
+
+  .p-fieldset .p-fieldset-legend {
+    background-color: $primary !important;
+    color: $white !important;
+  }
+}

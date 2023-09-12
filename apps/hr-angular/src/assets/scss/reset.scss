@@ -1,0 +1,58 @@
+@import './variables.scss';
+// a {
+//   color: $primary;
+// }
+label {
+  color: $black !important;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.bill-btn-custom {
+  .p-badge {
+    color: $white !important;
+    background-color: $secondary;
+  }
+}
+
+.p-card {
+  // background-color: $gray3;
+  background-color: $white;
+  border-radius: 0px;
+}
+
+// RTL Font style and arrow position switched
+// html[dir*='rtl'] {
+//   body,
+//   body .p-component {
+//     font-family: 'Plus Jakarta Sans', sans-serif !important;
+//     line-height: 19px;
+//     font-size: 0.86rem;
+//   }
+//   table tr th {
+//     font-weight: 700 !important;
+//   }
+//   .p-paginator .p-dropdown .p-dropdown-label {
+//     padding-right: 10px;
+//     padding-left: 0;
+//   }
+//   .p-panelmenu .p-panelmenu-header > a .p-menuitem-icon,
+//   .p-panelmenu
+//     .p-panelmenu-content
+//     .p-menuitem
+//     .p-menuitem-link
+//     .p-menuitem-icon {
+//     margin-right: 0;
+//     margin-left: 0.5rem;
+//   }
+//   .pi-chevron-right:before {
+//     content: '\e900';
+//   }
+//   .pi-chevron-left:before {
+//     content: '\e901';
+//   }
+// }
+
+// .border-round {
+//   border-radius: var(--border-radius) !important;
+// }

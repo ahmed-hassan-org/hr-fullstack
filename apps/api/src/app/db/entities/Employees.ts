@@ -8,7 +8,6 @@ import {
 } from "typeorm";
 import { Departments } from "./Departments";
 import { Jobs } from "./Jobs";
-import { JobHistory } from "./JobHistory";
 
 @Index("job_id", ["jobId"], {})
 @Index("department_id", ["departmentId"], {})
@@ -80,6 +79,6 @@ export class Employees {
   @OneToMany(() => Employees, (employees) => employees.manager)
   employees: Employees[];
 
-  @OneToMany(() => JobHistory, (jobHistory) => jobHistory.employee)
-  jobHistories: JobHistory[];
+  // @OneToMany(() => JobHistory, (jobHistory) => jobHistory.employee)
+  // jobHistories: JobHistory[];
 }

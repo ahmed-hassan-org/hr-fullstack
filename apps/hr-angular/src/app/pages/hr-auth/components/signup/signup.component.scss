@@ -1,0 +1,33 @@
+@import '/src/assets/scss/hr-app.scss';
+
+.signup-page-wrapper {
+  position: relative;
+  .signup-step-custom {
+    .p-steps-item .p-menuitem-link {
+      flex-direction: row !important;
+    }
+
+    &.p-steps .p-steps-item:before {
+      top: 100%;
+      z-index: -1;
+    }
+
+    &.p-steps .p-steps-item.p-highlight .p-steps-number {
+      background-color: $primary;
+      color: $white;
+    }
+
+    &.p-steps .p-steps-item.p-highlight .p-steps-title {
+      margin: 0px 5px;
+      color: $primary;
+    }
+
+    &.p-steps .p-steps-item .p-steps-number {
+      background-color: $gray7;
+      color: $black;
+    }
+    &.p-steps .p-steps-item .p-steps-title {
+      margin: 0px 5px;
+    }
+  }
+}

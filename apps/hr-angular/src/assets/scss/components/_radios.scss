@@ -1,0 +1,20 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+// << custom radio button >> //
+.p-radio-button-custom {
+  .p-radiobutton .p-radiobutton-box.p-highlight {
+    background-color: $primary;
+    border-color: $primary;
+  }
+
+  .p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
+    border-color: $secondary;
+  }
+
+  .p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+    border-color: $secondary;
+    background-color: $primary;
+    box-shadow: none;
+  }
+}

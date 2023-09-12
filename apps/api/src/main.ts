@@ -14,7 +14,7 @@ import {
 } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   const globalPrefix = 'api';
   const port = process.env.PORT || 3000;
   app.setGlobalPrefix(globalPrefix);
@@ -22,7 +22,7 @@ async function bootstrap() {
   // app.setBaseViewsDir(path.join(__dirname, 'client'));
   const config = new DocumentBuilder()
     .setTitle('HR Application')
-    .setDescription('financial app all apis')
+    .setDescription('Hr application for demo with angular, reaact, nextjs')
     .setVersion('v1')
     .addTag('hr')
     .build();

@@ -1,0 +1,15 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+// << custom checkbox >> //
+.p-checkbox-custom {
+  .p-checkbox .p-checkbox-box.p-highlight,
+  .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
+    background-color: $primary;
+    border-color: $primary;
+  }
+
+  .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+    border-color: $primary;
+  }
+}

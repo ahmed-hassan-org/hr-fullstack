@@ -1,0 +1,125 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+// << pagination customization  >> //
+.p-paginator-custom {
+  .p-paginator-bottom {
+    margin: 20px 0px 0px 0px;
+    border: none;
+    background-color: $gray2;
+  }
+
+  .p-paginator .p-paginator-pages .p-paginator-page {
+    color: $primary;
+    background-color: $white;
+    box-shadow: none;
+  }
+
+  .p-paginator .p-paginator-next,
+  .p-paginator .p-paginator-prev,
+  .p-paginator .p-paginator-last,
+  .p-paginator .p-paginator-first {
+    color: $primary;
+  }
+
+  .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    color: $white;
+    background-color: $primary;
+    border-color: $primary;
+  }
+
+  .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
+    color: $secondary;
+  }
+
+  .p-paginator .p-paginator-first:not(.p-disabled):not(.p-highlight):hover,
+  .p-paginator .p-paginator-prev:not(.p-disabled):not(.p-highlight):hover,
+  .p-paginator .p-paginator-next:not(.p-disabled):not(.p-highlight):hover,
+  .p-paginator .p-paginator-last:not(.p-disabled):not(.p-highlight):hover {
+    color: $secondary;
+  }
+
+  .p-dropdown {
+    background-color: $secondary;
+    border-color: $primary;
+
+    .pi {
+      color: $primary;
+    }
+  }
+
+  .p-dropdown:not(.p-disabled):hover {
+    border-color: $primary;
+  }
+
+  .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    background-color: $primary;
+    color: $secondary;
+  }
+
+  .p-paginator .p-dropdown .p-dropdown-label {
+    padding-right: 5px !important;
+  }
+
+  &.rtl {
+    .p-paginator-bottom {
+      flex-direction: row-reverse;
+    }
+  }
+}
+
+// << custom paginator >> //
+// .p-custom-paginator {
+//   .p-paginator-bottom {
+//     margin: 20px 0px 0px 0px;
+//     border: none;
+//     background-color: $gray2;
+//   }
+
+//   .p-paginator .p-paginator-pages .p-paginator-page {
+//     color: $primary;
+//     background-color: $white;
+//     box-shadow: none;
+//   }
+
+//   .p-paginator .p-paginator-next,
+//   .p-paginator .p-paginator-prev,
+//   .p-paginator .p-paginator-last,
+//   .p-paginator .p-paginator-first {
+//     color: $secondary;
+//   }
+
+//   .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+//     color: $white;
+//     background-color: $primary;
+//     border-color: $primary;
+//   }
+
+//   .p-dropdown {
+//     background-color: $secondary;
+//     border-color: $primary;
+
+//     .pi {
+//       color: $primary;
+//     }
+//   }
+
+//   .p-dropdown:not(.p-disabled):hover {
+//     border-color: $primary;
+//   }
+
+//   .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+//     background-color: $primary;
+//     color: $primary;
+//   }
+
+//   &.rtl {
+//     .p-paginator .p-paginator-next,
+//     .p-paginator .p-paginator-prev,
+//     .p-paginator .p-paginator-last,
+//     .p-paginator .p-paginator-first {
+//       color: $success;
+//       transform: rotate(180deg);
+//     }
+//   }
+// }

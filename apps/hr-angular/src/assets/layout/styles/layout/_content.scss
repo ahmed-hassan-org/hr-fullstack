@@ -1,0 +1,27 @@
+@import '../../../scss/variables.scss';
+
+$padding-top: 4rem;
+$padding-top-ar: 4rem;
+.layout-main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 2rem);
+  justify-content: space-between;
+  padding: $padding-top 0rem 0rem 0rem;
+  transition: margin-left $transitionDuration;
+  background-color: white;
+}
+.layout-main-container-ar {
+  display: flex;
+  flex-direction: column;
+  // min-height: 100vh;
+  justify-content: space-between;
+  padding: $padding-top-ar 0rem 0rem 0rem;
+  transition: margin-right $transitionDuration;
+  background-color: white;
+}
+
+.layout-main {
+  flex: 1 1 calc(100vh - $padding-top);
+  background-color: $body-bg-color;
+}

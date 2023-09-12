@@ -1,0 +1,13 @@
+<div class="error-messages-container-wrapper">
+  <ng-container *ngIf="validationErrorList.length > 0">
+    <p-card [styleClass]="'px-1 py-1 mb-4'" class="p-fluid">
+      <ng-container *ngFor="let error of validationErrorList">
+        <p-message
+          [severity]="'error'"
+          [text]="error"
+          [styleClass]="'mb-1 mt-1'"
+        ></p-message>
+      </ng-container>
+    </p-card>
+  </ng-container>
+</div>

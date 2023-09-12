@@ -1,0 +1,45 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+.withIcon {
+  .p-button-label {
+    text-align: start;
+  }
+}
+
+.p-button {
+  max-height: 50px;
+}
+
+.p-button.p-button-sm {
+  max-height: 40px;
+}
+
+.p-button.p-button-lg {
+  max-height: 60px;
+}
+
+.p-calendar {
+  .p-button {
+    max-height: 100%;
+  }
+}
+
+.rtl,
+html[dir*='rtl'] {
+  .p-button {
+    padding: 0.9063rem 1.2rem;
+    max-height: 50px;
+  }
+
+  .p-button.p-button-sm {
+    font-size: 0.875rem;
+    padding: 0.494rem 0.885rem 0.694rem;
+  }
+
+  .p-button.p-button-lg {
+    font-size: 1.125rem;
+
+    padding: 1.219rem 1.4rem;
+  }
+}

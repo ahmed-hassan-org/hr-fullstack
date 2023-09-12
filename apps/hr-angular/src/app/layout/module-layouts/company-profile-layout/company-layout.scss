@@ -1,0 +1,31 @@
+$content-height: 100px;
+$header-padding: 1rem;
+
+.sidebar-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  .close-hover {
+    transform: scale(1);
+    transition: all 0.4s ease-in-out;
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  .sidebar-header-section {
+    position: sticky;
+    top: 0;
+    padding: $header-padding 0px;
+    width: 100%;
+    flex: 1 1 100px;
+    z-index: 999;
+  }
+
+  .sidebar-content-section {
+    flex: 1 1 calc(100% - $content-height);
+  }
+}

@@ -1,0 +1,34 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+// styling dialog custom
+.p-dialog-custom {
+  .p-dialog {
+    .p-dialog-content {
+      // background: $primary;
+      border-radius: 8px;
+
+      .close-dialog {
+        position: absolute;
+        right: -11px;
+        top: -16px;
+        box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%) !important;
+        border: solid 1px $gray1 !important;
+        background-color: $white !important;
+        color: $gray3 !important;
+      }
+    }
+  }
+
+  .rtl,
+  html[dir*='rtl'] {
+    .p-dialog {
+      .p-dialog-content {
+        .close-dialog {
+          right: auto;
+          left: -11px;
+        }
+      }
+    }
+  }
+}

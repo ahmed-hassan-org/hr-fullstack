@@ -1,0 +1,19 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+.p-switch-button-custom {
+  .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: $primary !important;
+  }
+
+  .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
+    background-color: $primary;
+  }
+
+  // .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  //   background-color: $primary !important;
+  // }
+  .p-inputswitch.p-focus .p-inputswitch-slider {
+    box-shadow: none;
+  }
+}

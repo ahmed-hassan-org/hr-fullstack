@@ -1,0 +1,37 @@
+<div
+  class="layout-wrapper"
+  wapelRtl
+  [ngClass]="currentLanguage() === 'en' ? containerClass : containerClassAr"
+>
+  <hr-topbar />
+  <div class="layout-sidebar" wapelRtl>
+    <hr-sidebar />
+  </div>
+  <div
+    class="layout-main-container"
+    [ngClass]="{
+      'layout-main-container': currentLanguage() === 'en',
+      'layout-main-container-ar': currentLanguage() === 'ar'
+    }"
+  >
+    <div class="layout-main">
+      <div class="grid p-fluid h-full m-0">
+        <div
+          class="col-6 wp-bg-primary-accent flex flex-column justify-content-center align-items-center"
+        >
+          <img
+            src="../../assets/images/login illustration.svg"
+            alt="login-illustrate"
+            class="w-full"
+          />
+        </div>
+        <div class="col-6">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+    <!-- <hr-footer /> -->
+  </div>
+  <hr-config />
+  <div class="layout-mask"></div>
+</div>

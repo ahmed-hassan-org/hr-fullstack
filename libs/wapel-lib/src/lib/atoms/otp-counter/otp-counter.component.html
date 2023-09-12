@@ -1,0 +1,23 @@
+<p class="mt-1 pm-font-size-14" *ngIf="resetAfterTime !== 0">
+  {{
+    messageTranslationPrefix + "OTP-END-AFTER"
+      | translate: { time: resetAfterTime }
+  }}
+</p>
+<span
+  class="font-bold cursor-pointer mt-1 pm-font-size-14"
+  *ngIf="resetAfterTime === 0"
+  (click)="onResendFire()"
+>
+  {{commonMessages + 'RESEND-TEXT' | translate}}
+</span>
+<button
+  pButton
+  pRipple
+  type="button"
+  label=" {{ commonMessages + 'RESEND-TEXT' | translate }}"
+  class="p-button-text font-bold cursor-pointer mt-1 font-sm"
+  [disabled]="resetAfterTime !== 0"
+  (click)="onResendFire()"
+></button>
+

@@ -9,6 +9,6 @@ export const environment = {
   },
   sendgrid: {
     API_KEY:
-      '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',
+      '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',
   },
 };

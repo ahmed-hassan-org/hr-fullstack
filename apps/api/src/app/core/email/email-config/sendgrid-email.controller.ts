@@ -25,7 +25,11 @@ export class SendgridEmailController {
         to: to,
         subject: subject,
         from: 'messi10010@gmail.com',
-        html: `${body}`,
+        html: `
+        <h1>Hello mr ahmed zoz</h1>
+        <h5>are you ok pro</h5>
+        <p>${body}</p>
+        `,
       });
       return { mes: 'email send well', data: res, error: null };
     } catch (error) {

@@ -1,0 +1,12 @@
+<div class="flex flex-row justify-content-start align-items-start">
+  <p-avatar [image]="imagePath" [size]="size" shape="circle"></p-avatar>
+
+  <div class="content-section mx-3 mt-1">
+    <p class="m-0 text-base font-bold text-gray-900">
+      {{ title }}
+    </p>
+    <ng-container *ngIf="subtitle">
+      <p class="m-0 text-sm font-normal text-gray-400">{{ subtitle }}</p>
+    </ng-container>
+  </div>
+</div>

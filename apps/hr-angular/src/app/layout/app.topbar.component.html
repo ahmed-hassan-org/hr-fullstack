@@ -1,0 +1,135 @@
+<div class="layout-topbar" wapelRtl hrMainLayout [moduleName]="'AUTH'">
+  <div
+    class="logo-menu-items flex flex-row justify-content-between align-items-center"
+  >
+    <!-- *ngIf="(isLoggedin$ | async) === true" -->
+    <button
+      *ngIf="false"
+      class="p-link layout-menu-button layout-topbar-button p-trigger mx-1"
+      (click)="layoutService.onMenuToggle()"
+    >
+      <i class="pi pi-bars text-green-500 text-xl font-semibold"></i>
+    </button>
+    <a class="layout-topbar-logo">
+      <img
+        src="assets/images/{{
+          layoutService.config.colorScheme === 'light'
+            ? 'wapel-logo-light'
+            : 'wapel-logo-light'
+        }}.svg"
+        alt="logo"
+      />
+    </a>
+
+    <button
+      class="p-link layout-topbar-menu-button layout-topbar-button p-trigger"
+      (click)="layoutService.showProfileSidebar()"
+    >
+      <i class="pi pi-ellipsis-v"></i>
+    </button>
+  </div>
+  <div
+    class="layout-topbar-menu flex flex-row justify-content-end align-items-center"
+    [ngClass]="{
+      'layout-topbar-menu-mobile-active':
+        layoutService.state.profileSidebarVisible,
+      'layout-topbar-menu': currentLanguage() === 'en',
+      'layout-topbar-menu-ar': currentLanguage() === 'ar'
+    }"
+  >
+    <div class="mx-2 p-link layout-topbar-button" wapelRtl>
+      <div class="flex flex-row justify-content-between align-items-center">
+        <p class="m-0 mx-2 font-bold text-base">Services</p>
+        <p class="m-0 mx-2 font-bold text-base">F.A.Q</p>
+      </div>
+    </div>
+
+    <div class="mx-2 flex flex-row justify-content-center align-items-center">
+      <p-dropdown
+        [options]="langs"
+        placeholder="select language"
+        optionLabel="label"
+        dataKey="value"
+        [showClear]="false"
+        [ngModel]="selectedLanguage()"
+        (onChange)="changeLanguage($event)"
+      >
+        <ng-template pTemplate="selectedItem">
+          <div class="flex align-items-center gap-2" *ngIf="selectedLanguage()">
+            <img [src]="selectedLanguage().icon" alt="lng" width="32" height="32" />
+            <div>{{ selectedLanguage().label }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-lang pTemplate="item">
+          <div class="flex align-items-center gap-2">
+            <img [src]="lang.icon" alt="lng" width="32" height="32" />
+            <div>{{ lang.label }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div
+      class="today-work mx-1 flex flex-column justify-content-center align-items-center"
+    ></div>
+    <div class="notification-btn-wrapper relative">
+      <button
+        *ngIf="(isLoggedin$ | async) === true"
+        class="p-link layout-topbar-button bill-btn-custom"
+        (click)="showHideHeaderNotificataion()"
+      >
+        <i
+          class="pi pi-bell mr-4 p-text-secondary text-2xl"
+          pBadge
+          [value]="notificationCount"
+        ></i>
+      </button>
+      <button
+        *ngIf="(isLoggedin$ | async) === true"
+        class="p-link layout-topbar-button bill-btn-custom mx-1"
+        (click)="showHideHeaderWidget()"
+      >
+        <i class="pi pi-home mr-4 p-text-secondary text-2xl"></i>
+      </button>
+      <hr-notification
+        *ngIf="showHeaderNotification"
+        [@fadeInOnEnter]
+        [@fadeOutUpOnLeave]
+      />
+      <hr-header-widget
+        *ngIf="showHeaderWidget"
+        [@fadeInOnEnter]
+        [@fadeOutUpOnLeave]
+      />
+    </div>
+    <p-avatar
+      image="assets/images/av.jpg"
+      styleClass="mr-2"
+      shape="circle"
+      (click)="menu.toggle($event)"
+      *ngIf="(isLoggedin$ | async) === true"
+    ></p-avatar>
+
+    <div
+      class="mx-1 flex flex-column justify-content-center align-items-center"
+      *ngIf="(isLoggedin$ | async) === true"
+    >
+      <p class="m-0 text-sm font-semibold text-primary">
+        {{
+          currentLanguage() === 'ar'
+            ? currentSession?.nameAr
+            : currentSession?.nameEn
+        }}
+      </p>
+      <p class="m-0 text-sm font-normal text-primary">
+        {{ currentSession?.brName }}
+      </p>
+    </div>
+
+    <p-menu
+      #menu
+      [popup]="true"
+      [model]="ProfileItems"
+      [appendTo]="'body'"
+    ></p-menu>
+  </div>
+</div>

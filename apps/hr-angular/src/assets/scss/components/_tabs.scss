@@ -1,0 +1,56 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+// << custom tab >> //
+.p-tab-custom {
+  // .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  //   background-color: $white;
+  //   box-shadow: 0 -6px 10px 0 rgba(135, 135, 135, 0.05);
+  //   min-width: 120px;
+  //   padding: 1rem;
+  //   justify-content: center;
+  //   color: $primary;
+  // }
+
+  .p-tabview .p-tabview-panels {
+    margin-top: 15px;
+    min-height: 500px;
+    background-color: $body-bg-color;
+    padding: 0.5rem;
+  }
+
+  .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background-color: $primary-accent;
+    color: $gray10;
+    outline: none;
+    box-shadow: none;
+    border-color: $primary;
+  }
+
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+    box-shadow: none;
+  }
+
+  .p-tabview-panels {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .p-tabview .p-tabview-nav .p-tabview-ink-bar {
+    background-color: transparent !important;
+  }
+}
+
+// used to center tab items
+.p-tab-custom-center {
+  .p-tabview .p-tabview-nav {
+    justify-content: center !important;
+  }
+}
+
+// << used to hide tab header with stepper >> //
+.p-tab-stepper-custom {
+  .p-tabview .p-tabview-nav {
+    display: none;
+  }
+}

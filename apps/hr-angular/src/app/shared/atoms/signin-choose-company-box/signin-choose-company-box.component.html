@@ -1,0 +1,30 @@
+<div
+  class="my-3 p-3 w-full shadow-1 border-1 border-gray-200 flex flex-row justify-content-start align-items-center"
+  (click)="onSelectFn()"
+>
+  <div
+    class="logo-section mx-1 w-auto flex flex-row justify-content-start align-items-center"
+  >
+    <div class="img w-6 h-6 p-2 bg-gray-200">
+      <div class="img-container p-2 py-2">
+        <img
+          src="/assets/icons/dummy-company-logo.svg"
+          alt="dummy-co"
+          class="h-full w-full"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="info-section mx-1 w-full flex flex-row justify-content-start align-items-start"
+  >
+    <div class="items">
+      <p class="m-0 text-xl font-bold text-black">Company Name here</p>
+      <p class="m-0 text-base font-medium">Some Details here</p>
+    </div>
+    <p-chip styleClass="bg-green-50 border-noround mx-3">
+      <div class="p-2 text-primary font-semibold">Main Company</div>
+    </p-chip>
+  </div>
+</div>

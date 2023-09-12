@@ -1,0 +1,143 @@
+<section class="signin-page-wrapper">
+  <div class="content-wrapper px-7">
+    <div [ngSwitch]="signupStepModel()">
+      <div *ngSwitchCase="0">
+        <ng-template [ngTemplateOutlet]="signinInfoStep"></ng-template>
+      </div>
+      <div *ngSwitchCase="1">
+        <ng-template [ngTemplateOutlet]="verifyIdentity"></ng-template>
+      </div>
+      <div *ngSwitchCase="2">
+        <ng-template [ngTemplateOutlet]="phoneOtpForm"></ng-template>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #signinInfoStep>
+  <section class="grid p-fluid px-7">
+    <div class="col-12 mt-8">
+      <hr-title1>Signin to your account</hr-title1>
+      <hr-subtitle>Welcome back! Please enter your details. </hr-subtitle>
+    </div>
+    <div class="col-12 field mt-3">
+      <label for="">Your phone or email</label>
+      <div class="p-inputgroup p-inputgroup-custom">
+        <input pInputText placeholder="phone or email" />
+        <span class="p-inputgroup-addon">
+          <i class="pi pi-info-circle"></i>
+        </span>
+      </div>
+    </div>
+    <div class="col-12 field">
+      <label for="">Password</label>
+      <p-password
+        [toggleMask]="true"
+        [feedback]="false"
+        styleClass="p-password-custom"
+        placeholder="password"
+      />
+    </div>
+    <div class="col-12">
+      <button
+        type="button"
+        pButton
+        class="p-button border-noround"
+        label="Next"
+        (click)="toVerifyIdentity()"
+      ></button>
+    </div>
+
+    <div class="col-12 mt-4">
+      <p class="m-0 text-base font-medium">
+        Don't have an account?
+        <span
+          class="mx-2 text-primary font-medium wp-text-underline-hover"
+          [routerLink]="['/auth/signup']"
+          >Sign up</span
+        >
+      </p>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #verifyIdentity>
+  <section class="grid p-fluid px-7">
+    <div class="col-12 mt-8">
+      <hr-title1>Verify your email address</hr-title1>
+      <hr-subtitle extraClass="text-base font-normal text-gray-500">
+        Select a way to get the verification code.</hr-subtitle
+      >
+    </div>
+    <div class="col-12">
+      <div
+        class="px-5 py-3 my-2 shadow-2 w-full flex flex-row justify-content-between align-items-center"
+      >
+        <div class="info-side w-80 flex flex-row">
+          <span><i class="pi pi-comment"></i></span>
+          <hr-subtitle extraClass="text-base font-medium text-black mx-2">
+            Get a verification code at **** **** 123</hr-subtitle
+          >
+        </div>
+        <div
+          class="navigate-side w-20 flex flex-row justify-content-end align-items-center"
+        >
+          <span (click)="toPhoneOtp()"><i class="pi pi-arrow-right"></i></span>
+        </div>
+      </div>
+      <div
+        class="px-5 py-3 my-4 shadow-2 w-full flex flex-row justify-content-between align-items-center"
+      >
+        <div class="info-side w-80 flex flex-row">
+          <span><i class="pi pi-globe"></i></span>
+          <hr-subtitle extraClass="text-base font-medium text-black mx-2"
+            >Get a verification code through your authenticator app</hr-subtitle
+          >
+        </div>
+        <div
+          class="navigate-side w-20 flex flex-row justify-content-end align-items-center"
+        >
+          <span (click)="toPhoneOtp()"><i class="pi pi-arrow-right"></i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <hr-signup-back-button [backFn]="backToMain" />
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #phoneOtpForm>
+  <section class="grid p-fluid px-7">
+    <div class="col-12 mt-8">
+      <hr-title1>Please check your phone</hr-title1>
+      <hr-subtitle
+        >We have sent a code to
+        <span class="font-bold text-gray-800">{{
+          '+9660542658456'
+        }}</span></hr-subtitle
+      >
+    </div>
+    <div class="col-12">
+      <ng-otp-input [config]="{ length: 4, allowNumbersOnly: true }" />
+      <p class="m-0 mt-3 text-base text-gray-500 font-bold">
+        Did't get a code?
+        <span class="mx-2 text-primary">Send the verification code again</span>
+      </p>
+    </div>
+    <div class="col-12">
+      <button
+        type="button"
+        pButton
+        class="p-button border-noround"
+        label="Verify"
+        (click)="verifyAndToDashboard()"
+      ></button>
+    </div>
+
+    <div class="col-12">
+      <hr-signup-back-button [backFn]="backToSelectVerification" />
+    </div>
+  </section>
+</ng-template>

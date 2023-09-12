@@ -1,0 +1,21 @@
+<div class="auth-actions mx-8 mt-8 px-7 w-80">
+  <h1 class="m-0 mb-5 text-4xl font-bold">{{messageTranslationPrefix + 'PAGE-TITLE' | translate}}</h1>
+  <button
+    type="button"
+    pButton
+    class="p-button p-button-custom border-noround justify-content-center"
+    (click)="doSignup()"
+  >
+    <i class="pi pi-user mx-2"></i>
+    <span class="m-0 text-lg font-semibold">{{messageTranslationPrefix + 'SINGUP-BTN' | translate}}</span>
+  </button>
+  <button
+    type="button"
+    pButton
+    class="p-button wp-bg-secondary border-blue-700 border-noround justify-content-center my-4"
+    (click)="doSignIn()"
+  >
+    <i class="pi pi-user mx-2"></i>
+    <span class="m-0 text-lg font-semibold">{{messageTranslationPrefix + 'SINGIN-BTN' | translate}}</span>
+  </button>
+</div>

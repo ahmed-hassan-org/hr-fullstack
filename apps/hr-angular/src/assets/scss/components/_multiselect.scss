@@ -1,0 +1,186 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+//<< multi select dropdown custom style >>/
+.p-multiselect-custom {
+  .p-dropdown {
+    box-shadow: none !important;
+    border: 1px solid $gray5 !important;
+
+    &:not(.p-disabled).p-focus {
+      border: none;
+    }
+
+    .pi {
+      color: $gray6;
+    }
+  }
+
+  .p-listbox .p-listbox-list .p-listbox-item.p-highlight {
+    background-color: $primary;
+  }
+
+  .p-listbox .p-listbox-list .p-listbox-item:focus {
+    box-shadow: inset 0 0 0 0.15rem rgba(178, 228, 230, 0.5);
+  }
+
+  .p-listbox .p-listbox-list .p-listbox-item .p-checkbox,
+  .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
+    margin: 0 0.5rem;
+  }
+
+  &.p-inputwrapper-filled
+    .p-multiselect.p-multiselect-chip
+    .p-multiselect-label {
+    display: grid !important;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    @include tablet-portrait {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include tablet-landscape {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include phone {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    grid-auto-flow: row;
+    gap: 2px;
+  }
+
+  .p-multiselect {
+    margin-bottom: 5px;
+  }
+
+  .p-multiselect-panel
+    .p-multiselect-header
+    .p-multiselect-filter-container
+    .p-multiselect-filter-icon {
+    color: $primary;
+  }
+
+  .p-multiselect-panel .p-multiselect-header .p-multiselect-close {
+    color: $danger !important;
+
+    &:hover {
+      color: $danger !important;
+    }
+  }
+
+  .p-multiselect.p-multiselect-chip
+    .p-multiselect-token
+    .p-multiselect-token-icon {
+    display: initial;
+  }
+
+  .p-multiselect-panel .p-multiselect-header {
+    background-color: $secondary !important;
+  }
+
+  .p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
+    box-shadow: inset 0 0 0 0.15rem rgba(255, 255, 255, 0.5);
+  }
+
+  .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
+    border-color: lighten($color: $primary, $amount: 25%);
+    background-color: lighten($color: $primary, $amount: 50%);
+  }
+
+  .p-multiselect-panel .p-multiselect-header {
+    background-color: $gray4;
+  }
+
+  .p-multiselect.p-multiselect-chip .p-multiselect-token {
+    background-color: $primary;
+    color: $white;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+
+  .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+    background-color: $primary;
+    color: $white;
+  }
+
+  .p-checkbox .p-checkbox-box.p-highlight {
+    background-color: $primary;
+    border-color: $gray5;
+  }
+
+  .p-multiselect .p-multiselect-trigger {
+    color: $gray6;
+  }
+
+  .p-multiselect-panel {
+    left: 0 !important;
+    max-width: 100%;
+  }
+
+  .p-multiselect:not(.p-disabled):hover {
+    border-color: $secondary;
+  }
+
+  .p-multiselect-panel
+    .p-multiselect-header
+    .p-multiselect-filter-container
+    .p-inputtext {
+    // background-color: $secondary;
+    border-color: $primary;
+    box-shadow: none;
+
+    &:hover {
+      border-color: $primary;
+    }
+  }
+
+  .p-multiselect .p-multiselect-label {
+    padding: 0.5rem 0.5rem !important;
+  }
+
+  // in arabic mode
+  &.rtl {
+    .p-dropdown .p-dropdown-clear-icon {
+      position: absolute;
+      right: auto;
+      left: 35px;
+    }
+
+    .p-dropdown .p-dropdown-label {
+      padding: 8px 12px !important;
+    }
+
+    .p-multiselect.p-multiselect-chip
+      .p-multiselect-token
+      .p-multiselect-token-icon {
+      margin-right: 5px;
+    }
+
+    .p-multiselect-panel .p-multiselect-header .p-checkbox {
+      margin-right: 0;
+      margin-left: 0.5rem;
+    }
+  }
+
+  .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    background-color: $primary;
+  }
+
+  .p-multiselect-label {
+    display: flex !important;
+    flex-wrap: wrap !important;
+
+    .p-multiselect-token {
+      margin: 3px;
+
+      .p-multiselect-token-icon {
+        margin: 0 4px;
+      }
+    }
+  }
+}

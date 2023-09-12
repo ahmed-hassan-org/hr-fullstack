@@ -1,0 +1,126 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir.scss';
+
+// << custom table styles >> //
+.p-datatable-custom {
+  &.fixed-table {
+    .p-datatable-wrapper {
+      table {
+        table-layout: fixed;
+      }
+    }
+  }
+
+  // << datatable capation color>> //
+  &.p-datatable .p-datatable-header {
+    background-color: lighten($color: $secondary, $amount: 10%);
+  }
+
+  .p-datatable-wrapper {
+    display: block;
+    width: 100%;
+    // overflow-x: auto;
+    box-shadow: 0 0 1px 1px $gray4;
+    border-radius: 5px;
+
+    table {
+      table-layout: inherit;
+
+      .p-datatable-thead > tr > th {
+        background-color: $primary-accent;
+        text-align: center;
+        font-size: 1.1rem;
+        color: $primary;
+      }
+
+      tr:nth-child(even) {
+        background: $gray4 !important;
+      }
+
+      tr:nth-child(odd) {
+        background: $white;
+      }
+
+      .p-chip {
+        margin-bottom: 5px;
+      }
+
+      .p-datatable-tbody > tr {
+        border-bottom: 1px solid $gray4;
+        text-align: center;
+        font-size: 1.1rem;
+      }
+
+      .p-datatable-tbody > tr > td {
+        text-align: inherit;
+      }
+
+      // << sort custom >> //
+      .p-datatable .p-sortable-column.p-highlight {
+        color: $secondary !important;
+      }
+
+      .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+        color: $secondary !important;
+      }
+    }
+
+    .p-action-btn {
+      background: transparent;
+      border: none;
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      font-size: 1.75rem;
+
+      &.action-play {
+        color: $primary;
+      }
+
+      &.action-pause {
+        color: $warning;
+      }
+
+      i {
+        font-size: 1.5rem;
+      }
+    }
+
+    &.rtl {
+      .p-datatable .p-paginator-bottom {
+        color: $primary !important;
+        background-color: $primary-accent !important;
+        flex-direction: row-reverse !important;
+      }
+    }
+  }
+
+  .p-datatable .p-paginator-bottom {
+    color: $primary !important;
+    background-color: $primary-accent !important;
+    flex-direction: row-reverse !important;
+  }
+
+  .p-paginator .p-dropdown .p-dropdown-label {
+    margin: 0px 5px !important;
+  }
+
+  // << row selection >>
+  .p-checkbox .p-checkbox-box {
+    border-color: $primary;
+  }
+
+  .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+    border-color: $primary;
+  }
+
+  .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight {
+    border-color: $primary;
+    background-color: $primary;
+  }
+
+  .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
+    border-color: $primary;
+    background-color: $secondary;
+  }
+}

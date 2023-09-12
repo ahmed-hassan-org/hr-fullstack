@@ -1,6 +1,5 @@
 import { Column, Entity, OneToMany } from "typeorm";
 import { Employees } from "./Employees";
-import { JobHistory } from "./JobHistory";
 
 @Entity("jobs", { schema: "hr" })
 export class Jobs {
@@ -31,6 +30,6 @@ export class Jobs {
   @OneToMany(() => Employees, (employees) => employees.job)
   employees: Employees[];
 
-  @OneToMany(() => JobHistory, (jobHistory) => jobHistory.job)
-  jobHistories: JobHistory[];
+  // @OneToMany(() => JobHistory, (jobHistory) => jobHistory.job)
+  // jobHistories: JobHistory[];
 }

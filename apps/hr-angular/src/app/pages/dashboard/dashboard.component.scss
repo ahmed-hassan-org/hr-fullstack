@@ -1,0 +1,28 @@
+$db_bg1:#acffdd;
+$db_bg2:#ceee23;
+$db_bg3:#fa55ff;
+$db_bg4:#aa33bc;
+
+.progress-item1 {
+    .p-progressbar .p-progressbar-value {
+        background-color: $db_bg1;
+    }
+}
+
+.progress-item2 {
+    .p-progressbar .p-progressbar-value {
+        background-color: $db_bg2;
+    }
+}
+
+.progress-item3 {
+    .p-progressbar .p-progressbar-value {
+        background-color: $db_bg3;
+    }
+}
+
+.progress-item4 {
+    .p-progressbar .p-progressbar-value {
+        background-color: $db_bg4;
+    }
+}

@@ -1,0 +1,24 @@
+<div
+  class="layout-wrapper"
+  wapelRtl
+  [ngClass]="currentLanguage() === 'en' ? containerClass : containerClassAr"
+>
+  <hr-topbar />
+  <div
+    hrMainLayout
+    [moduleName]="'AUTH'"
+    class="layout-main-container"
+    [ngClass]="{
+      'layout-main-container': currentLanguage() === 'en',
+      'layout-main-container-ar': currentLanguage() === 'ar'
+    }"
+  >
+    <div class="layout-main">
+      <div class="grid p-fluid h-full m-0">
+        <div class="col-12 p-0 h-full bg-white">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

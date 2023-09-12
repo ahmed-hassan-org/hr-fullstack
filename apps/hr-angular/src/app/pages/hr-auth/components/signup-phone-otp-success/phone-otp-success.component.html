@@ -1,0 +1,51 @@
+<div class="phone-otp-success-wrapper wp-bg-primary-accent h-full">
+  <div class="grid p-fluid h-full">
+    <div
+      class="h-full col-6 col-offset-3 flex justify-content-center align-items-center"
+    >
+      <div
+        class="success-container-wrapper shadow-2 bg-white border-round-lg py-6 px-7"
+      >
+        <div class="grid">
+          <div class="col-12 text-center">
+            <div class="success-icon-wrapper">
+              <span
+                ><i
+                  class="pi pi-check-circle text-primary font-normal text-4xl"
+                ></i
+              ></span>
+            </div>
+            <p class="m-0 mt-2 font-bold text-4xl">Verified successfully!</p>
+          </div>
+          <div class="col-12">
+            <div
+              class="img-container flex justify-content-center align-items-center"
+            >
+              <img
+                src="/assets/images/login illustration.svg"
+                alt="login"
+                loading="lazy"
+                class="w-6 h-6"
+              />
+            </div>
+          </div>
+          <div class="col-12">
+            <p class="m-0 my-2 font-semibold text-xl text-center">
+              You have successfully created your company profile. You will now
+              need to verify your email address to get started.
+            </p>
+          </div>
+          <div class="col-12 flex justify-content-center align-items-center">
+            <button
+              type="button"
+              pButton
+              label="Verify my email address"
+              class="p-button border-noround border-0 w-8"
+              (click)="toSignupEmail()"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

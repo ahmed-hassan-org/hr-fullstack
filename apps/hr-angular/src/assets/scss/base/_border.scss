@@ -1,0 +1,97 @@
+.wp-no-border {
+  border: none;
+}
+.arrow-top:after {
+  content: " ";
+  position: absolute;
+  right: 30px;
+  top: -15px;
+  border-top: none;
+  border-right: 15px solid transparent;
+  border-left: 15px solid transparent;
+  border-bottom: 15px solid black;
+}
+
+.arrow-right:after {
+  content: " ";
+  position: absolute;
+  right: -15px;
+  top: 15px;
+  border-top: 15px solid transparent;
+  border-right: none;
+  border-left: 15px solid black;
+  border-bottom: 15px solid transparent;
+}
+
+.arrow-bottom:after {
+  content: " ";
+  position: absolute;
+  right: 30px;
+  bottom: -15px;
+  border-top: 15px solid black;
+  border-right: 15px solid transparent;
+  border-left: 15px solid transparent;
+  border-bottom: none;
+}
+
+.arrow-left:after {
+  content: " ";
+  position: absolute;
+  left: -15px;
+  top: 15px;
+  border-top: 15px solid transparent;
+  border-right: 15px solid black;
+  border-left: none;
+  border-bottom: 15px solid transparent;
+}
+
+// << border-colors >> //
+
+.wp-border-white {
+  border-color: $white !important;
+  .p-button {
+    border-color: $white !important;
+  }
+}
+.wp-border-black {
+  border-color: $black !important;
+  .p-button {
+    border-color: $white !important;
+  }
+}
+.wp-border-primary {
+  border-color: $primary !important;
+  .p-button {
+    border-color: $primary !important;
+  }
+}
+.wp-border-secondary {
+  border-color: $secondary !important;
+  .p-button {
+    border-color: $secondary !important;
+  }
+}
+.wp-border-success {
+  border-color: $success !important;
+  .p-button {
+    border-color: $success !important;
+  }
+}
+.wp-border-danger {
+  border-color: $danger !important;
+  .p-button {
+    border-color: $danger !important;
+  }
+}
+.wp-border-warn {
+  border-color: $warning !important;
+  .p-button {
+    border-color: $warning !important;
+  }
+}
+.wp-border-info {
+  border-color: $info !important;
+  .p-button {
+    border-color: $info !important;
+  }
+}

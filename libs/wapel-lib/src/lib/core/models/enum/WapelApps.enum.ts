@@ -1,0 +1,6 @@
+export enum WapelApps {
+  FINANCIAL_APP = 'FINANCIAL_APP',
+  HR_APP = 'HR_APP',
+  SETTINGS_APP = 'SETTINGS_APP',
+  ADMIN_APP = 'ADMIN_APP',
+}

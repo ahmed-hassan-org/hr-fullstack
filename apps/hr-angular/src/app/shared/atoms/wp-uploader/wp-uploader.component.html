@@ -1,0 +1,40 @@
+<div class="wp-uploader-wrapper">
+  <div class="uloader-body-wrapper">
+    <div class="img-items">
+      <span class="logo-item" *ngIf="!isImageSelected()"
+        ><i class="pi pi-user-plus text-xl"></i
+      ></span>
+      <img
+        [src]="selectedImage()"
+        alt="uploaded-image"
+        class="selected-img-item"
+        *ngIf="isImageSelected()"
+      />
+      <input
+        type="file"
+        class="input-file-item"
+        *ngIf="!isImageSelected()"
+        (change)="showPreview($event)"
+      />
+    </div>
+
+    <div class="action-items flex flex-row px-2 mx-3">
+      <button
+        type="button"
+        pButton
+        class="p-button mx-1 border-0 border-noround"
+        label="Upload"
+        (click)="uploadSelectedFile()"
+        [disabled]="!isImageSelected()"
+      ></button>
+      <button
+        type="button"
+        pButton
+        class="p-button p-button-outlined border-noround mx-1"
+        label="Remove"
+        (click)="removeFile()"
+        [disabled]="!isImageSelected()"
+      ></button>
+    </div>
+  </div>
+</div>

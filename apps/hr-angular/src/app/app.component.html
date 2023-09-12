@@ -1,0 +1,19 @@
+<ngx-spinner
+  [name]="'routerSpinner'"
+  [fullScreen]="true"
+  [type]="'ball-fussion'"
+  [size]="'medium'"
+  bdColor="rgba(0, 0, 0, 0.9)"
+  color="#fff"
+></ngx-spinner>
+<ngx-spinner
+  [name]="'httpLoaderSpinner'"
+  [fullScreen]="true"
+  [type]="'ball-fussion'"
+  [size]="'medium'"
+  bdColor="rgba(0, 0, 0, 0.9)"
+  color="#fff"
+></ngx-spinner>
+<router-outlet></router-outlet>
+
+<p-toast [key]="'mainToast'" [baseZIndex]="99999"></p-toast>

@@ -14,7 +14,16 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@hrAssets/*": ["apps/hr-angular/src/assets/*"],
+      "@hrCore/*": ["apps/hr-angular/src/app/core/*"],
+      "@hrEnv/*": ["apps/hr-angular/src/environments/*"],
+      "@hrLayout/*": ["apps/hr-angular/src/app/layout/*"],
+      "@hrPages/*": ["apps/hr-angular/src/app/pages/*"],
+      "@hrServices/*": ["apps/hr-angular/src/app/services/*"],
+      "@hrShared/*": ["apps/hr-angular/src/app/shared/*"],
+      "@wapelSharedLib/*": ["libs/wapel-lib/src/lib/*"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

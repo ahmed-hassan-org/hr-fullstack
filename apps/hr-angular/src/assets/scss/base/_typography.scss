@@ -1,0 +1,199 @@
+@import '../variables.scss';
+@import '../mixin/mixin_dir';
+
+// /// << font weight >> ///
+.wp-fw-100 {
+  font-weight: 100;
+}
+.wp-fw-200 {
+  font-weight: 200;
+}
+.wp-fw-300 {
+  font-weight: 300;
+}
+.wp-fw-400 {
+  font-weight: 400;
+}
+.wp-fw-500 {
+  font-weight: 500;
+}
+.wp-fw-600 {
+  font-weight: 600;
+}
+.wp-fw-700 {
+  font-weight: 700;
+}
+.wp-fw-800 {
+  font-weight: 800;
+}
+.wp-fw-900 {
+  font-weight: 900;
+}
+
+.wp-fw-bold {
+  font-weight: bold;
+}
+.wp-fw-bolder {
+  font-weight: bolder;
+}
+
+.wp-fw-normal {
+  font-weight: normal;
+}
+
+// << font size  >> //
+.wp-font-size-10 {
+  @include font-size(10px);
+}
+.wp-font-size-12 {
+  @include font-size(12px);
+}
+.wp-font-size-14 {
+  @include font-size(14px);
+}
+.wp-font-size-16 {
+  @include font-size(16px);
+}
+.wp-font-size-18 {
+  @include font-size(18px);
+}
+.wp-font-size-20 {
+  @include font-size(20px);
+}
+.wp-font-size-22 {
+  @include font-size(22px);
+}
+.wp-font-size-24 {
+  @include font-size(24px);
+}
+.wp-font-size-27 {
+  @include font-size(27px);
+}
+
+.wp-font-size-31 {
+  @include font-size(31px);
+}
+
+.wp-font-size-28 {
+  @include font-size(28px);
+}
+
+// // << text-transform >> //
+
+.wp-text-uppercase {
+  text-transform: uppercase;
+}
+
+.wp-text-lowercase {
+  text-transform: lowercase;
+}
+.wp-text-capitalize {
+  text-transform: capitalize;
+}
+.wp-text-line-through {
+  text-decoration: line-through;
+}
+
+.wp-text-underline {
+  text-decoration: underline;
+}
+.wp-text-underline-hover {
+  text-decoration: none;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+
+.wp-text-nounderline {
+  text-decoration: none;
+}
+
+// // << text align >> //
+
+.wp-text-center {
+  text-align: center;
+}
+
+.wp-text-left {
+  text-align: left;
+}
+
+.wp-text-right {
+  text-align: right;
+}
+
+//** display font sizes for big title & important heading */
+.wp-display-1 {
+  font-size: 6em;
+  font-weight: 500;
+}
+.wp-display-2 {
+  font-size: 5.5em;
+  font-weight: 500;
+}
+.wp-display-3 {
+  font-size: 4.5em;
+  font-weight: 500;
+}
+.wp-display-4 {
+  font-size: 3.5em;
+  font-weight: 500;
+}
+.wp-display-5 {
+  font-size: 2.5em;
+  font-weight: 500;
+}
+
+// headinh h1:h6 and title wwith subheading //
+
+.wp-text-h1 {
+  @include font-size(30px);
+}
+.wp-text-h2 {
+  @include font-size(22px);
+}
+.wp-text-h3 {
+  @include font-size(18px);
+}
+.wp-text-h4 {
+  @include font-size(16px);
+}
+.wp-text-h5 {
+  @include font-size(13.28px);
+}
+.wp-text-h6 {
+  @include font-size(10.72px);
+}
+
+.wp-text-p {
+  @include font-size(14px);
+}
+
+.wp-title1 {
+  @include font-size(18px);
+}
+
+.wp-title2 {
+  @include font-size(20px);
+}
+
+.wp-subheading1 {
+  @include font-size(12px);
+}
+
+.wp-subheading2 {
+  @include font-size(14px);
+}
+
+// work break
+
+.wp-word-break-all {
+  word-break: break-all;
+}
+
+.wp-no-boxshadow {
+  box-shadow: none !important;
+  &:focus {
+    box-shadow: none;
+  }
+}

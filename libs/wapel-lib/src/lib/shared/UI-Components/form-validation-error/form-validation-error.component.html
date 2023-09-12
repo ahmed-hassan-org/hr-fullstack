@@ -1,0 +1,76 @@
+<!-- used if validate form array -->
+<ng-container *ngIf="formArrayInstance">
+  <ng-container
+    *ngIf="
+      (getFormArray().at(formControlIndex).get(controlName)?.invalid &&
+        getFormArray().at(formControlIndex).get(controlName)?.touched) ||
+      getFormArray().at(formControlIndex).get(controlName)?.dirty
+    "
+  >
+    <ng-container *ngIf="validationErrorList.length > 0">
+      <ng-container *ngFor="let error of validationErrorList">
+        <ng-container
+          *ngIf="
+            getFormArray()
+              .at(formControlIndex).get(controlName)!
+              .hasError(error)
+          "
+        >
+          <p
+            class="error-msg-text"
+            [ngClass]="{
+              'text-right': isArabicMode
+            }"
+          >
+            {{
+              (translationPrefix ?? commonValidationMessages) + error
+                | translate
+                  : {
+                      default: LengthValParam?.default,
+                      length:LengthValParam?.length,
+                      maxLength: LengthValParam?.maxLength,
+                      minLength: LengthValParam?.minLength,
+                      val1: LengthValParam?.val1,
+                      val2: LengthValParam?.val2
+                    }
+            }}
+          </p>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="!formControlIndex && !formArrayInstance">
+  <ng-container *ngIf="checkFormControlState(formInstance, controlName)">
+    <ng-container *ngIf="validationErrorList.length > 0">
+      <ng-container *ngFor="let error of validationErrorList">
+        <ng-container
+          *ngIf="isFormControlHasError(formInstance, controlName, error)"
+        >
+          <p
+            class="error-msg-text"
+            [ngClass]="{
+              'text-right': isArabicMode
+            }"
+          >
+            {{
+              (translationPrefix ?? commonValidationMessages) + error
+                | translate
+                  : {
+                      default: LengthValParam?.default,
+                      length:LengthValParam?.length,
+                      maxLength: LengthValParam?.maxLength,
+                      minLength: LengthValParam?.minLength,
+                      val1: LengthValParam?.val1,
+                      val2: LengthValParam?.val2
+                    }
+            }}
+          </p>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+

@@ -1,0 +1,41 @@
+@import '../variables.scss';
+
+bg-black {
+  background-color: $black !important;
+}
+
+.wp-bg-primary-accent {
+  background-color: $primary-accent !important;
+}
+
+.wp-text-primary-accent {
+  color: $primary-accent !important;
+}
+
+.wp-bg-secondary {
+  background-color: $secondary !important;
+}
+
+.wp-text-secondary {
+  color: $secondary !important;
+}
+
+.wp-bg-blue {
+  background-color: $secondary !important;
+}
+
+.wp-text-blue {
+  background-color: $secondary !important;
+}
+
+.wp-bg-gray1 {
+  background-color: $content-bg-gray1 !important;
+}
+
+.wp-text-gray1 {
+  background-color: $content-bg-gray1 !important;
+}
+
+.wp-subtitle1-color {
+  color: $subtitle-color;
+}

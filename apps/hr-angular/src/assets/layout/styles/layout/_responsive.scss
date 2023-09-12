@@ -1,0 +1,290 @@
+@media screen and (min-width: 1729px) {
+  .layout-main,
+  .landing-wrapper {
+    width: 100%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .layout-wrapper {
+    &.layout-overlay {
+      .layout-main-container {
+        margin-left: 0;
+        padding-left: 2rem;
+      }
+
+      .layout-sidebar {
+        transform: translateX(-100%);
+        left: 0;
+        top: 0;
+        height: 100vh;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      &.layout-overlay-active {
+        .layout-sidebar {
+          transform: translateX(0);
+        }
+      }
+    }
+    // for arabic language
+    &.layout-overlay-ar {
+      .layout-main-container {
+        margin-right: 300px;
+        padding-right: 2rem;
+        margin-left: 100px;
+        padding-left: unset;
+      }
+
+      .layout-sidebar {
+        transform: translateX(100%);
+        left: unset;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      &.layout-overlay-active {
+        .layout-sidebar {
+          transform: translateX(0);
+        }
+      }
+    }
+
+    &.layout-static {
+      .layout-main-container {
+        margin-left: 300px;
+        margin-right: unset;
+      }
+
+      &.layout-static-inactive {
+        .layout-sidebar {
+          transform: translateX(-100%);
+          left: 0;
+        }
+
+        .layout-main-container {
+          margin-left: 0;
+          padding-left: 2rem;
+        }
+      }
+    }
+    // for arabic only
+    &.layout-static-ar {
+      .layout-main-container-ar {
+        margin-left: unset !important;
+      }
+
+      &.layout-static-inactive {
+        .layout-sidebar {
+          transform: translateX(100%);
+          left: unset;
+          right: 0;
+        }
+
+        .layout-main-container-ar {
+          margin-right: 0px;
+          margin-right: 300px;
+          margin-left: unset;
+          padding-right: 2rem;
+          padding-left: unset;
+        }
+      }
+    }
+
+    .layout-mask {
+      display: none;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .layout-wrapper {
+    &.layout-overlay {
+      .layout-main-container {
+        margin-left: 0;
+        padding-left: 2rem;
+      }
+
+      .layout-sidebar {
+        transform: translateX(-100%);
+        left: 0;
+        top: 0;
+        height: 100vh;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      &.layout-overlay-active {
+        .layout-sidebar {
+          transform: translateX(0);
+        }
+      }
+    }
+    // for arabic language
+    &.layout-overlay-ar {
+      .layout-main-container {
+        margin-right: 300px;
+        padding-right: 2rem;
+        margin-left: unset;
+        padding-left: unset;
+        height: calc(100vh - 2rem);
+      }
+
+      .layout-sidebar {
+        transform: translateX(100%);
+        left: unset;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      &.layout-overlay-active {
+        .layout-sidebar {
+          transform: translateX(0);
+        }
+      }
+    }
+
+    &.layout-static {
+      .layout-main-container {
+        margin-left: 300px;
+        margin-right: unset;
+        // used with directive only
+        &.auth-page {
+          margin-left: 0px !important;
+        }
+      }
+
+      &.layout-static-inactive {
+        .layout-sidebar {
+          transform: translateX(-100%);
+          left: 0;
+        }
+
+        .layout-main-container {
+          margin-left: 88px;
+          // padding-left: 2rem; // original
+          padding-left: 0rem;
+        }
+      }
+    }
+    // for arabic only
+    &.layout-static-ar {
+      .layout-main-container-ar {
+        margin-left: unset;
+        margin-right: 300px;
+
+        // used with directive only
+        &.auth-page-ar {
+          margin-right: 0px;
+        }
+      }
+
+      &.layout-static-inactive {
+        .layout-sidebar {
+          transform: translateX(100%);
+          left: unset;
+          right: 0;
+        }
+
+        .layout-main-container-ar {
+          margin-right: 88px;
+          margin-left: unset;
+          // padding-right: 2rem; // original
+          padding-right: 0rem;
+          padding-left: unset;
+          height: calc(100vh - 2rem);
+
+          // used with directive only
+          &.auth-page-ar {
+            margin-right: 0px;
+          }
+        }
+        .company-profile-sidebar-wrapper {
+          left: unset;
+          right: 0;
+        }
+
+        .layout-topbar {
+          width: calc(100% - $company-sidebar-width);
+          margin-right: $company-sidebar-width; // used to set the topbar off
+          margin-left: unset;
+        }
+      }
+    }
+
+    .layout-mask {
+      display: none;
+      top: 10%;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .blocked-scroll {
+    overflow: hidden;
+  }
+
+  .layout-wrapper {
+    .layout-main-container {
+      margin-left: 0;
+      padding-left: 2rem;
+    }
+
+    .layout-sidebar {
+      transition: all 0.2s ease-in-out;
+      transform: translateX(-100%);
+      left: 0;
+      top: 10%;
+      height: 100vh;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .layout-mask {
+      z-index: 998;
+      background-color: var(--mask-bg);
+    }
+
+    .layout-mask {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 998;
+      width: 100%;
+      height: 100%;
+      background-color: var(--maskbg);
+    }
+
+    &.layout-mobile-active {
+      .layout-sidebar {
+        transform: translateX(0px);
+        right: 300px;
+        left: 0;
+      }
+
+      .layout-mask {
+        display: block;
+        top: 10%;
+      }
+    }
+
+    &.rtl {
+      .layout-sidebar {
+        transform: translateX(100%);
+        left: 0;
+        top: 10%;
+        height: 100vh;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+}

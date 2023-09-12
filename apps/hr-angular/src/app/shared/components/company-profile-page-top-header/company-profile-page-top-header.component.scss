@@ -1,0 +1,28 @@
+@import '/src/assets/scss/hr-app.scss';
+
+.company-profile-page-top-header-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  height: 105px;
+  background-color: $white;
+
+  .page-haeder-title {
+    position: relative;
+    flex: 1 1 50%;
+    padding: 0px 10px;
+  }
+
+  .page-haeder-actions {
+    position: relative;
+    flex: 0 1 auto;
+    padding: 0px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}

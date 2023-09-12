@@ -1,0 +1,71 @@
+/* all screen sizes with names
+-- usage of the mixin
+-----------------------
+.site-header {
+    padding: 2rem;
+    font-size: 1.8rem;
+    @include mq('tablet-wide') {
+        padding-top: 4rem;
+        font-size: 2.4rem;
+    }
+}
+*/
+
+// $breakpoints: (
+//   'phone': 400px,
+//   'phone-wide': 480px,
+//   'phablet': 560px,
+//   'tablet-small': 640px,
+//   'tablet': 768px,
+//   'tablet-wide': 1024px,
+//   'desktop': 1248px,
+//   'desktop-wide': 1440px,
+// );
+// @mixin mq($width, $type: min) {
+//   @if map_has_key($breakpoints, $width) {
+//     $width: map_get($breakpoints, $width);
+//     @if $type == max {
+//       $width: $width - 1px;
+//     }
+//     @media only screen and (#{$type}-width: $width) {
+//       @content;
+//     }
+//   }
+// }
+/*
+Using a mixin
+Say we want to use a mixin to reduce the font size of our header text on mobile devices. We add the mixin as an include, like so:
+.header-title {
+   font-size: 2rem;
+
+   @include for-phone-only {
+      font-size: 1rem;
+   }
+}
+*/
+
+@mixin phone {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+@mixin tablet-portrait {
+  @media (min-width: 600px) and (max-width: 959px) {
+    @content;
+  }
+}
+@mixin tablet-landscape {
+  @media (min-width: 960px) and (max-width: 1279px) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: 1280px) and (max-width: 1919px) {
+    @content;
+  }
+}
+@mixin big-desktop {
+  @media (min-width: 1920px) and (max-width: 5000px) {
+    @content;
+  }
+}

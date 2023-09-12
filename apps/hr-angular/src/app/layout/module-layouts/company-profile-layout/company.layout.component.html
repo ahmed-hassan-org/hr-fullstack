@@ -1,0 +1,63 @@
+<div
+  class="layout-wrapper"
+  wapelRtl
+  [ngClass]="currentLanguage() === 'en' ? containerClass : containerClassAr"
+>
+  <hr-main-topbar />
+  <div class="layout-sidebar" wapelRtl>
+    <hr-sidebar />
+  </div>
+  <div
+    class="layout-main-container"
+    [ngClass]="{
+      'layout-main-container': currentLanguage() === 'en',
+      'layout-main-container-ar': currentLanguage() === 'ar'
+    }"
+  >
+    <div class="layout-main">
+      <div class="grid p-fluid h-full m-0">
+        <hr-company-profile-sidebar />
+        <div class="col-12">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <hr-config /> -->
+  <div class="layout-mask"></div>
+</div>
+
+<p-sidebar
+  wapelRtl
+  [visible]="sidebarModel()"
+  [position]="currentLanguage() === 'ar' ? 'right' : 'left'"
+  [styleClass]="fullScreenModel() ? '' : 'p-sidebar-crud-custom'"
+  (onHide)="closeSidebar()"
+  [closeOnEscape]="false"
+  [dismissible]="false"
+  [fullScreen]="fullScreenModel() ? true : false"
+  [showCloseIcon]="false"
+>
+  <div class="sidebar-wrapper h-full">
+    <div
+      class="sidebar-header-section flex flex-row justify-content-between align-items-start px-3 bg-gray-100"
+    >
+      <div class="header-text">
+        <p class="m-0 text-4xl text-black font-bold">{{ sidebarTitle() }}</p>
+        <ng-container *ngIf="sidebarSubtitle()">
+          <p class="m-0 text-base text-gray-400 font-normal">
+            {{ sidebarSubtitle() }}
+          </p>
+        </ng-container>
+      </div>
+      <span (click)="closeSidebar()" class="close-hover"
+        ><i class="pi pi-times text-gray-500 font-bold"></i
+      ></span>
+    </div>
+    <div class="sidebar-content-section px-3">
+      <ng-container *ngIf="workTemp">
+        <ng-template [ngTemplateOutlet]="workTemp"></ng-template>
+      </ng-container>
+    </div>
+  </div>
+</p-sidebar>

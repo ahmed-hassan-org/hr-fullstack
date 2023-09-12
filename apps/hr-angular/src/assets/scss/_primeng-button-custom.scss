@@ -1,0 +1,186 @@
+@import './variables.scss';
+@import './mixin/mixin_dir';
+
+.p-button-custom {
+  &.p-button {
+    box-shadow: none;
+  }
+
+  &.p-button.p-button-raised,
+  &.p-button:enabled:active,
+  &.p-button:enabled:hover {
+    min-width: 120px;
+    color: $white;
+    background-color: $primary;
+    border-color: $primary;
+  }
+}
+
+.p-outline-button-custom {
+
+  &.p-button.p-button-outlined,
+  &.p-button.p-button-outlined:enabled:active,
+  &.p-button.p-button-outlined:enabled:hover {
+    min-width: 120px;
+    color: $primary;
+    background-color: $white;
+    border-color: $primary;
+  }
+}
+
+.p-button-rounded-custom {
+
+  &.p-button {
+    background-color: $primary;
+    border-color: transparent;
+    width: 50px !important;
+    height: 50px !important;
+
+    &.pi {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &.p-button:enabled:hover {
+    background-color: $primary;
+    border-color: transparent;
+  }
+
+  &.p-button:enabled:focus {
+    // box-shadow: 0 0 0 0.2rem $success;
+    box-shadow: none;
+  }
+
+  &.p-button.p-button-icon-only.p-button-rounded {
+    border-radius: 2rem;
+  }
+}
+
+// << for dialog only >> ///
+.p-dialog-button-accept-custom {
+  &.p-button {
+    background-color: $success;
+    color: $white;
+    border-color: transparent;
+  }
+
+  &.p-button:enabled:hover {
+    background-color: $gray7;
+    border-color: transparent;
+  }
+}
+
+.p-dialog-button-reject-custom {
+  &.p-button {
+    background-color: $danger;
+    color: $white;
+    border-color: transparent;
+  }
+
+  &.p-button:enabled:hover {
+    background-color: $gray7;
+    border-color: transparent;
+  }
+}
+
+/////////////////////////
+// << customize default button behaviour >> //
+
+// << text button >> //
+.p-custom-text-button {
+  &.p-button.p-button-text {
+    width: 100%;
+    border: 1px solid $primary;
+    box-shadow: none;
+    color: $primary;
+    transition: all 0.3s ease-in-out;
+    border-radius: 1rem;
+
+    &:not(.p-disabled):hover {
+      background-color: $primary;
+      color: $white;
+      border: 1px solid $primary;
+    }
+  }
+}
+
+// << raised button >> //
+.p-custom-raised-button-fill {
+  .p-button {
+    width: 100%;
+    background-color: $primary !important;
+    color: $white !important;
+    border: 1px solid $primary;
+    box-shadow: none;
+    transition: all 0.3s ease-in-out;
+
+    // border-radius: 1rem;
+    &:not(.p-disabled):hover {
+      background-color: lighten($color: $primary, $amount: 90%);
+      color: $primary;
+      border: 1px solid $primary;
+    }
+  }
+}
+
+.p-custom-raised-button {
+  .p-button {
+    width: 100%;
+    background-color: $primary;
+    color: $white;
+    border: 1px solid $primary;
+    box-shadow: none;
+    transition: all 0.3s ease-in-out;
+
+    // border-radius: 1rem;
+    &:not(.p-disabled):hover {
+      background-color: lighten($color: $primary, $amount: 90%);
+      color: $primary;
+      border: 1px solid $primary;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+  }
+}
+
+// << custom button with icon on any side >> //
+.p-custom-button-icon {
+  &.p-button {
+    background-color: $primary;
+    width: 100% !important;
+    border: 1px solid $primary;
+    box-shadow: none;
+    margin-bottom: 3px;
+    transition: all 0.3s ease-in-out;
+
+    &:not(.p-disabled):hover {
+      background-color: lighten($color: $primary, $amount: 90%);
+      color: $primary;
+      border: 1px solid $primary;
+    }
+  }
+}
+
+.pi {
+  @media screen and (max-width: 39.938em) {
+    font-size: 0.9rem;
+  }
+}
+
+/// primary split button
+
+.p-splitbutton-custom {
+  .p-splitbutton {
+    flex-direction: row !important;
+    height: 41px;
+  }
+
+  &.rtl {
+    .p-splitbutton {
+      flex-direction: row-reverse !important;
+      height: 41px;
+    }
+  }
+}
