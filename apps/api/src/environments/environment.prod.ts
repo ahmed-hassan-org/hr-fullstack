@@ -1,5 +1,8 @@
 export const environment = {
   production: true,
+  frontend: {
+    baseUrl: '',
+  },
   aws: {
     accessKeyId: 'AKIA23CRPODW2MZ26SEA',
     secretAccessKey: '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',

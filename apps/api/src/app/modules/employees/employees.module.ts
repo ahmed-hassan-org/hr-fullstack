@@ -1,10 +1,11 @@
-import { EmployeesService } from './employees.service';
-import { EmployeesController } from './employees.controller';
 import { Module } from '@nestjs/common';
-import { SharedDBModule } from '../../db/shareddb.module';
+import { PrismaModule } from '../../db/prisma-module/prisma.module';
+import { EmployeesController } from './employees.controller';
+import { EmployeesService } from './employees.service';
+import { AuthModule } from '../../core/security/auth.module';
 
 @Module({
-  imports: [SharedDBModule],
+  imports: [PrismaModule, AuthModule],
   controllers: [EmployeesController],
   providers: [EmployeesService],
 })

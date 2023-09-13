@@ -25,6 +25,14 @@ async function bootstrap() {
     .setDescription('Hr application for demo with angular, reaact, nextjs')
     .setVersion('v1')
     .addTag('hr')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'authorization'
+    )
     .build();
   const options: SwaggerDocumentOptions = {
     deepScanRoutes: true,

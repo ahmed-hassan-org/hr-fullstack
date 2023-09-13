@@ -1,35 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Users } from '../../db/entities/Users';
-import { Repository } from 'typeorm';
+import { PrismaService } from '../../db/prisma-module/prisma.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(Users) private usersRepo: Repository<Users>) {}
+  constructor(private prisma: PrismaService) {}
   getAllUsers() {
-    return this.usersRepo.find();
+    return this.prisma.users.findMany();
   }
 
   findUserByEmail(email: string) {
-    return this.usersRepo.findOneBy({ email: email });
+    return this.prisma.users.findFirst({ where: { email: email } });
   }
 
   findUserById(userId: number) {
-    return this.usersRepo.findOneBy({ userId: userId });
+    return this.prisma.users.findFirst({ where: { user_id: userId } });
   }
 
-  createUser(userData: Users) {
-    return this.usersRepo.save(userData);
+  createUser(userData: any) {
+    return this.prisma.users.create({ data: { ...userData } });
   }
 
   async setTwoFactorAuthenticationSecret(secret: string, userId: number) {
-    return this.usersRepo.update(
-      { userId: userId },
-      { twoFactorAuthenticationSecret: secret }
-    );
+    return this.prisma.users.update({
+      where: { user_id: userId },
+      data: { twoFactorAuthenticationSecret: secret },
+    });
   }
 
-  enableDisableOtp(email: string, state: true | false) {
-    return this.usersRepo.update({ email: email }, { isOtpEnabled: state });
+  enableDisableOtp(email: string, state: boolean) {
+    return this.prisma.users.update({
+      where: { email: email },
+      data: { isOtpEnabled: state },
+      select: { email: true, isOtpEnabled: true },
+    });
   }
 }
