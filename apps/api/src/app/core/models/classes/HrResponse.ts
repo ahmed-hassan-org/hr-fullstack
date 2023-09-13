@@ -4,7 +4,7 @@ export class HrResponse {
   private data: any;
   private message: string;
   private httpStatus: HttpStatus;
-  private errors: string[];
+  private errors: string[] | any;
   constructor(
     data: any,
     message: string,

@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -16,9 +17,11 @@ import {
   UpdateEmployeeDto,
 } from '../../core/models/dto/EmployeeDto';
 import { HrResponse } from '../../core/models/classes/HrResponse';
+import { AuthGuard } from '../../core/guards/auth.guard';
 
 @ApiTags('Employees')
-@Controller('/employees')
+@Controller('/')
+@UseGuards(AuthGuard)
 export class EmployeesController {
   constructor(private empService: EmployeesService) {}
   @Get('/employees')
@@ -31,7 +34,8 @@ export class EmployeesController {
     }
   }
 
-  @Get('/employees/:empId')
+  @Get('/:empId')
+  @UseGuards(AuthGuard)
   async getOneEmployee(@Param('empId') empId: number) {
     try {
       const res = await this.empService.getOneEmployee(empId);
@@ -95,7 +99,7 @@ export class EmployeesController {
   async deleteEmployee(@Param('id', ParseIntPipe) empId: number) {
     try {
       const res = await this.empService.deleteEmployee(empId);
-      if (!res.affected) {
+      if (!res) {
         return new HrResponse(
           null,
           `no employee with this id: ${empId}`,

@@ -121,7 +121,7 @@ model users {
   user_id                       Int      @id
   username                      String   @db.VarChar(50)
   email                         String   @unique(map: "users_email_uindex") @db.VarChar(80)
-  password                      String?  @db.VarChar(40)
+  password                      String?  @db.VarChar(2000)
   is_active                     Boolean? @default(false)
   is_blocked                    Boolean? @default(false)
   isOtpEnabled                  Boolean? @default(false)

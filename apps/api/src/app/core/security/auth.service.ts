@@ -1,23 +1,24 @@
 import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from '../models/dto/LoginDto';
-import { UsersService } from '../../modules/users/users.service';
 import { HashService } from './hash.service';
 import { authenticator } from 'otplib';
-import { Users } from '../../db/entities/Users';
+import { PrismaService } from '../../db/prisma-module/prisma.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
+    private usersService: PrismaService,
     private jwtService: JwtService,
     private hashService: HashService
   ) {}
-  async validate(logData: LoginDto) {
-    const user = await this.usersService.findUserByEmail(logData.email);
+  async validateLogin(logData: LoginDto) {
+    const user = await this.usersService.users.findFirst({
+      where: { email: logData.email },
+    });
 
-    if (!user) {
-      throw new NotAcceptableException({ message: 'email not found' });
+    if (!user.user_id) {
+      throw new NotAcceptableException({ message: 'user not found' });
     }
     const validatePassword = await this.hashService.comparePassword(
       logData.password,
@@ -26,30 +27,48 @@ export class AuthService {
 
     if (!validatePassword) {
       throw new NotAcceptableException({
-        message: 'pleaase enter valid email password',
+        message: 'please enter valid password for your email',
       });
     }
-    const { ...result } = user;
-    const otpData = await this.generateTwoFactorAuthenticationSecret(user);
-    return {
-      token: this.jwtService.sign(
-        {
-          email: result.email,
-          username: result.username,
-        },
-        { secret: process.env.JWT_SECRET, algorithm: 'HS512' }
-      ),
-      ...otpData,
-    };
+
+    if (user.isOtpEnabled) {
+      const otpData = await this.generateTwoFactorAuthenticationSecret(user);
+      return {
+        token: this.jwtService.sign(
+          {
+            email: user.email,
+            username: user.username,
+          },
+          { secret: process.env.JWT_SECRET, algorithm: 'HS512' }
+        ),
+        ...otpData,
+      };
+    } else {
+      try {
+        const token = this.jwtService.sign(
+          {
+            email: user.email,
+            username: user.username,
+          },
+          { secret: process.env.JWT_SECRET, algorithm: 'HS512' }
+        );
+        const otpData = {
+          token: token,
+        };
+        return otpData;
+      } catch (error) {
+        return error;
+      }
+    }
   }
 
-  async generateTwoFactorAuthenticationSecret(user: Users) {
+  async generateTwoFactorAuthenticationSecret(user: any) {
     const secret = authenticator.generateSecret();
     const otpauthUrl = authenticator.keyuri(user.username, 'Hr App', secret);
-    await this.usersService.setTwoFactorAuthenticationSecret(
-      secret,
-      user.userId
-    );
+    await this.usersService.users.update({
+      where: { user_id: user.userId },
+      data: { twoFactorAuthenticationSecret: secret },
+    });
 
     return {
       secret,

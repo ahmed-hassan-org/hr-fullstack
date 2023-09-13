@@ -1,35 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Employees } from '../../db/entities/Employees';
-import { Repository } from 'typeorm';
-import {
-  CreateEmployeeDto,
-  UpdateEmployeeDto,
-} from '../../core/models/dto/EmployeeDto';
+import { PrismaService } from '../../db/prisma-module/prisma.service';
 
 @Injectable()
 export class EmployeesService {
-  constructor(
-    @InjectRepository(Employees) private empsRepo: Repository<Employees>
-  ) {}
+  constructor(private empsRepo: PrismaService) {}
 
   getAllEmployees() {
-    return this.empsRepo.find();
+    return this.empsRepo.employees.findMany();
   }
 
   getOneEmployee(employeeId: number) {
-    return this.empsRepo.findBy({ employeeId: employeeId });
+    return this.empsRepo.employees.findFirst({
+      where: { employee_id: employeeId },
+    });
   }
 
-  createEmployee(empData: CreateEmployeeDto) {
-    return this.empsRepo.save(empData);
+  createEmployee(empData: any) {
+    return this.empsRepo.employees.create({ data: { ...empData } });
   }
 
-  updateEmployee(empId: number, empData: UpdateEmployeeDto) {
-    return this.empsRepo.update(empId, empData);
+  updateEmployee(empId: number, empData: any) {
+    return this.empsRepo.employees.update({
+      where: { employee_id: empId },
+      data: { ...empData },
+    });
   }
 
   deleteEmployee(empId: number) {
-    return this.empsRepo.delete(empId);
+    return this.empsRepo.employees.delete({ where: { employee_id: empId } });
   }
 }
