@@ -4,12 +4,12 @@
       <div *ngSwitchCase="0">
         <ng-template [ngTemplateOutlet]="signinInfoStep"></ng-template>
       </div>
-      <div *ngSwitchCase="1">
+      <!-- <div *ngSwitchCase="1">
         <ng-template [ngTemplateOutlet]="verifyIdentity"></ng-template>
       </div>
       <div *ngSwitchCase="2">
         <ng-template [ngTemplateOutlet]="phoneOtpForm"></ng-template>
-      </div>
+      </div> -->
     </div>
   </div>
 </section>
@@ -20,33 +20,52 @@
       <hr-title1>Signin to your account</hr-title1>
       <hr-subtitle>Welcome back! Please enter your details. </hr-subtitle>
     </div>
-    <div class="col-12 field mt-3">
-      <label for="">Your phone or email</label>
-      <div class="p-inputgroup p-inputgroup-custom">
-        <input pInputText placeholder="phone or email" />
-        <span class="p-inputgroup-addon">
-          <i class="pi pi-info-circle"></i>
-        </span>
+    <form [formGroup]="loginForm">
+      <div class="grid">
+        <div class="col-12 field mt-3">
+          <label for="">Your phone or email</label>
+          <div class="p-inputgroup p-inputgroup-custom">
+            <input
+              pInputText
+              placeholder="phone or email"
+              formControlName="email"
+            />
+            <span class="p-inputgroup-addon">
+              <i class="pi pi-info-circle"></i>
+            </span>
+          </div>
+          <wapel-erp-form-validation-error
+            [formInstance]="loginForm"
+            [controlName]="'email'"
+            [validationErrorList]="['required', 'notEmail']"
+          />
+        </div>
+        <div class="col-12 field">
+          <label for="">Password</label>
+          <p-password
+            [toggleMask]="true"
+            [feedback]="false"
+            formControlName="password"
+            styleClass="p-password-custom"
+            placeholder="password"
+          />
+          <wapel-erp-form-validation-error
+            [formInstance]="loginForm"
+            [controlName]="'password'"
+            [validationErrorList]="['required']"
+          />
+        </div>
+        <div class="col-12">
+          <button
+            type="button"
+            pButton
+            class="p-button border-noround"
+            label="Login"
+            (click)="doLogin()"
+          ></button>
+        </div>
       </div>
-    </div>
-    <div class="col-12 field">
-      <label for="">Password</label>
-      <p-password
-        [toggleMask]="true"
-        [feedback]="false"
-        styleClass="p-password-custom"
-        placeholder="password"
-      />
-    </div>
-    <div class="col-12">
-      <button
-        type="button"
-        pButton
-        class="p-button border-noround"
-        label="Next"
-        (click)="toVerifyIdentity()"
-      ></button>
-    </div>
+    </form>
 
     <div class="col-12 mt-4">
       <p class="m-0 text-base font-medium">
@@ -61,7 +80,7 @@
   </section>
 </ng-template>
 
-<ng-template #verifyIdentity>
+<!-- <ng-template #verifyIdentity>
   <section class="grid p-fluid px-7">
     <div class="col-12 mt-8">
       <hr-title1>Verify your email address</hr-title1>
@@ -106,9 +125,9 @@
       <hr-signup-back-button [backFn]="backToMain" />
     </div>
   </section>
-</ng-template>
+</ng-template> -->
 
-<ng-template #phoneOtpForm>
+<!-- <ng-template #phoneOtpForm>
   <section class="grid p-fluid px-7">
     <div class="col-12 mt-8">
       <hr-title1>Please check your phone</hr-title1>
@@ -140,4 +159,4 @@
       <hr-signup-back-button [backFn]="backToSelectVerification" />
     </div>
   </section>
-</ng-template>
+</ng-template> -->

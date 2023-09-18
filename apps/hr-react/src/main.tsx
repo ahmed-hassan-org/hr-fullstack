@@ -2,26 +2,28 @@ import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './app/app';
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { RecoilRoot } from 'recoil';
+import { blueGrey } from '@mui/material/colors';
 
-const theme = extendTheme({
-  colors: {
-    brand: {
-      100: '#f7fafc',
-      900: '#1a202c',
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: blueGrey[500],
     },
   },
 });
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <StrictMode>
-    <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ChakraProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ThemeProvider>
+    </RecoilRoot>
   </StrictMode>
 );

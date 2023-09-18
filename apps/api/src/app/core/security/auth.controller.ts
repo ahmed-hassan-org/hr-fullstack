@@ -23,12 +23,9 @@ export class AuthController {
       const res = await this.authService.validateLogin(loginData);
       return new HrResponse(res, 'logged in success', HttpStatus.OK, []);
     } catch (error) {
-      return new HrResponse(
-        null,
-        'enter valid data',
-        HttpStatus.BAD_REQUEST,
-        error
-      );
+      return new HrResponse(null, 'enter valid data', HttpStatus.BAD_REQUEST, [
+        error.response.message,
+      ]);
     }
   }
 
@@ -39,7 +36,8 @@ export class AuthController {
         ...user,
         password: await this.hashService.hashPassword(user.password),
       };
-      const res = await this.usersService.createUser(userData);
+      const { password, twoFactorAuthenticationSecret, ...res } =
+        await this.usersService.createUser(userData);
       if (res) {
         return new HrResponse(res, 'created', HttpStatus.OK);
       }

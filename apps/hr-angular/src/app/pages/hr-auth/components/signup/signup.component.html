@@ -10,143 +10,171 @@
       <div *ngSwitchCase="2">
         <ng-template [ngTemplateOutlet]="verifyEmailForm"></ng-template>
       </div>
-      <div *ngSwitchCase="3">
-        <ng-template [ngTemplateOutlet]="emailOtpForm"></ng-template>
-      </div>
-      <div *ngSwitchCase="4">
-        <ng-template [ngTemplateOutlet]="emailOtpSuccess"></ng-template>
-      </div>
+      <!-- <div *ngSwitchCase="3">
+          <ng-template [ngTemplateOutlet]="emailOtpForm"></ng-template>
+        </div>
+        <div *ngSwitchCase="4">
+          <ng-template [ngTemplateOutlet]="emailOtpSuccess"></ng-template>
+        </div> -->
     </div>
   </div>
 </section>
 <!-- templates goes here -->
 <ng-template #stepperSection>
-  <div class="grid p-fluid">
-    <div class="col-12 mt-8 px-7">
-      <hr-title1>Company Registration</hr-title1>
-      <hr-subtitle>Please enter your company information </hr-subtitle>
-    </div>
-    <div class="col-12">
-      <div class="px-6">
-        <p-steps
-          [model]="stepItems()"
-          [activeIndex]="signupStepperModel()"
-          [readonly]="true"
-          (activeIndexChange)="changeAddInfoIdx($event)"
-          styleClass="signup-step-custom"
-        ></p-steps>
+  <form [formGroup]="registerForm">
+    <div class="grid p-fluid">
+      <div class="col-12 mt-8 px-7">
+        <hr-title1>User Registration</hr-title1>
+        <hr-subtitle>Please enter your information </hr-subtitle>
       </div>
-      <p-tabView
-        [activeIndex]="signupStepperModel()"
-        class="p-tab-stepper-custom"
-      >
-        <p-tabPanel header="nameStep">
-          <div class="grid px-6 mt-3">
-            <div class="col-12 field">
-              <label for="name">Name</label>
-              <input type="text" pInputText placeholder="Name" />
+      <div class="col-12">
+        <div class="px-6">
+          <p-steps
+            [model]="stepItems()"
+            [activeIndex]="signupStepperModel()"
+            [readonly]="true"
+            (activeIndexChange)="changeAddInfoIdx($event)"
+            styleClass="signup-step-custom"
+          ></p-steps>
+        </div>
+        <p-tabView
+          [activeIndex]="signupStepperModel()"
+          class="p-tab-stepper-custom"
+        >
+          <p-tabPanel header="nameStep">
+            <div class="grid px-6 mt-3">
+              <div class="col-12 field">
+                <label for="name">Username</label>
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Name"
+                  formControlName="username"
+                />
+                <wapel-erp-form-validation-error
+                  [formInstance]="registerForm"
+                  [controlName]="'username'"
+                  [validationErrorList]="['required', 'haveSpace']"
+                />
+              </div>
+              <div class="col-12 field">
+                <label for="nameId">Email</label>
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="email address"
+                  formControlName="email"
+                />
+                <wapel-erp-form-validation-error
+                  [formInstance]="registerForm"
+                  [controlName]="'email'"
+                  [validationErrorList]="['required', 'notEmail']"
+                />
+              </div>
+              <div class="col-12">
+                <button
+                  type="button"
+                  pButton
+                  class="p-button border-noround"
+                  label="Next"
+                  (click)="toPasswordStep()"
+                ></button>
+              </div>
+              <div class="col-12">
+                <hr-signup-back-button [backFn]="backToMainPage" />
+              </div>
             </div>
-            <div class="col-12 field">
-              <label for="nameId">Company/s Name</label>
-              <input type="text" pInputText placeholder="company name" />
+          </p-tabPanel>
+          <p-tabPanel header="passwordStep">
+            <div class="grid px-6 mt-3">
+              <div class="col-12 field">
+                <label for="passId">Password</label>
+                <p-password
+                  [toggleMask]="true"
+                  class="p-password-custom"
+                  formControlName="password"
+                  wapelRtl
+                >
+                  <ng-template pTemplate="header">
+                    <h6>Pick a password</h6>
+                  </ng-template>
+                  <ng-template pTemplate="footer">
+                    <p-divider></p-divider>
+                    <p class="mt-2">Suggestions</p>
+                    <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                      <li>At least one lowercase</li>
+                      <li>At least one uppercase</li>
+                      <li>At least one numeric</li>
+                      <li>Minimum 8 characters</li>
+                    </ul>
+                  </ng-template>
+                </p-password>
+                <wapel-erp-form-validation-error
+                  [formInstance]="registerForm"
+                  [controlName]="'password'"
+                  [validationErrorList]="['required']"
+                />
+              </div>
+              <!-- <div class="col-12 field">
+                <label for="confPass">Confirm Password</label>
+                <p-password
+                  [toggleMask]="true"
+                  class="p-password-custom"
+                  wapelRtl
+                >
+                  <ng-template pTemplate="header">
+                    <h6>Pick a password</h6>
+                  </ng-template>
+                  <ng-template pTemplate="footer">
+                    <p-divider></p-divider>
+                    <p class="mt-2">Suggestions</p>
+                    <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                      <li>At least one lowercase</li>
+                      <li>At least one uppercase</li>
+                      <li>At least one numeric</li>
+                      <li>Minimum 8 characters</li>
+                    </ul>
+                  </ng-template>
+                </p-password>
+              </div> -->
+              <div class="col-12">
+                <button
+                  type="button"
+                  pButton
+                  class="p-button border-noround"
+                  label="Register"
+                  (click)="doRegister()"
+                ></button>
+              </div>
+              <div class="col-12">
+                <hr-signup-back-button [backFn]="toNameStep" />
+              </div>
             </div>
-            <div class="col-12">
-              <button
-                type="button"
-                pButton
-                class="p-button border-noround"
-                label="Next"
-                (click)="toPasswordStep()"
-              ></button>
-            </div>
-            <div class="col-12">
-              <hr-signup-back-button [backFn]="backToMainPage" />
-            </div>
-          </div>
-        </p-tabPanel>
-        <p-tabPanel header="passwordStep">
-          <div class="grid px-6 mt-3">
-            <div class="col-12 field">
-              <label for="passId">Password</label>
-              <p-password
-                [toggleMask]="true"
-                class="p-password-custom"
-                wapelRtl
-              >
-                <ng-template pTemplate="header">
-                  <h6>Pick a password</h6>
-                </ng-template>
-                <ng-template pTemplate="footer">
-                  <p-divider></p-divider>
-                  <p class="mt-2">Suggestions</p>
-                  <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-                    <li>At least one lowercase</li>
-                    <li>At least one uppercase</li>
-                    <li>At least one numeric</li>
-                    <li>Minimum 8 characters</li>
-                  </ul>
-                </ng-template>
-              </p-password>
-            </div>
-            <div class="col-12 field">
-              <label for="confPass">Confirm Password</label>
-              <p-password
-                [toggleMask]="true"
-                class="p-password-custom"
-                wapelRtl
-              >
-                <ng-template pTemplate="header">
-                  <h6>Pick a password</h6>
-                </ng-template>
-                <ng-template pTemplate="footer">
-                  <p-divider></p-divider>
-                  <p class="mt-2">Suggestions</p>
-                  <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-                    <li>At least one lowercase</li>
-                    <li>At least one uppercase</li>
-                    <li>At least one numeric</li>
-                    <li>Minimum 8 characters</li>
-                  </ul>
-                </ng-template>
-              </p-password>
-            </div>
-            <div class="col-12">
-              <button
-                type="button"
-                pButton
-                class="p-button border-noround"
-                label="Next"
-                (click)="toPhoneStep()"
-              ></button>
-            </div>
-            <div class="col-12">
-              <hr-signup-back-button [backFn]="toNameStep" />
-            </div>
-          </div>
-        </p-tabPanel>
-        <p-tabPanel header="passwordStep">
-          <div class="grid px-6 mt-3">
-            <div class="col-12 field">
-              <label for="phoneId" class="block">Mobile Number</label>
-            </div>
+          </p-tabPanel>
+          <p-tabPanel header="mobileStep">
+            <div class="grid px-6 mt-3">
+              <div class="col-12 field">
+                <label for="phoneId" class="block">Mobile Number</label>
+              </div>
 
-            <div class="col-12">
-              <button
-                type="button"
-                pButton
-                class="p-button border-noround"
-                label="Continue"
-                (click)="toPhoneVerification()"
-              ></button>
+              <div class="col-12">
+                <button
+                  type="button"
+                  pButton
+                  class="p-button border-noround"
+                  label="Continue"
+                  (click)="toPhoneVerification()"
+                ></button>
+              </div>
+              <div class="col-12">
+                <hr-signup-back-button [backFn]="toPasswordStep" />
+              </div>
             </div>
-            <div class="col-12">
-              <hr-signup-back-button [backFn]="toPasswordStep" />
-            </div>
-          </div>
-        </p-tabPanel>
-      </p-tabView>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
     </div>
-  </div>
+  </form>
 </ng-template>
 
 <ng-template #phoneOtpForm>

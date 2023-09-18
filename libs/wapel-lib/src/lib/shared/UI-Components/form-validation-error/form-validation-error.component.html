@@ -12,7 +12,8 @@
         <ng-container
           *ngIf="
             getFormArray()
-              .at(formControlIndex).get(controlName)!
+              .at(formControlIndex)
+              .get(controlName)!
               .hasError(error)
           "
         >
@@ -27,7 +28,7 @@
                 | translate
                   : {
                       default: LengthValParam?.default,
-                      length:LengthValParam?.length,
+                      length: LengthValParam?.length,
                       maxLength: LengthValParam?.maxLength,
                       minLength: LengthValParam?.minLength,
                       val1: LengthValParam?.val1,
@@ -59,7 +60,7 @@
                 | translate
                   : {
                       default: LengthValParam?.default,
-                      length:LengthValParam?.length,
+                      length: LengthValParam?.length,
                       maxLength: LengthValParam?.maxLength,
                       minLength: LengthValParam?.minLength,
                       val1: LengthValParam?.val1,
@@ -72,5 +73,3 @@
     </ng-container>
   </ng-container>
 </ng-container>
-
-

@@ -24,25 +24,29 @@ export class ErrorhandlerService implements HttpInterceptor {
     private translate: TranslateService,
     private notify: ToasterService,
     private authService: AuthService,
-    @Inject(WapelInjectToken.APP_NAME) private appName: string,
-  ) {}
+    @Inject(WapelInjectToken.APP_NAME) private appName: string
+  ) {
+    console.log('erro interceptor  working');
+  }
 
   HttpErrorMsg: HttpErrorMessage = new HttpErrorMessage(
     this.router,
-    this.appName,
+    this.appName
   );
 
   intercept(
     req: HttpRequest<any>,
-    next: HttpHandler,
+    next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
+        console.log(err);
+
         const trans = Object.values(
           this.translate.instant([
             `COMMON-MESSAGES.HTTP-STATUS.401`,
             `COMMON-MESSAGES.Error`,
-          ]),
+          ])
         ) as string[];
         if (err.status === 401) {
           this.authService.setUserLoggedIn(false);
@@ -68,12 +72,14 @@ export class ErrorhandlerService implements HttpInterceptor {
             }
           }
         } else if (err.status === 400) {
+          console.log(err);
+
           if (err.error && err.error.errors) {
             for (let i = 0; i < err.error.errors.length; i++) {
               if (err.error.errors[i]) {
                 this.notify.showToastError(
                   this.Locz('COMMON-MESSAGES.Error'),
-                  err.error.errors[i].msg,
+                  err.error.errors[i].msg
                 );
               }
             }
@@ -81,19 +87,19 @@ export class ErrorhandlerService implements HttpInterceptor {
         } else if (err.status === 404) {
           this.notify.showToastError(
             this.Locz('COMMON-MESSAGES.Error'),
-            this.Locz('COMMON-MESSAGES.PageNotFoundErrorMessage'),
+            this.Locz('COMMON-MESSAGES.PageNotFoundErrorMessage')
           );
         } else if (err.status === 500) {
           this.notify.showToastError(
             this.Locz('COMMON-MESSAGES.Error'),
-            this.Locz('COMMON-MESSAGES.InternalServerErrorMessage'),
+            this.Locz('COMMON-MESSAGES.InternalServerErrorMessage')
           );
           // this.router.navigate(['/auth/login']);
           this.router.navigate(['/pages/server-error']);
         } else if (err.status === 504) {
           this.notify.showToastError(
             this.Locz('Error'),
-            this.Locz('COMMON-MESSAGES.NetworkErrorMessage'),
+            this.Locz('COMMON-MESSAGES.NetworkErrorMessage')
           );
         }
         // << check client side error >> //
@@ -109,7 +115,7 @@ export class ErrorhandlerService implements HttpInterceptor {
           }
         }
         return throwError(err);
-      }),
+      })
     );
   }
 

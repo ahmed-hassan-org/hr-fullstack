@@ -1,9 +1,13 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   Inject,
   Param,
+  Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -12,6 +16,7 @@ import { HrResponse } from '../../core/models/classes/HrResponse';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { departments } from '@prisma/client';
+import { DepartmentsDto } from '../../core/models/dto/DepartmentsDto';
 
 @Controller('departments')
 @ApiTags('Departments')
@@ -82,6 +87,104 @@ export class DepartmentsController {
         null,
         'not data found',
         HttpStatus.NOT_FOUND,
+        error
+      );
+    }
+  }
+
+  @Post('/create')
+  async createDepartment(@Body() deptData: DepartmentsDto) {
+    try {
+      const isExistsDept = await this.prisma.departments.findFirst({
+        where: { department_id: deptData.department_id },
+      });
+      if (isExistsDept && isExistsDept.department_id) {
+        return new HrResponse(
+          null,
+          'dept already exists',
+          HttpStatus.BAD_REQUEST,
+          ['dept already exists']
+        );
+      }
+      const res = await this.prisma.departments.create({ data: deptData });
+      if (res) {
+        return new HrResponse(res, 'new dept created', HttpStatus.CREATED, []);
+      }
+    } catch (error) {
+      return new HrResponse(
+        null,
+        'an error goes here',
+        HttpStatus.BAD_REQUEST,
+        error
+      );
+    }
+  }
+
+  @Put('/update')
+  async updateDepartment(@Body() deptData: DepartmentsDto) {
+    try {
+      const isExistsDept = await this.prisma.departments.findFirst({
+        where: { department_id: deptData.department_id },
+      });
+      if (isExistsDept && isExistsDept.department_id) {
+        return new HrResponse(
+          null,
+          'dept already exists',
+          HttpStatus.BAD_REQUEST,
+          ['dept already exists']
+        );
+      }
+      const res = await this.prisma.departments.update({
+        where: { department_id: deptData.department_id },
+        data: deptData,
+      });
+      if (res) {
+        return new HrResponse(res, 'new dept created', HttpStatus.CREATED, []);
+      }
+    } catch (error) {
+      return new HrResponse(
+        null,
+        'an error goes here',
+        HttpStatus.BAD_REQUEST,
+        error
+      );
+    }
+  }
+
+  @Delete('/delete/:id')
+  async deleteDepartment(@Param('id') deptId: number) {
+    try {
+      const isExists = await this.prisma.departments.findFirst({
+        where: { department_id: deptId },
+      });
+      if (!isExists && !isExists.department_id) {
+        return new HrResponse(null, 'dept not found', HttpStatus.BAD_REQUEST, [
+          'dept not found',
+        ]);
+      }
+      const countEmpByDeptId = await this.prisma.employees.aggregate({
+        _count: { employee_id: true },
+        where: { department_id: deptId },
+      });
+
+      if (countEmpByDeptId._count.employee_id > 0) {
+        return new HrResponse(
+          null,
+          'dept have employees cannot delete it',
+          HttpStatus.BAD_REQUEST,
+          ['dept have employees cannot delete it']
+        );
+      } else {
+        const res = await this.prisma.departments.delete({
+          where: { department_id: deptId },
+        });
+        return new HrResponse(res, 'dept deleted well', HttpStatus.OK, []);
+      }
+    } catch (error) {
+      return new HrResponse(
+        null,
+        'an error goes here',
+        HttpStatus.BAD_REQUEST,
         error
       );
     }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import {
   CommonModule,
   HashLocationStrategy,
@@ -99,12 +99,12 @@ const config: SocketIoConfig = {
       useClass: RouterLoaderService,
       multi: true,
     },
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: initializeSettingData,
-    //   deps: [ApplicationSettingsService],
-    //   multi: true,
-    // },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeSettingData,
+      deps: [ApplicationSettingsService],
+      multi: true,
+    },
     // {
     //   provide: TitleStrategy,
     //   useClass: TitleTranslationStrategyService,
@@ -131,8 +131,8 @@ function initializeSettingData(settingConfig: ApplicationSettingsService) {
   return (): Promise<any> => {
     return settingConfig
       .loadSettingData()
-      .then(() => {
-        settingConfig.setSetting({});
+      .then((data) => {
+        settingConfig.setSetting(data);
       })
       .catch(() => {
         settingConfig.setSetting({});

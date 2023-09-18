@@ -8,7 +8,7 @@ import {
   VerifyOtpModel,
 } from '@wapelSharedLib/core/models/interfaace/AppAuthEntity.interface';
 import { HttpResponseModel } from '@wapelSharedLib/core/models/interfaace/HttpResponseModel.interface';
-import { WapelServers } from '@wapelSharedLib/core/models/enum/WapelServers.enum';
+import { AppServers } from '@wapelSharedLib/core/models/enum/AppServers.enum';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { WapelInjectToken } from '@wapelSharedLib/core/token/WapelInjectToken.enum';
 @Injectable({
@@ -18,39 +18,39 @@ export class AuthService {
   jwtHelper: JwtHelperService = Inject(JwtHelperService);
 
   private isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false,
+    false
   );
 
   private selectedRole: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  private baseUrl = 'auth';
+  private baseUrl = '/auth';
   constructor(
     private http: HttpCall,
     private localStorageService: LocalStorageService,
     @Inject(WapelInjectToken.APP_LOCAL_STORAGE_KEYS)
-    private localStoragekeys: LocalStorageKeysModel,
+    private localStoragekeys: LocalStorageKeysModel
   ) {}
 
   login(loginData: LoginModel) {
     return this.http.post<HttpResponseModel>(
-      WapelServers.BASE_API_SERVER,
+      AppServers.BASE_API_SERVER,
       `${this.baseUrl}/login`,
-      loginData,
+      loginData
     );
   }
 
   signout() {
     return this.http.getAll<HttpResponseModel>(
-      WapelServers.BASE_API_SERVER,
-      `${this.baseUrl}/signout`,
+      AppServers.BASE_API_SERVER,
+      `${this.baseUrl}/signout`
     );
   }
 
   verify(verifyOtpData: VerifyOtpModel) {
     return this.http.post<HttpResponseModel>(
-      WapelServers.BASE_API_SERVER,
+      AppServers.BASE_API_SERVER,
       `${this.baseUrl}/verify`,
-      verifyOtpData,
+      verifyOtpData
     );
   }
 
@@ -67,21 +67,14 @@ export class AuthService {
   /** @description get session detail from session storage */
   getSession() {
     const sessionData = this.localStorageService.getSessionStorage(
-      this.localStoragekeys.APP_TOKEN_SESSION as string,
+      this.localStoragekeys.APP_TOKEN_SESSION as string
     );
     return sessionData;
   }
 
-  /** get current user mac address in login page */
-  getMacIp() {
-    return lastValueFrom<any>(
-      this.http.getAll<any>(WapelServers.NODE_API_SERVER, `getuserMacIp`),
-    );
-  }
-
   getSelectedRole() {
     const seletedRole = this.localStorageService.getSessionStorage(
-      this.localStoragekeys.APP_USER_SELECTED_ROLE as string,
+      this.localStoragekeys.APP_USER_SELECTED_ROLE as string
     );
     this.setSelectedRole(seletedRole);
     return this.selectedRole.asObservable();
@@ -104,8 +97,8 @@ export class AuthService {
 
   getProfileData(userNo: any) {
     return this.http.getAll<HttpResponseModel>(
-      WapelServers.BASE_API_SERVER,
-      `adminController/users/employee/${userNo}`,
+      AppServers.BASE_API_SERVER,
+      `adminController/users/employee/${userNo}`
     );
   }
 }

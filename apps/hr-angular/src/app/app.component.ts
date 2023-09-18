@@ -3,9 +3,9 @@ import { LocalStorageKeys } from '@hrCore/models/enum/LocalStorageKeys.enum';
 import { NavigationPaths } from '@hrCore/routes/NavigationPaths.enum';
 import { LayoutService } from '@hrLayout/service/app.layout.service';
 import { ApplicationSettingsService } from '@hrServices/application-settings.service';
+import { AuthService } from '@hrServices/auth.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { WapelBase } from '@wapelSharedLib/core/models/classes/WapelBase';
-import { AuthService } from '@wapelSharedLib/services/auth.service';
 import { PrimeNGConfig } from 'primeng/api';
 @Component({
   selector: 'hr-root',
@@ -20,7 +20,7 @@ export class AppComponent extends WapelBase implements OnInit {
     injector: Injector,
     private primengConfig: PrimeNGConfig,
     private authService: AuthService,
-    public layoutService: LayoutService,
+    public layoutService: LayoutService
   ) {
     super(injector);
   }
@@ -28,7 +28,7 @@ export class AppComponent extends WapelBase implements OnInit {
   ngOnInit() {
     this.getAppLanguage();
     this.setAppLanguageConfig();
-    // this.checkUserloggedInOnStart();
+    this.checkUserloggedInOnStart();
     this.getRolesPermissionData();
     this.primengConfig.ripple = true;
     document.documentElement.style.fontSize = '14px';
@@ -36,7 +36,7 @@ export class AppComponent extends WapelBase implements OnInit {
 
   override getAppLanguage(): void {
     this.currentLanguage.set(
-      this.getFusionHelper().getActiveLanguage(LocalStorageKeys.APP_LANG),
+      this.getFusionHelper().getActiveLanguage(LocalStorageKeys.APP_LANG)
     );
     this.getTranslation()
       .onDefaultLangChange.pipe(untilDestroyed(this))
@@ -47,7 +47,7 @@ export class AppComponent extends WapelBase implements OnInit {
 
   getRolesPermissionData() {
     const rolesPerm: any = this.getLocalStorage().getSessionStorage(
-      LocalStorageKeys.APP_TREE,
+      LocalStorageKeys.APP_TREE
     );
     if (rolesPerm) {
       const moduleSbmoduleList = rolesPerm.modulesSubmodule;
@@ -69,18 +69,18 @@ export class AppComponent extends WapelBase implements OnInit {
     this.currentLanguage.set(
       this.getLocalStorage()?.getLocal(LocalStorageKeys.APP_LANG)
         ? this.getLocalStorage().getLocal(LocalStorageKeys.APP_LANG)
-        : setting.defaultLanguage,
+        : setting.defaultLanguage
     );
 
     this.localStorageService.setLocal(
       LocalStorageKeys.APP_LANG,
-      (setting?.defaultLanguage as string) ?? this.currentLanguage() ?? 'en',
+      (setting?.defaultLanguage as string) ?? this.currentLanguage() ?? 'en'
     );
     this.getTranslation().use(
-      this.currentLanguage() ?? (setting.defaultLanguage as string),
+      this.currentLanguage() ?? (setting.defaultLanguage as string)
     );
     this.getTranslation().setDefaultLang(
-      this.currentLanguage() ?? (setting.defaultLanguage as string),
+      this.currentLanguage() ?? (setting.defaultLanguage as string)
     );
     this.getTranslation().onLangChange.subscribe((lang) => {
       this.changePageDirection(lang?.lang);
@@ -104,7 +104,7 @@ export class AppComponent extends WapelBase implements OnInit {
         .getElementById('theme-css')!
         .setAttribute(
           'href',
-          'assets/layout/styles/theme/md-light-indigo/theme-rtl.css',
+          'assets/layout/styles/theme/md-light-indigo/theme-rtl.css'
         );
       this.getDocument()!.getElementById('htmlParentItem')!.style.fontFamily =
         'Cairo, sans-serif';
@@ -120,7 +120,7 @@ export class AppComponent extends WapelBase implements OnInit {
         .getElementById('theme-css')!
         .setAttribute(
           'href',
-          'assets/layout/styles/theme/md-light-indigo/theme.css',
+          'assets/layout/styles/theme/md-light-indigo/theme.css'
         );
       this.getDocument()!.getElementById('htmlParentItem')!.style.fontFamily =
         'Plus Jakarta Sans, sans-serif';
@@ -129,27 +129,22 @@ export class AppComponent extends WapelBase implements OnInit {
 
   async checkUserloggedInOnStart() {
     const localData = this.localStorageService.getLocal(
-      LocalStorageKeys.APP_IS_LOGGED,
+      LocalStorageKeys.APP_IS_LOGGED
     );
     const sessionData = this.localStorageService.getSessionStorage(
-      LocalStorageKeys.APP_IS_LOGGED,
-    );
-    const treeData = this.localStorageService.getSessionStorage(
-      LocalStorageKeys.APP_TREE,
+      LocalStorageKeys.APP_IS_LOGGED
     );
 
-    if (this.authService.isTokenExpired()) {
+    if (!this.authService.checkTokenExpired() as boolean) {
       this.getAlertToaster().showToastWarn('', 'Current user token is expired');
-      this.getRouter.navigate([NavigationPaths.NAVIGATE_TO_COMPANY_PROFILE]);
+      this.getRouter.navigate(['/auth']);
       return;
     }
 
     if (!localData && !sessionData) {
-      this.getRouter.navigate([NavigationPaths.NAVIGATE_TO_COMPANY_PROFILE]);
+      this.getRouter.navigate(['/auth']);
     } else {
-      // this.lookupService.setTreeMenudata(treeData);
-      // this.getRouter().navigate(['/dashboard']);
-      this.authService.setUserLoggedIn(true);
+      this.getRouter.navigate(['/dashboard']);
     }
   }
 }

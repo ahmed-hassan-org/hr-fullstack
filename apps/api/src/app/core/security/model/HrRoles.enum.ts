@@ -1,0 +1,6 @@
+export enum HrRoles {
+  ADMIN_USER = 'ADMIN',
+  WRITER_USER = 'WRITER',
+  VISITOR_USER = 'VISITOR',
+  REVIEW_USER = 'REVIEW',
+}

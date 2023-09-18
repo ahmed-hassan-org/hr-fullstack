@@ -8,13 +8,16 @@ import {
   ViewEncapsulation,
   signal,
 } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LocalStorageKeys } from '@hrCore/models/enum/LocalStorageKeys.enum';
 import {
   SignupAddInfoChild,
   SignupSteps,
 } from '@hrPages/hr-auth/models/SignupSteps.enum';
+import { AuthService } from '@hrServices/auth.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { WapelBase } from '@wapelSharedLib/core/models/classes/WapelBase';
+import { CustomValidation } from '@wapelSharedLib/shared/validator/CustomValidation';
 
 import { MenuItem } from 'primeng/api';
 
@@ -27,7 +30,7 @@ import { MenuItem } from 'primeng/api';
 @UntilDestroy({ checkProperties: true })
 export class SignupComponent extends WapelBase implements OnInit {
   separateDialCode = true;
-
+  registerForm!: FormGroup;
   override currentLanguage = signal('');
 
   @ViewChild('phoneOtpForm') phoneOtpForm!: TemplateRef<any>;
@@ -37,14 +40,13 @@ export class SignupComponent extends WapelBase implements OnInit {
   stepItems = signal<MenuItem[]>([
     { id: 'STEP-NAME', label: '' },
     { id: 'STEP-PASSWORD', label: '' },
-    { id: 'STEP-PHONE', label: '' },
   ]);
   @Input() set step(val: any) {
     if (val) {
       this.signupStepModel.set(val);
     }
   }
-  constructor(injector: Injector) {
+  constructor(injector: Injector, private authService: AuthService) {
     super(injector);
     this.messageTranslationPrefix = 'PAGES.SIGNUP-PAGE.MESSAGES.';
   }
@@ -52,7 +54,7 @@ export class SignupComponent extends WapelBase implements OnInit {
   ngOnInit(): void {
     this.translateHeaderMenuItems(this.stepItems(), this.stepItems);
     this.getAppLanguage();
-    // this.getQueryOnStart();
+    this.createRegisterForm();
   }
 
   override getAppLanguage(): void {
@@ -66,6 +68,28 @@ export class SignupComponent extends WapelBase implements OnInit {
       });
   }
 
+  createRegisterForm() {
+    this.registerForm = this.formBuilder.group({
+      username: [
+        '',
+        [
+          Validators.required,
+          CustomValidation.startWithSpace,
+          CustomValidation.isEnglishOnly,
+        ],
+      ],
+      email: ['', [Validators.required, CustomValidation.isEmail]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(15),
+        ],
+      ],
+    });
+  }
+
   changeAddInfoIdx(e: number) {
     this.signupStepperModel.set(e);
   }
@@ -75,7 +99,13 @@ export class SignupComponent extends WapelBase implements OnInit {
   };
 
   toPasswordStep = () => {
-    this.signupStepperModel.set(1);
+    const { username, email } = this.registerForm.value;
+    if (!username || !email) {
+      this.registerForm.get('username')?.markAllAsTouched();
+      this.registerForm.get('email')?.markAllAsTouched();
+    } else {
+      this.signupStepperModel.set(1);
+    }
   };
 
   toPhoneStep = () => {
@@ -111,5 +141,31 @@ export class SignupComponent extends WapelBase implements OnInit {
 
   onPhoneOtpChange(e: any) {
     console.log(e);
+  }
+
+  doRegister() {
+    const userData = this.registerForm.value;
+    if (!userData.password) {
+      this.registerForm.get('password')?.markAllAsTouched();
+      return;
+    }
+
+    if (this.registerForm.valid) {
+      this.authService
+        .register(userData)
+        .pipe(untilDestroyed(this))
+        .subscribe((data) => {
+          if (data) {
+            console.log(data);
+            this.getAlertToaster().showToastSuccess(
+              '',
+              'New user created succssfully'
+            );
+            this.getRouter.navigate(['/auth/signin'], {
+              relativeTo: this.getActivatedRoute,
+            });
+          }
+        });
+    }
   }
 }

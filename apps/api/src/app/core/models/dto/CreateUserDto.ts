@@ -1,16 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateUserDto {
-  @IsInt({ message: 'user id must be integer' })
-  @IsNotEmpty({ message: 'user id is required' })
-  @ApiProperty()
+  // @ApiProperty()
   user_id: number;
   @IsNotEmpty({ message: 'username is required' })
   @ApiProperty()
@@ -24,14 +16,14 @@ export class CreateUserDto {
   @ApiProperty()
   password: string;
   @IsOptional({ message: 'optional field' })
-  @ApiProperty()
+  // @ApiProperty()
   is_active: boolean;
   @IsOptional({ message: 'optional field' })
-  @ApiProperty()
+  // @ApiProperty()
   is_blocked: boolean;
   @IsOptional({ message: 'optional field' })
-  @ApiProperty()
+  // @ApiProperty()
   isOtpEnabled: boolean;
-  @ApiProperty()
+  // @ApiProperty()
   twoFactorAuthenticationSecret: string;
 }

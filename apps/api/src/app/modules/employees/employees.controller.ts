@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   CreateEmployeeDto,
   UpdateEmployeeDto,
@@ -20,11 +20,12 @@ import { HrResponse } from '../../core/models/classes/HrResponse';
 import { AuthGuard } from '../../core/guards/auth.guard';
 
 @ApiTags('Employees')
-@Controller('/')
-@UseGuards(AuthGuard)
+@Controller('/employees')
 export class EmployeesController {
   constructor(private empService: EmployeesService) {}
-  @Get('/employees')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @Get('/')
   async getAllEmployees() {
     try {
       const res = await this.empService.getAllEmployees();
@@ -34,17 +35,19 @@ export class EmployeesController {
     }
   }
 
-  @Get('/:empId')
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @Get('/:empId')
   async getOneEmployee(@Param('empId') empId: number) {
     try {
       const res = await this.empService.getOneEmployee(empId);
-      return { data: res, status: 200 };
+      return new HrResponse(res, 'data found', HttpStatus.OK, []);
     } catch (error) {
-      return { error: error };
+      return new HrResponse(null, 'no data found', HttpStatus.NOT_FOUND, error);
     }
   }
 
+  @UseGuards(AuthGuard)
   @Post('/create')
   async createEmployee(@Body() empData: CreateEmployeeDto) {
     try {
@@ -60,13 +63,19 @@ export class EmployeesController {
         );
       } else {
         const res = await this.empService.createEmployee(empData);
-        return new HrResponse(res, 'created', HttpStatus.CREATED, []);
+        return new HrResponse(res, 'employee created', HttpStatus.CREATED, []);
       }
     } catch (error) {
-      return new HrResponse(null, 'not created', HttpStatus.BAD_REQUEST, error);
+      return new HrResponse(
+        null,
+        'employee not created',
+        HttpStatus.BAD_REQUEST,
+        error
+      );
     }
   }
 
+  @UseGuards(AuthGuard)
   @Put('/update/:id')
   async updateEmployee(
     @Body() empData: UpdateEmployeeDto,
@@ -95,6 +104,7 @@ export class EmployeesController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Delete('/delete/:id')
   async deleteEmployee(@Param('id', ParseIntPipe) empId: number) {
     try {

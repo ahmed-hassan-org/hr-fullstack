@@ -1,15 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class DepartmentsDto {
   @ApiProperty()
   @IsNotEmpty({ message: 'departmet id is required' })
-  departmentId: number;
+  @IsInt({ message: 'department id must be a number' })
+  department_id: number;
+  @ApiProperty()
   @IsNotEmpty({ message: 'departmet name is required' })
+  @IsString({ message: 'department name must be a string' })
+  department_name: string;
   @ApiProperty()
-  departmentName: string;
+  manager_id: number;
   @ApiProperty()
-  managerId: number;
-  @ApiProperty()
-  locationId: number;
+  location_id: number;
 }

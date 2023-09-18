@@ -1,8 +1,6 @@
 export interface LoginModel {
-  userId: string;
+  email: string;
   password: string;
-  macIp: string;
-  rememberMe?: boolean;
 }
 
 export interface LoginResponseModel {

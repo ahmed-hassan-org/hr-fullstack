@@ -47,11 +47,6 @@ export class DashboardComponent extends WapelBase implements OnInit {
       { label: 'Center' },
       { label: 'label' },
     ];
-
-    this.empService.getAllEmployees().subscribe((data) => {
-      console.log('emps data here');
-      console.log(data);
-    });
   }
 
   override getAppLanguage(): void {

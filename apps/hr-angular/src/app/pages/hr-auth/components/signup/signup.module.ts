@@ -7,9 +7,11 @@ import { SubtitleComponent } from '@hrShared/atoms/subtitle/subtitle.component';
 import { Title1Component } from '@hrShared/atoms/title1/title1.component';
 import { SharedWapelModule } from '@wapelSharedLib/shared/SharedWapel.module';
 import { RtlDirective } from '@wapelSharedLib/shared/directives/rtl.directive';
+import { FormValidationErrorComponent } from '../../../../../../../../libs/wapel-lib/src/lib/shared/UI-Components/form-validation-error/form-validation-error.component';
+import { SignupComponent } from './signup.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [SignupComponent],
   imports: [
     CommonModule,
     SignupRoutingModule,
@@ -18,6 +20,7 @@ import { RtlDirective } from '@wapelSharedLib/shared/directives/rtl.directive';
     SubtitleComponent,
     HrSignupBackButtonComponent,
     RtlDirective,
+    FormValidationErrorComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

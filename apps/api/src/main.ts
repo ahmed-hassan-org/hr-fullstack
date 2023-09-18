@@ -27,9 +27,11 @@ async function bootstrap() {
     .addTag('hr')
     .addBearerAuth(
       {
+        description: 'add your generated token after login',
         type: 'http',
         scheme: 'bearer',
         bearerFormat: 'JWT',
+        in: 'Header',
       },
       'authorization'
     )

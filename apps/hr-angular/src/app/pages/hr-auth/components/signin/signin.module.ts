@@ -9,6 +9,7 @@ import { SubtitleComponent } from '@hrShared/atoms/subtitle/subtitle.component';
 import { RtlDirective } from '@wapelSharedLib/shared/directives/rtl.directive';
 import { SigninComponent } from './signin.component';
 import { SigninChooseCompanyBoxComponent } from '@hrShared/atoms/signin-choose-company-box/signin-choose-company-box.component';
+import { FormValidationErrorComponent } from '../../../../../../../../libs/wapel-lib/src/lib/shared/UI-Components/form-validation-error/form-validation-error.component';
 
 @NgModule({
   declarations: [SigninComponent],
@@ -21,6 +22,7 @@ import { SigninChooseCompanyBoxComponent } from '@hrShared/atoms/signin-choose-c
     HrSignupBackButtonComponent,
     RtlDirective,
     SigninChooseCompanyBoxComponent,
+    FormValidationErrorComponent
   ],
 })
 export class SigninModule {}

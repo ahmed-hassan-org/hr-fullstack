@@ -1,5 +1,3 @@
-import { Button, Grid, GridItem } from '@chakra-ui/react';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Employees = () => {
@@ -10,11 +8,7 @@ const Employees = () => {
   };
   return (
     <div>
-      <Grid>
-        <GridItem>
-          <Button onClick={toHome}>To Home</Button>
-        </GridItem>
-      </Grid>
+      <p>employees</p>
     </div>
   );
 };

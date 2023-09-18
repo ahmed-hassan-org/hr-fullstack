@@ -1,8 +1,11 @@
 import { Component, Injector, OnInit, signal } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
 import { LocalStorageKeys } from '@hrCore/models/enum/LocalStorageKeys.enum';
 import { SigninSteps } from '@hrPages/hr-auth/models/SigninSteps.enum';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { WapelBase } from '@wapelSharedLib/core/models/classes/WapelBase';
+import { CustomValidation } from '../../../../../../../../libs/wapel-lib/src/lib/shared/validator/CustomValidation';
+import { AuthService } from '@hrServices/auth.service';
 
 @Component({
   selector: 'hr-signin',
@@ -12,13 +15,15 @@ import { WapelBase } from '@wapelSharedLib/core/models/classes/WapelBase';
 @UntilDestroy({ checkProperties: true })
 export class SigninComponent extends WapelBase implements OnInit {
   signupStepModel = signal(SigninSteps.ENTER_INFO);
+  loginForm!: FormGroup;
   override currentLanguage = signal('');
-  constructor(injector: Injector) {
+  constructor(injector: Injector, private authService: AuthService) {
     super(injector);
   }
 
   ngOnInit(): void {
     this.getAppLanguage();
+    this.createLoginForm();
   }
 
   override getAppLanguage(): void {
@@ -30,6 +35,13 @@ export class SigninComponent extends WapelBase implements OnInit {
       .subscribe((lang) => {
         this.currentLanguage.set(lang?.lang);
       });
+  }
+
+  createLoginForm() {
+    this.loginForm = this.getFormBuilder.group({
+      email: ['', [Validators.required, CustomValidation.isEmail]],
+      password: ['', [Validators.required]],
+    });
   }
 
   toVerifyIdentity() {
@@ -50,5 +62,37 @@ export class SigninComponent extends WapelBase implements OnInit {
 
   verifyAndToDashboard() {
     this.getRouter.navigate(['/dashboard']);
+  }
+
+  doLogin() {
+    if (this.loginForm.valid) {
+      const loginData = this.loginForm.value;
+      this.authService
+        .login(loginData)
+        .pipe(untilDestroyed(this))
+        .subscribe((data) => {
+          if (data.data) {
+            console.log('user logged in success');
+            console.log(data);
+            if (data) {
+              this.localStorageService.setSessionStorage(
+                LocalStorageKeys.APP_TOKEN_SESSION,
+                data.data.token
+              );
+              this.localStorageService.setSessionStorage(
+                LocalStorageKeys.APP_IS_LOGGED,
+                true
+              );
+              this.getRouter.navigate(['/dashboard']);
+            }
+          }
+        });
+    } else {
+      this.loginForm.markAllAsTouched();
+      this.getAlertToaster().showToastError(
+        'Login Data alert',
+        'pleasae enter your credintials'
+      );
+    }
   }
 }

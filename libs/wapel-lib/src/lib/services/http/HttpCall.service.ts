@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { HttpConfigService } from './HttpConfig.service';
 import { Observable } from 'rxjs';
-import { WapelServers } from '@wapelSharedLib/core/models/enum/WapelServers.enum';
+import { AppServers } from '@wapelSharedLib/core/models/enum/AppServers.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export class HttpCall {
    * @param uri `string`
    */
   public getAll<T>(
-    serverId: WapelServers,
+    serverId: AppServers,
     uri?: string,
     queryParams?: any,
     headers?: any,
@@ -56,7 +56,7 @@ export class HttpCall {
    * @param id `string`
    */
   public getOne<T>(
-    serverId: WapelServers,
+    serverId: AppServers,
     uri: string,
     id?: string,
     queryparams?: any,
@@ -79,7 +79,7 @@ export class HttpCall {
   }
 
   public getOneCustom<T>(
-    serverId: WapelServers,
+    serverId: AppServers,
     uri: string,
     id?: string,
     queryParams?: any,
@@ -105,7 +105,7 @@ export class HttpCall {
    * @returns `Observable<T>`
    */
   public update<T>(
-    serverId: WapelServers,
+    serverId: AppServers,
     uri: string,
     objectToUpdate: any,
     queryPrams?: any,
@@ -133,7 +133,7 @@ export class HttpCall {
    * @param queryparams @type `optional`
    */
   public post<T>(
-    serverId: WapelServers,
+    serverId: AppServers,
     uri: string,
     data: any,
     queryPrams?: any,
@@ -150,7 +150,7 @@ export class HttpCall {
 
   /** @description used to perform delete method */
   public delete<T>(
-    serverId: WapelServers,
+    serverId: AppServers,
     uri: string,
     data?: any,
     queryPrams?: any,
@@ -175,14 +175,14 @@ export class HttpCall {
   /**
    * @description this method is used to return the server based on function need
    * */
-  private getServerByName(serverId: WapelServers | number) {
+  private getServerByName(serverId: AppServers | number) {
     let server = '';
 
     switch (serverId) {
-      case WapelServers.BASE_API_SERVER:
+      case AppServers.BASE_API_SERVER:
         server = this.config.servers.baseServer.baseUrl;
         break;
-      case WapelServers.NODE_API_SERVER:
+      case AppServers.NODE_API_SERVER:
         server = this.config.servers.nodeServer.baseUrl;
         break;
     }
