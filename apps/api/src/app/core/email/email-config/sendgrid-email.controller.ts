@@ -11,8 +11,8 @@ import { SendgridEmailService } from './sendgrid-email.service';
 export class SendgridEmailController {
   constructor(
     private sendgridEmail: SendgridEmailService
-    // private smtpEmail: SmtpEmailService
-  ) {}
+  ) // private smtpEmail: SmtpEmailService
+  {}
 
   @Post()
   async sendEmailSendgrid(
@@ -31,7 +31,7 @@ export class SendgridEmailController {
         <p>${body}</p>
         `,
       });
-      return { mes: 'email send well', data: res, error: null };
+      return { mes: 'email send success to:', data: res, error: null };
     } catch (error) {
       return { msg: 'an error goes here', error: error, data: null };
     }
