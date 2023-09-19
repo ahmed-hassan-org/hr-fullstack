@@ -1,12 +1,13 @@
 import { Body, Controller, HttpStatus, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { authenticator } from 'otplib';
 import { UsersService } from '../../modules/users/users.service';
+import { HrErrorresponse } from '../models/classes/HrErrorResponse';
+import { HrResponse } from '../models/classes/HrResponse';
+import { CreateUserDto } from '../models/dto/CreateUserDto';
+import { LoginDto } from '../models/dto/LoginDto';
 import { AuthService } from './auth.service';
 import { HashService } from './hash.service';
-import { HrResponse } from '../models/classes/HrResponse';
-import { authenticator } from 'otplib';
-import { LoginDto } from '../models/dto/LoginDto';
-import { CreateUserDto } from '../models/dto/CreateUserDto';
 
 @Controller('/auth')
 @ApiTags('Auth')
@@ -20,11 +21,11 @@ export class AuthController {
   @Post('/login')
   async login(@Body() loginData: LoginDto) {
     try {
-      const res = await this.authService.validateLogin(loginData);
+      const res = await this.authService.doLogin(loginData);
       return new HrResponse(res, 'logged in success', HttpStatus.OK, []);
     } catch (error) {
-      return new HrResponse(null, 'enter valid data', HttpStatus.BAD_REQUEST, [
-        error.response.message,
+      throw new HrErrorresponse('enter valid data', HttpStatus.NOT_ACCEPTABLE, [
+        error.message,
       ]);
     }
   }
@@ -39,10 +40,14 @@ export class AuthController {
       const { password, twoFactorAuthenticationSecret, ...res } =
         await this.usersService.createUser(userData);
       if (res) {
-        return new HrResponse(res, 'created', HttpStatus.OK);
+        return new HrResponse(res, 'user created', HttpStatus.OK);
       }
     } catch (error) {
-      return new HrResponse(null, 'faild', HttpStatus.BAD_REQUEST, error);
+      throw new HrErrorresponse(
+        'cannot create user right now',
+        HttpStatus.BAD_REQUEST,
+        [error]
+      );
     }
   }
 
@@ -70,6 +75,15 @@ export class AuthController {
     @Param('email') email: string,
     @Param('state') state: boolean
   ) {
-    return this.usersService.enableDisableOtp(email, state);
+    try {
+      const res = await this.usersService.enableDisableOtp(email, state);
+      return new HrResponse(res, '2fa enabled', HttpStatus.OK);
+    } catch (error) {
+      throw new HrErrorresponse(
+        'cannot enable 2fa right now',
+        HttpStatus.NOT_ACCEPTABLE,
+        [error]
+      );
+    }
   }
 }

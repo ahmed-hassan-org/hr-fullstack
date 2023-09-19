@@ -28,7 +28,7 @@ export class AppComponent extends WapelBase implements OnInit {
   ngOnInit() {
     this.getAppLanguage();
     this.setAppLanguageConfig();
-    this.checkUserloggedInOnStart();
+    // this.checkUserloggedInOnStart();
     this.getRolesPermissionData();
     this.primengConfig.ripple = true;
     document.documentElement.style.fontSize = '14px';
@@ -104,7 +104,7 @@ export class AppComponent extends WapelBase implements OnInit {
         .getElementById('theme-css')!
         .setAttribute(
           'href',
-          'assets/layout/styles/theme/md-light-indigo/theme-rtl.css'
+          'assets/layout/styles/theme/lara-light-indigo/theme-rtl.css'
         );
       this.getDocument()!.getElementById('htmlParentItem')!.style.fontFamily =
         'Cairo, sans-serif';
@@ -120,7 +120,7 @@ export class AppComponent extends WapelBase implements OnInit {
         .getElementById('theme-css')!
         .setAttribute(
           'href',
-          'assets/layout/styles/theme/md-light-indigo/theme.css'
+          'assets/layout/styles/theme/lara-light-indigo/theme.css'
         );
       this.getDocument()!.getElementById('htmlParentItem')!.style.fontFamily =
         'Plus Jakarta Sans, sans-serif';

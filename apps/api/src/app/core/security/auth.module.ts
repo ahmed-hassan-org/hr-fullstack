@@ -6,18 +6,32 @@ import { HashService } from './hash.service';
 import { PrismaModule } from '../../db/prisma-module/prisma.module';
 import { UsersModule } from '../../modules/users/users.module';
 import { UsersService } from '../../modules/users/users.service';
+import { RefreshTokenService } from './refreshtoken.service';
+import { AccessToeknJwtService } from './accesstoeknjwt.service';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
     PrismaModule,
     UsersModule,
+    PassportModule.register({
+      defaultStrategy: 'jwt',
+      session: false,
+    }),
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: 'secret',
       signOptions: { expiresIn: '5m' },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtService, HashService, UsersService],
+  providers: [
+    AuthService,
+    JwtService,
+    HashService,
+    UsersService,
+    RefreshTokenService,
+    AccessToeknJwtService,
+  ],
   exports: [AuthService, JwtService, HashService],
 })
 export class AuthModule {}

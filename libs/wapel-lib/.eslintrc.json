@@ -6,7 +6,7 @@
       "files": ["*.ts"],
       "rules": {
         "@angular-eslint/directive-selector": [
-          "error",
+          "warning",
           {
             "type": "attribute",
             "prefix": "wapel",
@@ -14,7 +14,7 @@
           }
         ],
         "@angular-eslint/component-selector": [
-          "error",
+          "warning",
           {
             "type": "element",
             "prefix": "wapel",

@@ -1,8 +1,9 @@
 export interface HttpResponseModel {
   data?: any;
-  status?: string;
+  httpStatus?: string;
+  message?: string;
   errors?: string[];
-  pagination: PaginationModel;
+  pagination?: PaginationModel;
 }
 
 export interface PaginationModel {

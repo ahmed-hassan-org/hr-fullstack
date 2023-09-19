@@ -12,12 +12,15 @@ import {
   SwaggerDocumentOptions,
   SwaggerModule,
 } from '@nestjs/swagger';
+import { HttpExceptionFilter } from './app/core/exception/HttpExceptionFilter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
+  app.enableCors({ origin: '*' });
   const globalPrefix = 'api';
   const port = process.env.PORT || 3000;
   app.setGlobalPrefix(globalPrefix);
+  app.useGlobalFilters(new HttpExceptionFilter());
   // app.useStaticAssets(path.join(__dirname, 'client'));
   // app.setBaseViewsDir(path.join(__dirname, 'client'));
   const config = new DocumentBuilder()
@@ -47,6 +50,7 @@ async function bootstrap() {
       transform: true,
     })
   );
+
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`

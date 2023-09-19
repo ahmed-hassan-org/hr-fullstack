@@ -1,6 +1,6 @@
 {
   "COMMON-MESSAGES": {
-    "Error": "Unknown error, please contact it",
+    "Error": "General Error alert",
     "InternalServerErrorMessage": "Unexpected error happened. Try again later and if issue still persist, please contact us",
     "NetworkErrorMessage": "Unexpected error happened . Please check Network Connectivity and try again later",
     "PageNotFoundErrorMessage": "the page you were trying to reach on a website couldn't be found",

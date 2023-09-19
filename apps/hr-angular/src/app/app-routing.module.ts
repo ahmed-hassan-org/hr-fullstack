@@ -35,6 +35,30 @@ import { canMatchGuard } from '@hrCore/security/can-match.guard';
               canMatch: [canMatchGuard],
             },
             {
+              path: 'employees',
+              loadChildren: () =>
+                import('./pages/employees/employees.module').then(
+                  (m) => m.EmployeesModule
+                ),
+              canMatch: [canMatchGuard],
+            },
+            {
+              path: 'departments',
+              loadChildren: () =>
+                import('./pages/departments/departments.module').then(
+                  (m) => m.DepartmentsModule
+                ),
+              canMatch: [canMatchGuard],
+            },
+            {
+              path: 'locations',
+              loadChildren: () =>
+                import('./pages/locations/locations.module').then(
+                  (m) => m.LocationsModule
+                ),
+              canMatch: [canMatchGuard],
+            },
+            {
               path: NavigationPaths.NAVIGATE_TO_HOME,
               loadChildren: () =>
                 import('./pages/home/home.module').then((m) => m.HomeModule),

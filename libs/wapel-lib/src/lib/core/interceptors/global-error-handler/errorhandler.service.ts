@@ -25,9 +25,7 @@ export class ErrorhandlerService implements HttpInterceptor {
     private notify: ToasterService,
     private authService: AuthService,
     @Inject(WapelInjectToken.APP_NAME) private appName: string
-  ) {
-    console.log('erro interceptor  working');
-  }
+  ) {}
 
   HttpErrorMsg: HttpErrorMessage = new HttpErrorMessage(
     this.router,
@@ -71,25 +69,33 @@ export class ErrorhandlerService implements HttpInterceptor {
               this.notify.showToastError('', messages);
             }
           }
-        } else if (err.status === 400) {
-          console.log(err);
-
+        } else if (err.status >= 400 && err.status <= 450) {
           if (err.error && err.error.errors) {
             for (let i = 0; i < err.error.errors.length; i++) {
               if (err.error.errors[i]) {
                 this.notify.showToastError(
                   this.Locz('COMMON-MESSAGES.Error'),
-                  err.error.errors[i].msg
+                  err.error.errors[i]
                 );
               }
             }
           }
-        } else if (err.status === 404) {
-          this.notify.showToastError(
-            this.Locz('COMMON-MESSAGES.Error'),
-            this.Locz('COMMON-MESSAGES.PageNotFoundErrorMessage')
-          );
-        } else if (err.status === 500) {
+        }
+
+        // else if (err.status === 404) {
+        //   this.notify.showToastError(
+        //     this.Locz('COMMON-MESSAGES.Error'),
+        //     this.Locz('COMMON-MESSAGES.PageNotFoundErrorMessage')
+        //   );
+        // }
+
+        // else if (err.status === 406) {
+        //   this.notify.showToastError(
+        //     this.Locz('COMMON-MESSAGES.Error'),
+        //     this.Locz(err.error.errors[0])
+        //   );
+        // }
+        else if (err.status === 500) {
           this.notify.showToastError(
             this.Locz('COMMON-MESSAGES.Error'),
             this.Locz('COMMON-MESSAGES.InternalServerErrorMessage')

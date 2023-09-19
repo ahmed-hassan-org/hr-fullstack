@@ -10,7 +10,7 @@ export class EmployeesService {
   }
 
   getOneEmployee(employeeId: number) {
-    return this.empsRepo.employees.findFirst({
+    return this.empsRepo.employees.findFirstOrThrow({
       where: { employee_id: employeeId },
     });
   }

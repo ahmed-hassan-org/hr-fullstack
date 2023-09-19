@@ -12,14 +12,22 @@ export class AuthService {
     private jwtService: JwtService,
     private hashService: HashService
   ) {}
-  async validateLogin(logData: LoginDto) {
-    const user = await this.usersService.users.findFirst({
-      where: { email: logData.email },
-    });
 
-    if (!user.user_id) {
+  async doLogin(logData: LoginDto) {
+    let user = null;
+    let roles = null;
+    try {
+      user = await this.usersService.users.findFirstOrThrow({
+        where: { email: logData.email },
+      });
+      roles = await this.usersService
+        .$queryRaw`select role_name from roles where role_id in (select role_id from user_Roles where user_id = ${user.user_id})`;
+      roles = roles.map((ele) => ele.role_name).toString();
+      console.log(roles);
+    } catch (error) {
       throw new NotAcceptableException({ message: 'user not found' });
     }
+
     const validatePassword = await this.hashService.comparePassword(
       logData.password,
       user.password
@@ -34,13 +42,18 @@ export class AuthService {
     if (user.isOtpEnabled) {
       const otpData = await this.generateTwoFactorAuthenticationSecret(user);
       return {
-        token: this.jwtService.sign(
+        token: await this.jwtService.sign(
           {
             email: user.email,
             username: user.username,
+            roles: roles,
           },
-          { secret: process.env.JWT_SECRET, algorithm: 'HS512' }
+          {
+            secret: 'secret',
+            expiresIn: '5m',
+          }
         ),
+        roles: roles,
         ...otpData,
       };
     } else {
@@ -49,11 +62,13 @@ export class AuthService {
           {
             email: user.email,
             username: user.username,
+            roles: roles,
           },
-          { secret: process.env.JWT_SECRET, algorithm: 'HS512' }
+          { secret: 'secret', expiresIn: '5m' }
         );
         const otpData = {
           token: token,
+          roles: roles,
         };
         return otpData;
       } catch (error) {

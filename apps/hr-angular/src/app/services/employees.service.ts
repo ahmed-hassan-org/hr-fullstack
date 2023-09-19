@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppServers } from '@wapelSharedLib/core/models/enum/AppServers.enum';
+import { HttpResponseModel } from '@wapelSharedLib/core/models/interfaace/HttpResponseModel.interface';
 import { HttpCall } from '@wapelSharedLib/services/http/HttpCall.service';
 
 @Injectable({
@@ -11,6 +12,9 @@ export class EmployeesService {
   constructor(private http: HttpCall) {}
 
   getAllEmployees() {
-    return this.http.getAll(AppServers.BASE_API_SERVER, `${this.baseUrl}/employees`);
+    return this.http.getAll<HttpResponseModel>(
+      AppServers.BASE_API_SERVER,
+      `${this.baseUrl}`
+    );
   }
 }

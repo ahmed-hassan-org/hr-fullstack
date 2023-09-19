@@ -8,46 +8,54 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import {
   CreateEmployeeDto,
   UpdateEmployeeDto,
 } from '../../core/models/dto/EmployeeDto';
 import { HrResponse } from '../../core/models/classes/HrResponse';
-import { AuthGuard } from '../../core/guards/auth.guard';
+import { AuthGuardJwt } from '../../core/guards/auth.guard';
+import { HrErrorresponse } from '../../core/models/classes/HrErrorResponse';
+import { JwtAuthGuardGuard } from '../../core/guards/jwtauthguard.guard';
+import { Roles } from '../../core/decorator/roles.decorator';
+import { HrRoles } from '../../core/security/model/HrRoles.enum';
+import { RolesGuard } from '../../core/guards/rolesguard.guard';
 
 @ApiTags('Employees')
 @Controller('/employees')
 export class EmployeesController {
   constructor(private empService: EmployeesService) {}
-  @UseGuards(AuthGuard)
-  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuardGuard)
   @Get('/')
   async getAllEmployees() {
     try {
       const res = await this.empService.getAllEmployees();
-      return { data: res, status: 200 };
+      return new HrResponse(res, 'data found', HttpStatus.OK, []);
     } catch (error) {
       return { error: error };
     }
   }
 
-  @UseGuards(AuthGuard)
-  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuardGuard, RolesGuard)
+  // @Roles(HrRoles.REVIEW_USER, HrRoles.ADMIN_USER)
+  // @ApiBearerAuth()
   @Get('/:empId')
-  async getOneEmployee(@Param('empId') empId: number) {
+  async getOneEmployee(@Param('empId') empId: number, @Request() req: Request) {
+    console.log(req.headers);
+
     try {
       const res = await this.empService.getOneEmployee(empId);
       return new HrResponse(res, 'data found', HttpStatus.OK, []);
     } catch (error) {
-      return new HrResponse(null, 'no data found', HttpStatus.NOT_FOUND, error);
+      throw new HrErrorresponse('no data found', HttpStatus.NOT_FOUND, error);
     }
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuardJwt)
   @Post('/create')
   async createEmployee(@Body() empData: CreateEmployeeDto) {
     try {
@@ -66,8 +74,7 @@ export class EmployeesController {
         return new HrResponse(res, 'employee created', HttpStatus.CREATED, []);
       }
     } catch (error) {
-      return new HrResponse(
-        null,
+      throw new HrErrorresponse(
         'employee not created',
         HttpStatus.BAD_REQUEST,
         error
@@ -75,7 +82,7 @@ export class EmployeesController {
     }
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuardJwt)
   @Put('/update/:id')
   async updateEmployee(
     @Body() empData: UpdateEmployeeDto,
@@ -100,11 +107,11 @@ export class EmployeesController {
         );
       }
     } catch (error) {
-      return new HrResponse(null, 'not created', HttpStatus.BAD_REQUEST, error);
+      throw new HrErrorresponse('not created', HttpStatus.BAD_REQUEST, error);
     }
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuardJwt)
   @Delete('/delete/:id')
   async deleteEmployee(@Param('id', ParseIntPipe) empId: number) {
     try {
@@ -125,7 +132,7 @@ export class EmployeesController {
         );
       }
     } catch (error) {
-      return new HrResponse(null, 'not created', HttpStatus.BAD_REQUEST, error);
+      throw new HrErrorresponse('not created', HttpStatus.BAD_REQUEST, error);
     }
   }
 }

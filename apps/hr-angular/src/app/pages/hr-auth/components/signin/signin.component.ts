@@ -72,12 +72,14 @@ export class SigninComponent extends WapelBase implements OnInit {
         .pipe(untilDestroyed(this))
         .subscribe((data) => {
           if (data.data) {
-            console.log('user logged in success');
-            console.log(data);
             if (data) {
               this.localStorageService.setSessionStorage(
                 LocalStorageKeys.APP_TOKEN_SESSION,
                 data.data.token
+              );
+              this.localStorageService.setSessionStorage(
+                LocalStorageKeys.APP_USER_ROLES_PERMISSION,
+                data.data.roles
               );
               this.localStorageService.setSessionStorage(
                 LocalStorageKeys.APP_IS_LOGGED,

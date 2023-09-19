@@ -21,45 +21,38 @@ export class HeaderKeysService implements HttpInterceptor {
     @Inject(WapelInjectToken.APP_LOCAL_STORAGE_KEYS)
     public localStorage: LocalStorageKeysModel,
     private localStorageService: LocalStorageService,
-    private router: Router,
+    private router: Router
   ) {}
 
   intercept(
     req: HttpRequest<any>,
-    next: HttpHandler,
+    next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const currentLang =
       this.localStorageService.getLocal(this.localStorage.APP_LANG as string) ??
       'ar';
     const userSession: LoginResponseModel =
       this.localStorageService.getSessionStorage(
-        this.localStorage.APP_TOKEN_SESSION as string,
+        this.localStorage.APP_TOKEN_SESSION as string
       );
+
     const selecetedRole = this.localStorageService.getSessionStorage(
-      this.localStorage.APP_USER_SELECTED_ROLE as string,
+      this.localStorage.APP_USER_SELECTED_ROLE as string
     );
     if (currentLang) {
       const request = req.clone({
         headers: req.headers
           .append(
-            WapelHeaderKeys.HEADER_CURRENT_MC_CODE,
-            userSession && userSession.mcCode
-              ? String(userSession?.mcCode)
-              : String(1),
-          )
-          .append(
             WapelHeaderKeys.HEADER_CURRENT_LANGUAGE,
-            String(currentLang).toUpperCase(),
+            String(currentLang).toUpperCase()
           )
           .append(
             WapelHeaderKeys.HEADER_CURRENT_TOKEN,
-            userSession?.token
-              ? `Bearer ${userSession?.token as string}`
-              : 'null',
+            userSession ? `Bearer ${userSession}` : 'null'
           )
           .append(
             WapelHeaderKeys.HEADER_CURRENT_ROLE,
-            selecetedRole ? `${selecetedRole as string}` : 'null',
+            selecetedRole ? `${selecetedRole as string}` : 'null'
           ),
       });
       return next.handle(request);
