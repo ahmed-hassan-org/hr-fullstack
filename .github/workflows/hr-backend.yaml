@@ -16,9 +16,6 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v4
 
-      - name: Install all needed packages for app
-        run: npm ci --force
-
       - name: Cache node modules
         id: cache-nodemodules
         uses: actions/cache@v3
@@ -28,6 +25,9 @@ jobs:
           path: node_modules
           key: ${{env.node-cahe-name}}${{hashFiles('package-lock.json')}}
           restore-keys: ${{env.node-cahe-name}}
+
+      - name: Install all needed packages for app
+        run: npm ci --force
 
       - name: Build backend API folder
         run: npx nx run api:build --configuration=production
