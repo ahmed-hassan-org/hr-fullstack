@@ -19,13 +19,15 @@ jobs:
       - name: Cache node modules
         id: cache-nodemodules
         uses: actions/cache@v3
+        env:
+          node-cahe-name: cache-node_modules-
         with:
           path: node_modules
-          key: node_modules-${{hashFiles('package-lock.json')}}
-          restore-keys: node_modules-
+          key: ${{env.node-cahe-name}}${{hashFiles('package-lock.json')}}
+          restore-keys: ${{env.node-cahe-name}}
 
       - name: Install all needed packages for app
-        run: npm install --force
+        run: npm ci --force
 
       - name: Build backend API folder
         run: npx nx run api:build --configuration=production
