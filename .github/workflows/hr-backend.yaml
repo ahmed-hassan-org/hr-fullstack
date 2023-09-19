@@ -1,0 +1,14 @@
+name: 'hr-backend-api'
+on: ['push']
+jobs:
+  build-hr-angular:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install all needed packages for app
+        run: npm install --force
+
+      - name: Build backend API folder
+        run: npx nx run api:build --configuration=production

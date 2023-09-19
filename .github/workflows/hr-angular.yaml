@@ -1,4 +1,4 @@
-name: 'hr-angular'
+name: 'hr-angular-fe'
 on: ['push']
 jobs:
   build-hr-angular:
@@ -9,9 +9,6 @@ jobs:
 
       - name: Install all needed packages for app
         run: npm install --force
-
-      - name: Build backend API folder
-        run: npx nx run api:build --configuration=production
 
       - name: Build angular client
         run: npx nx run hr-angular:build --configuration=production
