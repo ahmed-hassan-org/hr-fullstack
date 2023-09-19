@@ -3,7 +3,7 @@ on:
   push:
     branches: ['main']
 jobs:
-  build-hr-angular:
+  build-angular-fe:
     runs-on: ubuntu-latest
 
     steps:
