@@ -1,7 +1,5 @@
 name: 'hr-angular-fe'
-on:
-  push:
-    branches: ['main']
+on: ['push']
 jobs:
   build-angular-fe:
     runs-on: ubuntu-latest
