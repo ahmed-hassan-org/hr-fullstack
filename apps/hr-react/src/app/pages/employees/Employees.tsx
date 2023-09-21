@@ -12,6 +12,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetEmplpyees } from '../../services/EmplooyeeService';
+import AddEmployee from './AddEmployee';
 
 const Employees = () => {
   const router = useNavigate();
@@ -22,11 +23,21 @@ const Employees = () => {
     router('/');
   };
   const [open, setOpen] = useState(false);
+  const [addEmpModalState, setAddEmpModalState] = useState(false);
+
   const handleClose = () => {
     setOpen(false);
   };
   const handleOpen = () => {
     setOpen(true);
+  };
+
+  const cancelAddEmployee = () => {
+    setAddEmpModalState(false);
+  };
+
+  const addEmployee = () => {
+    setAddEmpModalState(true);
   };
 
   function createData(
@@ -57,6 +68,11 @@ const Employees = () => {
     {
       field: 'phone_number',
       headerName: 'Phone',
+      type: 'string',
+    },
+    {
+      field: 'job_id',
+      headerName: 'Job ID',
       type: 'string',
     },
     {
@@ -105,7 +121,7 @@ const Employees = () => {
             }}
           >
             <Typography variant="body1">Employees</Typography>
-            <Button variant="contained" color="secondary">
+            <Button variant="contained" color="secondary" onClick={addEmployee}>
               Add
             </Button>
           </Paper>
@@ -129,6 +145,12 @@ const Employees = () => {
           )}
         </Grid>
       </Grid>
+      {addEmpModalState && (
+        <AddEmployee
+          openModal={addEmpModalState}
+          handleClose={cancelAddEmployee}
+        />
+      )}
     </>
   );
 };

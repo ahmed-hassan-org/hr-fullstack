@@ -1,27 +1,25 @@
 import { Box, colors } from '@mui/material';
+import { useEffect } from 'react';
+import { useJwt } from 'react-jwt';
+import { useNavigate } from 'react-router-dom';
 import './app.scss';
+import './core/intercceptor/HrInterceptor';
+import { LocalStorageKeysReact } from './core/models/enum/LocalStorgeKeysReact.enum';
 import Routing from './core/router/Routing';
 import SidebarDrawer from './shared/layouts/SidebarDrawer/SidebarDrawer';
 import './translation/i18n';
-import './core/intercceptor/HrInterceptor';
-import { useJwt } from 'react-jwt';
-import { LocalStorageKeysReact } from './core/models/enum/LocalStorgeKeysReact.enum';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 export function App() {
-  // const token: string = sessionStorage.getItem(
-  //   LocalStorageKeysReact.APP_TOKEN
-  // ) as string;
-  // const { decodedToken, isExpired } = useJwt<string>(token);
-  // const router = useNavigate();
+  const { isExpired } = useJwt<string>(
+    sessionStorage.getItem(LocalStorageKeysReact.APP_TOKEN) as string
+  );
+  const router = useNavigate();
 
-  // useEffect(() => {
-  //   if (isExpired) {
-  //     console.log('from app compo is token end: ', isExpired);
-  //     router('/auth/login');
-  //   }
-  // }, [isExpired]);
+  useEffect(() => {
+    if (isExpired) {
+      router('/auth/login');
+    }
+  }, [isExpired]);
 
   return (
     <Box

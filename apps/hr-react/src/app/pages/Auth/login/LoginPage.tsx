@@ -10,8 +10,10 @@ import {
   CircularProgress,
   Container,
   Grid,
+  Link,
   TextField,
   Typography,
+  colors,
 } from '@mui/material';
 import LockOpenOutlined from '@mui/icons-material/LockOpenOutlined';
 import { useForm } from 'react-hook-form';
@@ -136,6 +138,7 @@ const Login = () => {
                   alignItems: 'center',
                 }}
               >
+                <LockOpenOutlined color="secondary" sx={{ mx: '10px' }} />
                 <Typography
                   variant="h5"
                   fontWeight={'bold'}
@@ -143,12 +146,11 @@ const Login = () => {
                 >
                   HR Login
                 </Typography>
-                <LockOpenOutlined color="secondary" sx={{ mx: '10px' }} />
               </Box>
               <Grid container sx={{ my: '10px' }} spacing={2}>
                 <Grid item sm={12} md={12} lg={12}>
                   <TextField
-                    id="outlined-basic"
+                    id="emailId"
                     label="Email"
                     variant="outlined"
                     sx={{ width: '100%' }}
@@ -159,7 +161,7 @@ const Login = () => {
                 </Grid>
                 <Grid item sm={12}>
                   <TextField
-                    id="outlined-basic"
+                    id="passwordId"
                     label="Password"
                     variant="outlined"
                     type="password"
@@ -185,6 +187,22 @@ const Login = () => {
                     <Button variant="outlined" onClick={onReset}>
                       Reset
                     </Button>
+                  </Box>
+                  <Box sx={{ width: '100%', my: '10px' }}>
+                    <Typography
+                      variant="h6"
+                      fontWeight={'bold'}
+                      color={colors.lightGreen['800']}
+                      textAlign={'center'}
+                    >
+                      <Link
+                        href={'/auth/register'}
+                        color={colors.lightGreen['800']}
+                        underline="hover"
+                      >
+                        Create Account
+                      </Link>
+                    </Typography>
                   </Box>
                 </Grid>
               </Grid>

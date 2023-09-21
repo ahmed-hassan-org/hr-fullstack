@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import {
+  Alert,
+  AlertColor,
   Box,
   Button,
   Card,
@@ -7,16 +9,47 @@ import {
   Container,
   Divider,
   Grid,
+  IconButton,
+  Snackbar,
   TextField,
   Typography,
   colors,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import ArrowBack from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
+import { useRegisterApi } from '../../../services/AuthService';
+import { RegisterModel } from '@wapelSharedLib/core/models/interfaace/AppAuthEntity.interface';
 
 const Register = () => {
+  const router = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [snackState, setSnackState] = useState<{
+    message: string;
+    sevirty: AlertColor;
+  }>({
+    message: '',
+    sevirty: 'success',
+  });
+
+  const openSnackbar = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const registerSchema = yup.object({
     username: yup.string().required(),
     email: yup.string().email('enter a valid email').required(),
@@ -41,12 +74,39 @@ const Register = () => {
     resolver: yupResolver(registerSchema),
   });
 
-  const onSubmit = (value: any) => {
-    console.log(value);
+  const { mutateAsync, isError, isLoading } = useRegisterApi();
+
+  const doRegister = async (value: RegisterModel) => {
+    if (isValid) {
+      try {
+        const { data, status } = await mutateAsync(value);
+
+        if (status === 200 || status === 201) {
+          console.log(data);
+          setOpen(true);
+          setSnackState({
+            message: data.message ?? 'new user created',
+            sevirty: 'success',
+          });
+          router('/auth/login');
+        }
+      } catch (error: any) {
+        console.log(error.response?.data.message);
+        setOpen(true);
+        setSnackState({
+          message: error.response?.data.message,
+          sevirty: 'error',
+        });
+      }
+    }
   };
 
   const onReset = () => {
     reset();
+  };
+
+  const backToLogin = () => {
+    router('/auth/login');
   };
 
   return (
@@ -63,6 +123,23 @@ const Register = () => {
       >
         <Card variant="outlined" sx={{ width: '100%' }}>
           <CardContent>
+            <Box
+              sx={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}
+            >
+              <IconButton
+                aria-label="ArrowBack"
+                color="default"
+                onClick={backToLogin}
+              >
+                <ArrowBack />
+              </IconButton>
+            </Box>
             <Box
               sx={{
                 width: '100%',
@@ -85,75 +162,92 @@ const Register = () => {
               </Typography>
             </Box>
             <Box sx={{ width: '100%', my: '5px' }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={12}>
-                  <TextField
-                    autoFocus
-                    id="email"
-                    label="Email"
-                    variant="outlined"
-                    sx={{ width: '100%' }}
-                    {...register('email')}
-                    error={!!errors.email}
-                    helperText={errors.email?.message}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={12}>
-                  <TextField
-                    id="username"
-                    label="Username"
-                    variant="outlined"
-                    sx={{ width: '100%' }}
-                    {...register('username')}
-                    error={!!errors.username}
-                    helperText={errors.username?.message}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={12}>
-                  <TextField
-                    id="password"
-                    label="Password"
-                    variant="outlined"
-                    type="password"
-                    sx={{ width: '100%' }}
-                    {...register('password')}
-                    error={!!errors.password}
-                    helperText={errors.password?.message}
-                  />
-                </Grid>
-                <Grid item sm={12} md={12}>
-                  <Box
-                    sx={{
-                      width: '100%',
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      color="success"
-                      sx={{ flex: 2 }}
-                      onClick={handleSubmit(onSubmit)}
-                    >
-                      Create Account
-                    </Button>
-                    <Divider orientation="vertical" sx={{ flex: 2 }} />
-                    <Button
+              <form onSubmit={handleSubmit(doRegister)}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <TextField
+                      autoFocus
+                      id="email"
+                      label="Email"
                       variant="outlined"
-                      sx={{ flex: 1 }}
-                      onClick={onReset}
+                      sx={{ width: '100%' }}
+                      {...register('email')}
+                      error={!!errors.email}
+                      helperText={errors.email?.message}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <TextField
+                      id="username"
+                      label="Username"
+                      variant="outlined"
+                      sx={{ width: '100%' }}
+                      {...register('username')}
+                      error={!!errors.username}
+                      helperText={errors.username?.message}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <TextField
+                      id="password"
+                      label="Password"
+                      variant="outlined"
+                      type="password"
+                      sx={{ width: '100%' }}
+                      {...register('password')}
+                      error={!!errors.password}
+                      helperText={errors.password?.message}
+                    />
+                  </Grid>
+                  <Grid item sm={12} md={12}>
+                    <Box
+                      sx={{
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}
                     >
-                      Reset
-                    </Button>
-                  </Box>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="success"
+                        sx={{ flex: 2 }}
+                      >
+                        Create Account
+                      </Button>
+                      <Divider orientation="vertical" sx={{ flex: 2 }} />
+                      <Button
+                        variant="outlined"
+                        sx={{ flex: 1 }}
+                        onClick={onReset}
+                      >
+                        Reset
+                      </Button>
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </form>
             </Box>
           </CardContent>
         </Card>
       </Container>
+
+      <Snackbar
+        open={open}
+        autoHideDuration={5000}
+        onDurationChange={handleClose}
+        onClose={handleClose}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={snackState.sevirty}
+          sx={{ width: '100%' }}
+        >
+          {snackState.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

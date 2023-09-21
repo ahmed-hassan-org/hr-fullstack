@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useAuthState } from '../../store/AuthState';
 import { LocalStorageKeysReact } from '../models/enum/LocalStorgeKeysReact.enum';
@@ -11,14 +11,17 @@ type Props = {
 
 const RouteGuard = (props: Props) => {
   const authState = useRecoilValue(useAuthState);
+  const router = useNavigate();
   const token: string = sessionStorage.getItem(
     LocalStorageKeysReact.APP_TOKEN
   ) as string;
-  const { decodedToken, isExpired } = useJwt<string>(token ?? '');
+  const { isExpired } = useJwt<string>(token ?? '');
 
   useEffect(() => {
-    console.log('is token expired: ', isExpired);
-    console.log(decodedToken);
+    if (isExpired) {
+      console.log('is token expired: ', isExpired);
+      router('/auth/login');
+    }
   }, [isExpired]);
 
   if (!authState.isLoggedIn || isExpired) {

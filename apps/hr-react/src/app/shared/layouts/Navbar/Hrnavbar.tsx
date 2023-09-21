@@ -18,6 +18,7 @@ const Hrnavbar = () => {
   const [layoutState, setLayoutState] = useRecoilState(useLayoutState);
   const authState = useRecoilValue(useAuthState);
   const [menuState, setMenuState] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const showSideMenu = () => {
     setLayoutState((e) => ({
@@ -25,6 +26,17 @@ const Hrnavbar = () => {
       draweOpen: true,
     }));
   };
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+    setMenuState(true);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setMenuState(false);
+  };
+
   return (
     <>
       <AppBar position="static">
@@ -47,6 +59,7 @@ const Hrnavbar = () => {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="inherit"
+                onClick={handleMenu}
               >
                 <AccountCircle />
               </IconButton>
@@ -62,6 +75,7 @@ const Hrnavbar = () => {
                   horizontal: 'right',
                 }}
                 open={menuState}
+                onClose={handleClose}
               >
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>My account</MenuItem>

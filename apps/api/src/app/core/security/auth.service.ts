@@ -64,7 +64,7 @@ export class AuthService {
             username: user.username,
             roles: roles,
           },
-          { secret: 'secret', expiresIn: '5m' }
+          { secret: 'secret', expiresIn: '10m' }
         );
         const otpData = {
           token: token,

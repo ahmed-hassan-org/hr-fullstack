@@ -1,12 +1,11 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import { Grid } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import React from 'react';
 
 const Departments = () => {
   return (
     <>
-      <Grid2 container>
+      <Grid container>
         <Grid item sm={12}>
           <h1>Departments</h1>
           <p>
@@ -44,7 +43,7 @@ const Departments = () => {
             voluptate, esse veniam numquam cupiditate.
           </p>
         </Grid>
-      </Grid2>
+      </Grid>
     </>
   );
 };

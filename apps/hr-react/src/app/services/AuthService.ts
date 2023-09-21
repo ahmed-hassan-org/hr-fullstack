@@ -15,9 +15,9 @@ export const useLoginApi = () => {
 };
 
 const registerApi = (regModel: RegisterModel) => {
-  return axios.post(`${baseUrl}/auth/login`, regModel);
+  return axios.post(`${baseUrl}/auth/register`, regModel);
 };
 
-export const useRegisterModel = () => {
+export const useRegisterApi= () => {
   return useMutation(registerApi);
 };
