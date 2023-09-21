@@ -1,25 +1,18 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import React from 'react';
-import { Grid, colors } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import Hrnavbar from '../../shared/layouts/Navbar/Hrnavbar';
 
-const Home = () => {
+const AuthLayout = () => {
   return (
     <>
       <Grid container>
-        <Grid item sm={12} md={12}>
-          <Hrnavbar />
-        </Grid>
         <Grid
           item
           sm={12}
           md={12}
           sx={{
-            bgcolor: colors.blue['200'],
             height: '100vh',
-            pt: '10px',
-            px: '10px',
           }}
         >
           <Outlet />
@@ -29,4 +22,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AuthLayout;

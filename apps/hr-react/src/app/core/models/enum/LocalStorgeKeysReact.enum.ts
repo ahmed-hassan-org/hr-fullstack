@@ -1,0 +1,5 @@
+export enum LocalStorageKeysReact {
+  APP_TOKEN = 'REACT-HR-TOKEN',
+  APP_ROLES = 'REACT-HR-ROLES',
+  APP_IS_LOGGEDIN = 'REACT-HR_IS-LOGGEDIN',
+}

@@ -33,6 +33,16 @@ export class AuthController {
   @Post('/register')
   async createUser(@Body() user: CreateUserDto) {
     try {
+      const isUserExists = await this.usersService.findUserByEmail(user.email);
+      console.log(isUserExists);
+
+      if (isUserExists) {
+        throw new HrErrorresponse(
+          'user already exists, please change email',
+          HttpStatus.BAD_REQUEST,
+          ['user already exists, please change email']
+        );
+      }
       const userData = {
         ...user,
         password: await this.hashService.hashPassword(user.password),
