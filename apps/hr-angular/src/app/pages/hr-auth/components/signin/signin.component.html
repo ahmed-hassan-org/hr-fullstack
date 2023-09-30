@@ -4,12 +4,12 @@
       <div *ngSwitchCase="0">
         <ng-template [ngTemplateOutlet]="signinInfoStep"></ng-template>
       </div>
-      <!-- <div *ngSwitchCase="1">
+      <div *ngSwitchCase="1">
         <ng-template [ngTemplateOutlet]="verifyIdentity"></ng-template>
       </div>
       <div *ngSwitchCase="2">
         <ng-template [ngTemplateOutlet]="phoneOtpForm"></ng-template>
-      </div> -->
+      </div>
     </div>
   </div>
 </section>
@@ -80,7 +80,7 @@
   </section>
 </ng-template>
 
-<!-- <ng-template #verifyIdentity>
+<ng-template #verifyIdentity>
   <section class="grid p-fluid px-7">
     <div class="col-12 mt-8">
       <hr-title1>Verify your email address</hr-title1>
@@ -125,9 +125,9 @@
       <hr-signup-back-button [backFn]="backToMain" />
     </div>
   </section>
-</ng-template> -->
+</ng-template>
 
-<!-- <ng-template #phoneOtpForm>
+<ng-template #phoneOtpForm>
   <section class="grid p-fluid px-7">
     <div class="col-12 mt-8">
       <hr-title1>Please check your phone</hr-title1>
@@ -139,7 +139,7 @@
       >
     </div>
     <div class="col-12">
-      <ng-otp-input [config]="{ length: 4, allowNumbersOnly: true }" />
+      <ng-otp-input [config]="{ length: 6, allowNumbersOnly: true }" />
       <p class="m-0 mt-3 text-base text-gray-500 font-bold">
         Did't get a code?
         <span class="mx-2 text-primary">Send the verification code again</span>
@@ -159,4 +159,4 @@
       <hr-signup-back-button [backFn]="backToSelectVerification" />
     </div>
   </section>
-</ng-template> -->
+</ng-template>

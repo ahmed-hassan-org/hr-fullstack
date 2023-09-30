@@ -200,7 +200,9 @@
     "auth": "Auth",
     "login": "Login",
     "company-profile": "Company Profile",
-    "details": "Details"
+    "details": "Details",
+    "employees": "Employees",
+    "departments": "Departments"
   },
   "LAYOUT": {
     "HEADER": {

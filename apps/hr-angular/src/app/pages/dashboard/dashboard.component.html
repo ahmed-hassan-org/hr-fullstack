@@ -3,27 +3,50 @@
   <grid-container>
     <div class="col-3">
       <p-card>
-        <h1 class="text-base m-0 font-bold text-center">Employees No:</h1>
-        <p class="text-2xl m-0 font-medium text-blue-600 text-center">10</p>
+        <h1 class="text-base m-0 font-bold text-center">
+          Employees No:
+          <span class="mx-2 text-blue-700">
+            {{
+              dashboardDetails()?.countEmps?._count['employee_id'] ?? 0
+            }}</span
+          >
+        </h1>
+        <p class="text-xl m-0 font-medium text-blue-600 text-center">
+          Total Salaryies:
+          <span class="mx-1 font-bold text-orange-700">{{
+            dashboardDetails()?.countEmps?._sum['salary'] ?? 0 | currency
+          }}</span>
+        </p>
       </p-card>
     </div>
     <div class="col-3">
-      <p-card>
+      <p-card styleClass="h-full">
         <h1 class="text-base m-0 font-bold">Departments No:</h1>
-        <p class="text-2xl m-0 font-medium text-blue-600">10</p>
+        <p class="text-2xl m-0 font-medium text-blue-600">
+          {{ dashboardDetails()?.countDepts ?? 0 }}
+        </p>
       </p-card>
     </div>
     <div class="col-3">
-      <p-card>
-        <h1 class="text-base m-0 font-bold">Departments No:</h1>
-        <p class="text-2xl m-0 font-medium text-blue-600">10</p>
+      <p-card styleClass="h-full">
+        <h1 class="text-base m-0 font-bold">Loctions No:</h1>
+        <p class="text-2xl m-0 font-medium text-blue-600">
+          {{ dashboardDetails()?.countLocations ?? 0 }}
+        </p>
       </p-card>
     </div>
     <div class="col-3">
-      <p-card>
-        <h1 class="text-base m-0 font-bold">Departments No:</h1>
-        <p class="text-2xl m-0 font-medium text-blue-600">10</p>
+      <p-card styleClass="h-full">
+        <h1 class="text-base m-0 font-bold">Country No:</h1>
+        <p class="text-2xl m-0 font-medium text-blue-600">
+          {{ dashboardDetails()?.countCountry ?? 0 }}
+        </p>
       </p-card>
     </div>
+  </grid-container>
+  <!-- row number two  -->
+  <grid-container>
+    <div class="col-6">table here</div>
+    <div class="col-6">some details here</div>
   </grid-container>
 </section>

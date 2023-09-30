@@ -39,8 +39,6 @@ export class EmployeesComponent extends WapelBase implements OnInit {
       .getAllEmployees()
       .pipe(untilDestroyed(this))
       .subscribe((data) => {
-        console.log(data.data);
-
         this.employeesList.set(data.data);
       });
   }

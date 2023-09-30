@@ -201,7 +201,9 @@
     "auth": "الأمان",
     "login": "الدخول",
     "company-profile": "ملف الشركة",
-    "details": "التفاصيل"
+    "details": "التفاصيل",
+    "employees": "الموظفين",
+    "departments": "الإدارات"
   },
   "LAYOUT": {
     "HEADER": {

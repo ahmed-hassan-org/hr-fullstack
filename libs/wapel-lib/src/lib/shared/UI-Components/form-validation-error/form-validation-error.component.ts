@@ -14,12 +14,12 @@ import { LocalStorageKeysModel } from '@wapelSharedLib/core/models/interfaace/Lo
 import { WapelInjectToken } from '@wapelSharedLib/core/token/WapelInjectToken.enum';
 import { SharedWapelModule } from '@wapelSharedLib/shared/SharedWapel.module';
 interface LengthValParam {
-  default?: number;
-  minLength?: number;
-  maxLength?: number;
-  val1?: number;
-  val2?: number;
-  length?: number;
+  default: number;
+  minLength: number;
+  maxLength: number;
+  val1: number;
+  val2: number;
+  length: number;
 }
 @Component({
   standalone: true,

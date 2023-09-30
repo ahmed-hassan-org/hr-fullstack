@@ -71,21 +71,26 @@ export class SigninComponent extends WapelBase implements OnInit {
         .login(loginData)
         .pipe(untilDestroyed(this))
         .subscribe((data) => {
+          const { token, roles, isOtpEnabled } = data.data;
           if (data.data) {
             if (data) {
               this.localStorageService.setSessionStorage(
                 LocalStorageKeys.APP_TOKEN_SESSION,
-                data.data.token
+                token
               );
               this.localStorageService.setSessionStorage(
                 LocalStorageKeys.APP_USER_ROLES_PERMISSION,
-                data.data.roles
+                roles
               );
               this.localStorageService.setSessionStorage(
                 LocalStorageKeys.APP_IS_LOGGED,
                 true
               );
-              this.getRouter.navigate(['/dashboard']);
+              if (isOtpEnabled) {
+                this.toVerifyIdentity();
+              } else {
+                this.getRouter.navigate(['/dashboard']);
+              }
             }
           }
         });

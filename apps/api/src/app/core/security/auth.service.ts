@@ -39,10 +39,10 @@ export class AuthService {
       });
     }
 
-    if (user.isOtpEnabled) {
-      const otpData = await this.generateTwoFactorAuthenticationSecret(user);
-      return {
-        token: await this.jwtService.sign(
+    if (user && user.isOtpEnabled && !user.twoFactorAuthenticationSecret) {
+      try {
+        const otpData = await this.generateTwoFactorAuthenticationSecret(user);
+        const token = await this.jwtService.sign(
           {
             email: user.email,
             username: user.username,
@@ -52,11 +52,20 @@ export class AuthService {
             secret: 'secret',
             expiresIn: '5m',
           }
-        ),
-        roles: roles,
-        ...otpData,
-      };
-    } else {
+        );
+        return {
+          token: token,
+          roles: roles,
+          isOtpEnabled: true,
+          ...otpData,
+        };
+      } catch (error) {
+        console.log(error);
+        return error;
+      }
+    }
+
+    if (user && user.isOtpEnabled && user.twoFactorAuthenticationSecret) {
       try {
         const token = this.jwtService.sign(
           {
@@ -69,6 +78,28 @@ export class AuthService {
         const otpData = {
           token: token,
           roles: roles,
+          isOtpEnabled: true,
+        };
+        return otpData;
+      } catch (error) {
+        return error;
+      }
+    }
+
+    if (user && !user.isOtpEnabled && !user.twoFactorAuthenticationSecret) {
+      try {
+        const token = this.jwtService.sign(
+          {
+            email: user.email,
+            username: user.username,
+            roles: roles,
+          },
+          { secret: 'secret', expiresIn: '10m' }
+        );
+        const otpData = {
+          token: token,
+          roles: roles,
+          isOtpEnabled: false,
         };
         return otpData;
       } catch (error) {
@@ -79,9 +110,9 @@ export class AuthService {
 
   async generateTwoFactorAuthenticationSecret(user: any) {
     const secret = authenticator.generateSecret();
-    const otpauthUrl = authenticator.keyuri(user.username, 'Hr App', secret);
+    const otpauthUrl = authenticator.keyuri(user.email, 'Hr App', secret);
     await this.usersService.users.update({
-      where: { user_id: user.userId },
+      where: { email: user.email },
       data: { twoFactorAuthenticationSecret: secret },
     });
 
@@ -89,5 +120,19 @@ export class AuthService {
       secret,
       otpauthUrl,
     };
+  }
+
+  generateToken() {
+    const data = '0062510-01-19420531';
+    const actualDate = new Date().getTime();
+
+    authenticator.options = {
+      digits: 10,
+      step: 5,
+      epoch: actualDate,
+    };
+    const secret = authenticator.encode(data);
+    const newToken = authenticator.generate(secret);
+    return newToken;
   }
 }

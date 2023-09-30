@@ -19,12 +19,13 @@ import LockOpenOutlined from '@mui/icons-material/LockOpenOutlined';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useLoginApi } from '../../../services/AuthService';
+import { useLoginApi, useVerifyOtp } from '../../../services/AuthService';
 import { useState } from 'react';
 import { LocalStorageKeysReact } from '../../../core/models/enum/LocalStorgeKeysReact.enum';
 import { useRecoilState } from 'recoil';
 import { useAuthState } from '../../../store/AuthState';
 import { useNavigate } from 'react-router-dom';
+import { MuiOtpInput } from 'mui-one-time-password-input';
 
 const Login = () => {
   const loginSchema = yup.object({
@@ -32,6 +33,7 @@ const Login = () => {
     password: yup.string().required('password is requried'),
   });
   const [authState, setAuthState] = useRecoilState(useAuthState);
+  const [isOtpEnabled, setisOtpEnabled] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -55,21 +57,51 @@ const Login = () => {
     isError,
     error: loginErrors,
   } = useLoginApi();
+  const {
+    mutateAsync: otpMutateAsync,
+    isLoading: otpIsLoading,
+    isSuccess: otpIsSuccess,
+    isError: otpIsError,
+    error: otpErrors,
+  } = useVerifyOtp();
+
+  const [otp, setOtp] = useState('');
+
+  const handleOtpChange = (newValue: any) => {
+    setOtp(newValue);
+  };
+
   const onSubmit = async (value: any) => {
     try {
       if (isValid) {
         const { data, status } = await mutateAsync(value);
-        const { token, roles } = data.data;
-        console.log('logged in success');
-        console.log(data);
+        const { token, roles, isOtpEnabled } = data.data;
+        setisOtpEnabled(isOtpEnabled);
         sessionStorage.setItem(LocalStorageKeysReact.APP_TOKEN, token);
         sessionStorage.setItem(LocalStorageKeysReact.APP_ROLES, roles);
         sessionStorage.setItem(LocalStorageKeysReact.APP_IS_LOGGEDIN, 'true');
         setAuthState({ isLoggedIn: true, token: token, roles: roles });
-        navigate('/'); // to dashboard
+        if (!isOtpEnabled) {
+          navigate('/'); // to dashboard page
+        } else {
+          setisOtpEnabled(isOtpEnabled);
+        }
       }
     } catch (error) {
       console.log('erpr her');
+    }
+  };
+
+  const verifyOtp = async () => {
+    const { status, data } = await otpMutateAsync({
+      email: getValues('email'),
+      twoFactorAuthenticationCode: otp,
+    });
+    console.log(data);
+
+    if (status === 200 || status === 201) {
+      navigate('/'); // to dashboard page
+      return;
     }
   };
 
@@ -100,7 +132,7 @@ const Login = () => {
   return (
     <>
       <Container
-        maxWidth={'xs'}
+        maxWidth={'sm'}
         sx={{
           display: 'flex',
           height: '100vh',
@@ -110,25 +142,109 @@ const Login = () => {
         }}
       >
         <Card variant="outlined" sx={{ width: '100%' }}>
-          <CardContent>
-            {isError && (
-              <Alert severity="error" sx={{ mb: '3px' }}>
-                <AlertTitle sx={{ fontWeight: 'bold' }}>
-                  Login errors
-                </AlertTitle>
-                {loginErrors && (loginErrors as any).response?.data?.errors}
-              </Alert>
-            )}
-            {isSuccess && (
-              <Alert severity="success" sx={{ mb: '3px' }}>
-                <AlertTitle sx={{ fontWeight: 'bold' }}>
-                  Login success
-                </AlertTitle>
-                Logged in success
-              </Alert>
-            )}
+          {!isOtpEnabled && (
+            <CardContent>
+              {isError && (
+                <Alert severity="error" sx={{ mb: '3px' }}>
+                  <AlertTitle sx={{ fontWeight: 'bold' }}>
+                    Login errors
+                  </AlertTitle>
+                  {loginErrors && (loginErrors as any).response?.data?.errors}
+                </Alert>
+              )}
+              {isSuccess && (
+                <Alert severity="success" sx={{ mb: '3px' }}>
+                  <AlertTitle sx={{ fontWeight: 'bold' }}>
+                    Login success
+                  </AlertTitle>
+                  Logged in success
+                </Alert>
+              )}
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Box
+                  sx={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <LockOpenOutlined color="secondary" sx={{ mx: '10px' }} />
+                  <Typography
+                    variant="h5"
+                    fontWeight={'bold'}
+                    sx={{ textAlign: 'center' }}
+                  >
+                    HR Login
+                  </Typography>
+                </Box>
+                <Grid container sx={{ my: '10px' }} spacing={2}>
+                  <Grid item sm={12} md={12} lg={12}>
+                    <TextField
+                      id="emailId"
+                      label="Email"
+                      variant="outlined"
+                      sx={{ width: '100%' }}
+                      {...register('email')}
+                      helperText={errors && errors.email?.message}
+                      error={!!errors.email}
+                    />
+                  </Grid>
+                  <Grid item sm={12}>
+                    <TextField
+                      id="passwordId"
+                      label="Password"
+                      variant="outlined"
+                      type="password"
+                      sx={{ width: '100%' }}
+                      {...register('password')}
+                      helperText={errors && errors.password?.message}
+                      error={!!errors.password}
+                    />
+                  </Grid>
+                  <Grid item sm={12}>
+                    <Box
+                      sx={{
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Button variant="contained" type={'submit'}>
+                        Login
+                      </Button>
+                      <Button variant="outlined" onClick={onReset}>
+                        Reset
+                      </Button>
+                    </Box>
+                    <Box sx={{ width: '100%', my: '10px' }}>
+                      <Typography
+                        variant="h6"
+                        fontWeight={'bold'}
+                        color={colors.lightGreen['800']}
+                        textAlign={'center'}
+                      >
+                        <Link
+                          href={'/auth/register'}
+                          color={colors.lightGreen['800']}
+                          underline="hover"
+                        >
+                          Create Account
+                        </Link>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </form>
+            </CardContent>
+          )}
+
+          {isOtpEnabled && (
+            <CardContent>
               <Box
                 sx={{
                   width: '100%',
@@ -138,76 +254,27 @@ const Login = () => {
                   alignItems: 'center',
                 }}
               >
-                <LockOpenOutlined color="secondary" sx={{ mx: '10px' }} />
-                <Typography
-                  variant="h5"
-                  fontWeight={'bold'}
-                  sx={{ textAlign: 'center' }}
-                >
-                  HR Login
-                </Typography>
-              </Box>
-              <Grid container sx={{ my: '10px' }} spacing={2}>
-                <Grid item sm={12} md={12} lg={12}>
-                  <TextField
-                    id="emailId"
-                    label="Email"
-                    variant="outlined"
-                    sx={{ width: '100%' }}
-                    {...register('email')}
-                    helperText={errors && errors.email?.message}
-                    error={!!errors.email}
-                  />
-                </Grid>
-                <Grid item sm={12}>
-                  <TextField
-                    id="passwordId"
-                    label="Password"
-                    variant="outlined"
-                    type="password"
-                    sx={{ width: '100%' }}
-                    {...register('password')}
-                    helperText={errors && errors.password?.message}
-                    error={!!errors.password}
-                  />
-                </Grid>
-                <Grid item sm={12}>
-                  <Box
-                    sx={{
-                      width: '100%',
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Button variant="contained" type={'submit'}>
-                      Login
-                    </Button>
-                    <Button variant="outlined" onClick={onReset}>
-                      Reset
-                    </Button>
-                  </Box>
-                  <Box sx={{ width: '100%', my: '10px' }}>
+                <Grid container sx={{ my: '10px' }} spacing={2}>
+                  <Grid item sm={12} md={12} lg={12}>
                     <Typography
-                      variant="h6"
-                      fontWeight={'bold'}
-                      color={colors.lightGreen['800']}
-                      textAlign={'center'}
+                      variant="body1"
+                      color={colors.deepOrange['A400']}
                     >
-                      <Link
-                        href={'/auth/register'}
-                        color={colors.lightGreen['800']}
-                        underline="hover"
-                      >
-                        Create Account
-                      </Link>
+                      Enter Otp From Authenticator
                     </Typography>
-                  </Box>
+                  </Grid>
+                  <Grid item sm={12} md={12} lg={12}>
+                    <MuiOtpInput
+                      value={otp}
+                      length={6}
+                      onChange={handleOtpChange}
+                      onComplete={verifyOtp}
+                    />
+                  </Grid>
                 </Grid>
-              </Grid>
-            </form>
-          </CardContent>
+              </Box>
+            </CardContent>
+          )}
         </Card>
       </Container>
     </>

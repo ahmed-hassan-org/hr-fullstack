@@ -28,6 +28,15 @@ export class UsersService {
   }
 
   enableDisableOtp(email: string, state: boolean) {
+    // disabled state
+    if (!state) {
+      return this.prisma.users.update({
+        where: { email: email },
+        data: { isOtpEnabled: state, twoFactorAuthenticationSecret: '' },
+        select: { email: true, isOtpEnabled: true },
+      });
+    }
+    // enable state
     return this.prisma.users.update({
       where: { email: email },
       data: { isOtpEnabled: state },

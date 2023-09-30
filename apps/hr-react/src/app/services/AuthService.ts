@@ -18,6 +18,17 @@ const registerApi = (regModel: RegisterModel) => {
   return axios.post(`${baseUrl}/auth/register`, regModel);
 };
 
-export const useRegisterApi= () => {
+export const useRegisterApi = () => {
   return useMutation(registerApi);
+};
+
+const verifyOtp = (otpData: {
+  email: string;
+  twoFactorAuthenticationCode: string;
+}) => {
+  return axios.post(`${baseUrl}/auth/verify-2fa-otp`, otpData);
+};
+
+export const useVerifyOtp = () => {
+  return useMutation(verifyOtp);
 };

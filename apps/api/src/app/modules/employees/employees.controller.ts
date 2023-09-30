@@ -40,7 +40,8 @@ export class EmployeesController {
     }
   }
 
-  @UseGuards(JwtAuthGuardGuard, RolesGuard)
+  // @UseGuards(JwtAuthGuardGuard, RolesGuard)
+  @UseGuards(JwtAuthGuardGuard)
   // @Roles(HrRoles.REVIEW_USER, HrRoles.ADMIN_USER)
   // @ApiBearerAuth()
   @Get('/:empId')

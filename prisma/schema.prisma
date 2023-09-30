@@ -132,3 +132,13 @@ model users {
   twoFactorAuthenticationSecret String?      @db.VarChar(2000)
   user_roles                    user_roles[]
 }
+
+model users_log {
+  log_id             Int       @id @default(autoincrement())
+  is_otp_verify      Boolean   @default(false)
+  login_verify_date  DateTime? @db.DateTime(0)
+  logout_verify_date DateTime? @db.DateTime(0)
+  verify_otp_code    String    @db.VarChar(6)
+  email              String    @db.VarChar(80)
+  is_logged_out      Boolean?  @default(false)
+}

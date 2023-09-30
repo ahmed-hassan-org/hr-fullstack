@@ -7,9 +7,9 @@ import AuthLayout from '../../shared/layouts/AuthLayout';
 import LoginPage from '../../pages/Auth/login/LoginPage';
 import Register from '../../pages/Auth/register/Register';
 import ResetPassword from '../../pages/Auth/reset-password/ResetPassword';
-import Dashboard from '../../pages/dashboard/dashboard';
 import RouteGuard from '../guards/RouteGuard';
 import Notfound from '../../pages/notfound/Notfound';
+import Dashboard from '../../pages/dashboard/Dashboard';
 
 function Routing() {
   return (
