@@ -5,8 +5,16 @@ import { PrismaService } from '../../db/prisma-module/prisma.service';
 export class DepartmentsService {
   constructor(private deptRepo: PrismaService) {}
 
-  getAllDepartments() {
-    return this.deptRepo.departments.findMany();
+  getAllDepartments(skip: number, take: number) {
+    return this.deptRepo.departments.findMany({
+      select: {
+        department_id: true,
+        department_name: true,
+        location_id: true,
+      },
+      skip: 0,
+      take: 10,
+    });
   }
 
   getOneDepartment(deptId: number) {

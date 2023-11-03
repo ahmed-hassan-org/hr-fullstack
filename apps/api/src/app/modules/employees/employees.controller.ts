@@ -8,11 +8,12 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import {
   CreateEmployeeDto,
   UpdateEmployeeDto,
@@ -24,16 +25,42 @@ import { JwtAuthGuardGuard } from '../../core/guards/jwtauthguard.guard';
 import { Roles } from '../../core/decorator/roles.decorator';
 import { HrRoles } from '../../core/security/model/HrRoles.enum';
 import { RolesGuard } from '../../core/guards/rolesguard.guard';
-
+import { paginator, searchPaginator } from '@nodeteam/nestjs-prisma-pagination';
+// import types
+import { PaginatorTypes } from '@nodeteam/nestjs-prisma-pagination';
+import { PrismaService } from '../../db/prisma-module/prisma.service';
 @ApiTags('Employees')
 @Controller('/employees')
 export class EmployeesController {
-  constructor(private empService: EmployeesService) {}
+  constructor(
+    private empService: EmployeesService,
+    private empsRepo: PrismaService
+  ) {}
   @UseGuards(JwtAuthGuardGuard)
   @Get('/')
-  async getAllEmployees() {
+  @ApiQuery({
+    name: 'skip',
+    description: 'skip first items count',
+    type: 'number',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'take',
+    description: 'show number of items',
+    type: 'number',
+    required: false,
+  })
+  async getAllEmployees(@Query('skip') page = 1, @Query('take') perPage = 5) {
+    const paginate: PaginatorTypes.PaginateFunction = paginator({
+      page: 1,
+      perPage: 10,
+    });
     try {
-      const res = await this.empService.getAllEmployees();
+      const res = await paginate(
+        this.empsRepo.employees,
+        {},
+        { page, perPage }
+      );
       return new HrResponse(res, 'data found', HttpStatus.OK, []);
     } catch (error) {
       return { error: error };

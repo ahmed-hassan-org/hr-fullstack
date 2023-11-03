@@ -8,7 +8,12 @@ import {
   Typography,
   colors,
 } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridPaginationModel,
+  GridRowModel,
+} from '@mui/x-data-grid';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetEmplpyees } from '../../services/EmplooyeeService';
@@ -16,8 +21,15 @@ import AddEmployee from './AddEmployee';
 
 const Employees = () => {
   const router = useNavigate();
-
-  const { data, isError, isLoading, refetch, isFetched } = useGetEmplpyees();
+  const [pageModel, setPageModel] = useState<GridPaginationModel>({
+    page: 1,
+    pageSize: 5,
+  });
+  const { data, isError, isLoading, refetch, isFetched } = useGetEmplpyees(
+    pageModel.pageSize,
+    pageModel.page
+  );
+  const meta = data?.data.data.meta;
 
   const toHome = () => {
     router('/');
@@ -38,6 +50,12 @@ const Employees = () => {
 
   const addEmployee = () => {
     setAddEmpModalState(true);
+  };
+
+  const onPageChange = (data: GridPaginationModel) => {
+    console.log(data);
+    setPageModel(data);
+    refetch();
   };
 
   function createData(
@@ -129,7 +147,7 @@ const Employees = () => {
         <Grid item sm={12} md={12}>
           {data?.data && (
             <DataGrid
-              rows={data?.data.data}
+              rows={data?.data.data.data}
               getRowId={(row) => row['employee_id']}
               columns={columns}
               initialState={{
@@ -137,10 +155,20 @@ const Employees = () => {
                   paginationModel: { page: 0, pageSize: 5 },
                 },
               }}
-              pageSizeOptions={[5, 10]}
+              pageSizeOptions={[5, 10, 15]}
               checkboxSelection
               disableRowSelectionOnClick
               loading={isLoading}
+              paginationMode="server"
+              rowCount={meta?.total}
+              pagination={true}
+              paginationModel={{
+                pageSize: 5,
+                page: 0,
+              }}
+              onPaginationModelChange={(m) => {
+                console.log(m);
+              }}
             />
           )}
         </Grid>

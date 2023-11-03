@@ -5,30 +5,19 @@
     </div>
 
     <ul class="company-menu-wrapper my-3">
-      <li class="active">
-        <a>
-          <img src="/assets/icons/grid-outline.svg" alt="grid" loading="lazy"
-        /></a>
-        <span class="mx-2 text-sm font-semibold">Dashboard</span>
-      </li>
-      <li>
-        <a>
-          <img
-            src="/assets/icons/employees-outline.svg"
-            alt="employees"
-            loading="lazy"
-        /></a>
-        <span class="mx-2 text-sm font-semibold">Employees</span>
-      </li>
-      <li>
-        <a>
-          <img
-            src="/assets/icons/employees-outline.svg"
-            alt="employees"
-            loading="lazy"
-        /></a>
-        <span class="mx-2 text-sm font-semibold">Departments</span>
-      </li>
+      <ng-container *ngFor="let item of navLinks()">
+        <li [routerLink]="[item.url]" routerLinkActive="active">
+          <div class="flex flex-row justify-content-center align-items-center">
+            <a>
+              <img
+                src="/assets/icons/grid-outline.svg"
+                alt="grid"
+                loading="lazy"
+            /></a>
+            <span class="mx-2 text-sm font-semibold">{{ item.label }}</span>
+          </div>
+        </li>
+      </ng-container>
     </ul>
   </div>
 </div>

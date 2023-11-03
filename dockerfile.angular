@@ -1,12 +1,12 @@
 ## STAGE 1: Build ###
-FROM node:16.17.0-alpine AS build
+FROM node:18.17.1-alpine AS build
 WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
 RUN npm install --force
-COPY /apps /app/apps
+COPY /dist/hr-angular /app/apps/dist/hr-angular
 RUN npx nx build client
 
 ## STAGE 2: Run ###
-FROM nginx:1.17.1-alpine
+FROM nginx:1.18-alpine
 COPY ./nginx/nginx.conf /usr/nginx/nginx.conf
-COPY --from=build /usr/local/app/dist/apps/client /usr/share/nginx/html
+COPY --from=build /usr/local/app/dist/apps/hr-angular /usr/share/nginx/html

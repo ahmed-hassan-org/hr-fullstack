@@ -14,11 +14,13 @@ import { useLayoutState } from '../../../store/LayoutState';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useAuthState } from '../../../store/AuthState';
+import { useNavigate } from 'react-router-dom';
 const Hrnavbar = () => {
   const [layoutState, setLayoutState] = useRecoilState(useLayoutState);
   const authState = useRecoilValue(useAuthState);
   const [menuState, setMenuState] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const router = useNavigate();
 
   const showSideMenu = () => {
     setLayoutState((e) => ({
@@ -77,7 +79,9 @@ const Hrnavbar = () => {
                 open={menuState}
                 onClose={handleClose}
               >
-                <MenuItem>Profile</MenuItem>
+                <MenuItem onClick={() => router('/hr/profile')}>
+                  Profile
+                </MenuItem>
                 <MenuItem>My account</MenuItem>
               </Menu>
             </div>

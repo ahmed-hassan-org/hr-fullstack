@@ -1,0 +1,14 @@
+## STAGE 1: Build ###
+FROM node:18.17.1-alpine AS build
+ENV HOME=/usr/local/app
+ENV DIST_PATH=/app/apps
+WORKDIR ${HOME}
+COPY ./ ${HOME}}
+RUN npm install --force
+COPY /apps/api ${DIST_PATH}
+RUN npx nx run api:build --configuration=production  
+
+## STAGE 2: Run ###
+COPY /usr/local/app/dist/api ./dist/api
+
+CMD ["node", "api/main"]

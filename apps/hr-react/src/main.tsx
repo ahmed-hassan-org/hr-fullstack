@@ -11,8 +11,9 @@ import { ErrorBoundary } from 'react-error-boundary';
 const theme = createTheme({
   direction: 'ltr',
   palette: {
+    mode: 'light',
     primary: {
-      main: blueGrey[500],
+      main: blueGrey[700],
     },
     secondary: {
       main: deepOrange['700'],

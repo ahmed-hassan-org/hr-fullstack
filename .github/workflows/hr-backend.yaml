@@ -1,36 +1,36 @@
-name: 'hr-backend-api'
-on:
-  pull_request:
-    branches:
-      - master
-    types: [closed]
-jobs:
-  build-backend:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        # node-version: [18.x, 20.x]
-        node-version: [18.x]
+# name: 'hr-backend-api'
+# on:
+#   pull_request:
+#     branches:
+#       - master
+#     types: [closed]
+# jobs:
+#   build-backend:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         # node-version: [18.x, 20.x]
+#         node-version: [18.x]
 
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: checkout code
+#         uses: actions/checkout@v4
 
-      - name: Cache node modules
-        id: cache-nodemodules
-        uses: actions/cache@v3
-        env:
-          node-cahe-name: cache-node-modules-
-        with:
-          path: node_modules
-          key: ${{env.node-cahe-name}}${{hashFiles('package-lock.json')}}
-          restore-keys: ${{env.node-cahe-name}}
+#       - name: Cache node modules
+#         id: cache-nodemodules
+#         uses: actions/cache@v3
+#         env:
+#           node-cahe-name: cache-node-modules-
+#         with:
+#           path: node_modules
+#           key: ${{env.node-cahe-name}}${{hashFiles('package-lock.json')}}
+#           restore-keys: ${{env.node-cahe-name}}
 
-      - name: Install all needed packages for app
-        run: npm ci --force
+#       - name: Install all needed packages for app
+#         run: npm ci --force
 
-      - name: Build backend API folder
-        run: npx nx run api:build --configuration=production
+#       - name: Build backend API folder
+#         run: npx nx run api:build --configuration=production
 
-      - name: Build angular client
-        run: npx nx run hr-angular:build --configuration=production
+#       - name: Build angular client
+#         run: npx nx run hr-angular:build --configuration=production

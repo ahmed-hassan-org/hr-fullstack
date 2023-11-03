@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-no-useless-fragment */
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Alert,
   AlertTitle,
@@ -15,17 +16,16 @@ import {
   Typography,
   colors,
 } from '@mui/material';
-import LockOpenOutlined from '@mui/icons-material/LockOpenOutlined';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useLoginApi, useVerifyOtp } from '../../../services/AuthService';
-import { useState } from 'react';
-import { LocalStorageKeysReact } from '../../../core/models/enum/LocalStorgeKeysReact.enum';
-import { useRecoilState } from 'recoil';
-import { useAuthState } from '../../../store/AuthState';
-import { useNavigate } from 'react-router-dom';
 import { MuiOtpInput } from 'mui-one-time-password-input';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import * as yup from 'yup';
+import HrLogo from '../../../components/icons/HrLogo';
+import { LocalStorageKeysReact } from '../../../core/models/enum/LocalStorgeKeysReact.enum';
+import { useLoginApi, useVerifyOtp } from '../../../services/AuthService';
+import { useAuthState } from '../../../store/AuthState';
 
 const Login = () => {
   const loginSchema = yup.object({
@@ -171,13 +171,14 @@ const Login = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <LockOpenOutlined color="secondary" sx={{ mx: '10px' }} />
+                  <HrLogo />
                   <Typography
                     variant="h5"
                     fontWeight={'bold'}
-                    sx={{ textAlign: 'center' }}
+                    sx={{ textAlign: 'center', margin: '0 10px' }}
+                    color={colors.blue['900']}
                   >
-                    HR Login
+                    BlueBird HR
                   </Typography>
                 </Box>
                 <Grid container sx={{ my: '10px' }} spacing={2}>

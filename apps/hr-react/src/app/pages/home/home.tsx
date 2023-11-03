@@ -2,7 +2,7 @@
 import React from 'react';
 import { Grid, colors } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import Hrnavbar from '../../shared/layouts/Navbar/Hrnavbar';
+import Hrnavbar from '../../components/layout/Navbar/Hrnavbar';
 
 const Home = () => {
   return (

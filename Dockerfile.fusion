@@ -1,0 +1,14 @@
+## STAGE 1: Build ###
+FROM node:16.19.0-alpine AS build
+ENV HOME=/usr/local/app
+WORKDIR ${HOME}
+COPY ./ ${HOME}
+RUN npm install --force
+COPY /apps /app/apps
+RUN npx nx build fusion
+
+## STAGE 2: Run ###
+FROM nginx:1.17.1-alpine
+COPY ./nginx/nginx.conf /usr/nginx/nginx.conf
+COPY --from=build /usr/local/app/dist/apps/fusion /usr/share/nginx/html
+# RUN npm run start:fusion

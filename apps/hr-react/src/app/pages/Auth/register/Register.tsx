@@ -23,6 +23,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterApi } from '../../../services/AuthService';
 import { RegisterModel } from '@wapelSharedLib/core/models/interfaace/AppAuthEntity.interface';
+import HrLogo from '../../../components/icons/HrLogo';
 
 const Register = () => {
   const router = useNavigate();
@@ -148,17 +149,16 @@ const Register = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
+              boxShadow={2}
             >
+              <HrLogo />
               <Typography
                 variant="h5"
-                fontWeight={'700'}
-                sx={{
-                  textAlign: 'center',
-                  color: colors.lightBlue['600'],
-                  mb: '10px',
-                }}
+                fontWeight={'bold'}
+                sx={{ textAlign: 'center', margin: '0 10px' }}
+                color={colors.blue['900']}
               >
-                Create Account
+                BlueBird HR
               </Typography>
             </Box>
             <Box sx={{ width: '100%', my: '5px' }}>

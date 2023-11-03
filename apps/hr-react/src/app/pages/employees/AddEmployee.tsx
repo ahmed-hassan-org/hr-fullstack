@@ -90,7 +90,12 @@ const AddEmployee = (props: Props) => {
   }, []);
 
   return (
-    <Dialog open={props.openModal} onClose={props.handleClose} fullWidth>
+    <Dialog
+      open={props.openModal}
+      onClose={props.handleClose}
+      fullWidth
+      disableEscapeKeyDown
+    >
       <DialogTitle fontWeight={'bold'}>Add Employee</DialogTitle>
       <DialogContent>
         <DialogContentText>Create new employee</DialogContentText>
@@ -233,7 +238,7 @@ const AddEmployee = (props: Props) => {
                   error={!!errors.department_id}
                 >
                   {isFetched &&
-                    data?.data.data.map((ele: any) => (
+                    data?.data.data.data.map((ele: any) => (
                       <MenuItem
                         value={ele.department_id}
                         key={ele.department_id}

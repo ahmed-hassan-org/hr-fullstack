@@ -17,6 +17,9 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { departments } from '@prisma/client';
 import { DepartmentsDto } from '../../core/models/dto/DepartmentsDto';
+import { paginator, searchPaginator } from '@nodeteam/nestjs-prisma-pagination';
+// import types
+import { PaginatorTypes } from '@nodeteam/nestjs-prisma-pagination';
 
 @Controller('departments')
 @ApiTags('Departments')
@@ -46,23 +49,22 @@ export class DepartmentsController {
     required: false,
   })
   async getAllDepartments(
-    @Query('skip') skip = 1,
-    @Query('take') take = 5,
+    @Query('skip') page = 1,
+    @Query('take') perPage = 5,
     @Query('order') order = 'asc'
   ) {
+    const paginate: PaginatorTypes.PaginateFunction = paginator({
+      page: 1,
+      perPage: 10,
+    });
     try {
-      const deptsCached = await this.cacheManager.get('depts');
-      if (deptsCached) {
-        console.log('from cached data');
-        return new HrResponse(deptsCached, 'all data here', HttpStatus.OK, []);
-      } else {
-        console.log('from main data');
-        const res = await this.prisma.departments.findMany({
-          select: { department_id: true, department_name: true },
-        });
-        await this.cacheManager.set('depts', res);
-        return new HrResponse(res, 'all data here', HttpStatus.OK, []);
-      }
+      const res = await paginate(
+        this.prisma.departments,
+        {},
+        { page, perPage }
+      );
+      await this.cacheManager.set('depts', res);
+      return new HrResponse(res, 'all data here', HttpStatus.OK, []);
     } catch (error) {
       return new HrResponse(null, 'not data', HttpStatus.NOT_FOUND, error);
     }
