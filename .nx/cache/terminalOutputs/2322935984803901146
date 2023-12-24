@@ -1,0 +1,9 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+Re-optimizing dependencies because lockfile has changed
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4201[22m/[39m
+[33mAssets in public directory cannot be imported from JavaScript.
+If you intend to import that asset, put the file in the src directory, and use [36m/src/locale/en.json[33m instead of [36m/public/locale/en.json[33m.
+If you intend to use the URL of that asset, use [36m/locale/en.json?url[33m.[39m
+[33mAssets in public directory cannot be imported from JavaScript.
+If you intend to import that asset, put the file in the src directory, and use [36m/src/locale/ar.json[33m instead of [36m/public/locale/ar.json[33m.
+If you intend to use the URL of that asset, use [36m/locale/ar.json?url[33m.[39m

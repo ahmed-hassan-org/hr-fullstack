@@ -1,4 +1,3 @@
-import { RefreshTokenService } from './core/security/refreshtoken.service';
 import { Module } from '@nestjs/common';
 import { EmailConfigModule } from './core/email/email-config/email-config.module';
 import { TypeOrmModule } from '@nestjs/typeorm';

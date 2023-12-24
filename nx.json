@@ -33,6 +33,10 @@
     },
     "e2e": {
       "inputs": ["default", "^production"]
+    },
+    "@nx/vite:test": {
+      "cache": true,
+      "inputs": ["default", "^production"]
     }
   },
   "namedInputs": {

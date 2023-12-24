@@ -32,9 +32,9 @@ export abstract class WapelBase {
     text: 'Other with notes',
   });
   /** start on page */
-  pageNumber = 1;
+  pageNumber = signal(1);
   /** default page size from server side */
-  pageSize = 10;
+  pageSize = signal(10);
   /** select rows per page */
   rowsPerPage = [10, 20, 30, 40, 50];
 
@@ -42,7 +42,7 @@ export abstract class WapelBase {
   /** current active language in app */
   currentLanguage = signal('');
   /** row total count */
-  rowTotalCount = 0;
+  rowTotalCount = signal(0);
   private EXCEL_TYPE =
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   /** the current active language by system */
@@ -190,12 +190,12 @@ export abstract class WapelBase {
     headerColumn: any[],
     tableData: any[],
     pdfTitle: string,
-    fileName: string,
+    fileName: string
   ) {
     const pdf = new jsPDF();
 
     const tableHeader = headerColumn.map((ele) =>
-      ele.isVisible ? ele.columnName : '',
+      ele.isVisible ? ele.columnName : ''
     );
 
     const allData = tableData.map((ele) => Object.values(ele));
@@ -256,7 +256,7 @@ export abstract class WapelBase {
   private saveAsExcelFile(
     buffer: any,
     fileName: string,
-    fileType: 'xlsx' | 'csv' = 'xlsx',
+    fileType: 'xlsx' | 'csv' = 'xlsx'
   ): void {
     const data: Blob = new Blob([buffer], {
       type: 'xlsx',
@@ -268,7 +268,7 @@ export abstract class WapelBase {
   isFormControlHasError(
     formInstance: UntypedFormGroup,
     controlName: string,
-    errorName: string,
+    errorName: string
   ) {
     return formInstance.get(controlName)?.hasError(errorName);
   }
@@ -359,7 +359,7 @@ export abstract class WapelBase {
     for (const item of childeren) {
       if (item.separator) continue;
       item.label = this.getTranslation().instant(
-        `${this.messageTranslationPrefix}${item.id}`,
+        `${this.messageTranslationPrefix}${item.id}`
       );
       if (item.items) {
         this.translateHeaderMenuItems(item.items, returnInto);
@@ -370,7 +370,7 @@ export abstract class WapelBase {
       for (const item of childeren) {
         if (item.separator) continue;
         item.label = this.getTranslation().instant(
-          `${this.messageTranslationPrefix}${item.id}`,
+          `${this.messageTranslationPrefix}${item.id}`
         );
         if (item.items) {
           this.translateHeaderMenuItems(item.items, returnInto);

@@ -11,7 +11,17 @@ export class EmployeesService {
 
   constructor(private http: HttpCall) {}
 
-  getAllEmployees() {
+  getAllEmployees(size = 10, page = 0) {
+    return this.http.getAll<HttpResponseModel>(
+      AppServers.BASE_API_SERVER,
+      `${this.baseUrl}`,
+      {
+        take: size,
+        skip: page,
+      }
+    );
+  }
+  getAllEmployeesPaging(page = 1, size = 10) {
     return this.http.getAll<HttpResponseModel>(
       AppServers.BASE_API_SERVER,
       `${this.baseUrl}`

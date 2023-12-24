@@ -4,6 +4,8 @@ import { IEmployeesModel } from '@hrCore/models/interface/IEmployeesModel.interf
 import { EmployeesService } from '@hrServices/employees.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { WapelBase } from '@wapelSharedLib/core/models/classes/WapelBase';
+import { PagingMeta } from '../../../../../../libs/wapel-lib/src/lib/core/models/interfaace/PaginaMeta.interface';
+import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
   selector: 'hr-fullstack-employees',
@@ -13,6 +15,7 @@ import { WapelBase } from '@wapelSharedLib/core/models/classes/WapelBase';
 @UntilDestroy({ checkProperties: true })
 export class EmployeesComponent extends WapelBase implements OnInit {
   employeesList = signal<IEmployeesModel[]>([]);
+  pageMeta = signal<Partial<PagingMeta>>({ total: 100, perPage: 10 });
   constructor(injector: Injector, private empService: EmployeesService) {
     super(injector);
     this.messageTranslationPrefix = '';
@@ -34,12 +37,24 @@ export class EmployeesComponent extends WapelBase implements OnInit {
       });
   }
 
-  getEmployees() {
+  getEmployees(size = 10, page = 0) {
     this.empService
-      .getAllEmployees()
+      .getAllEmployees(size, page)
       .pipe(untilDestroyed(this))
       .subscribe((data) => {
-        this.employeesList.set(data.data);
+        console.log(data.data);
+        this.pageMeta.set(data.data.meta);
+        this.employeesList.set(data.data.data);
+        this.rowTotalCount.set(this.pageMeta().total as number);
+        this.pageSize.set(this.pageMeta().perPage as number);
+        this.pageNumber.set(this.pageMeta().currentPage as number);
       });
+  }
+
+  onLazyLoad(e: LazyLoadEvent | any) {
+    console.log(e);
+    let pg = (e.page - 1) * e.rows;
+    this.pageNumber.set(pg);
+    this.getEmployees(this.pageMeta().perPage, pg);
   }
 }

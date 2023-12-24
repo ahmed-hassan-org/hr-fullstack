@@ -2,7 +2,7 @@
   position: relative;
   .navbar {
     position: fixed;
-    width: 100px;
+    width: 75px;
     height: 100%;
     top: 0;
     left: 0;
@@ -15,7 +15,7 @@
     overflow: hidden;
     overflow-x: hidden;
     z-index: 999;
-    transition: width 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    transition: width 0.25s cubic-bezier(0.6, 0.04, 0.98, 0.335);
     .company-logo {
       position: relative;
     }
